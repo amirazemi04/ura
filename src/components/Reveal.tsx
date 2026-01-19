@@ -1,96 +1,45 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { motion, type Variants } from "framer-motion";
+import type { ReactNode } from "react";
 
 interface RevealProps {
   children: ReactNode;
   delay?: number;
   duration?: number;
   direction?: "up" | "down" | "left" | "right";
-  className?: string;
 }
+
+const variants: Variants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0 },
+};
 
 export default function Reveal({
   children,
   delay = 0,
   duration = 0.6,
   direction = "up",
-  className = "",
 }: RevealProps) {
-  const [isVisible, setIsVisible] = useState(false);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setPrefersReducedMotion(mediaQuery.matches);
-
-    const handler = (e: MediaQueryListEvent) =>
-      setPrefersReducedMotion(e.matches);
-
-    mediaQuery.addEventListener("change", handler);
-    return () => mediaQuery.removeEventListener("change", handler);
-  }, []);
-
-  useEffect(() => {
-    const currentRef = ref.current;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setTimeout(() => {
-              setIsVisible(true);
-            }, delay * 1000);
-          }
-        });
-      },
-      {
-        threshold: 0.1,
-        rootMargin: "0px 0px -100px 0px",
-      }
-    );
-
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-    };
-  }, [delay]);
-
-  const getTransform = () => {
-    if (isVisible || prefersReducedMotion) return "translate(0, 0)";
-
+  const getAxis = () => {
     switch (direction) {
-      case "up":
-        return "translate(0, 50px)";
       case "down":
-        return "translate(0, -50px)";
+        return { y: -40 };
       case "left":
-        return "translate(50px, 0)";
+        return { x: 40 };
       case "right":
-        return "translate(-50px, 0)";
+        return { x: -40 };
       default:
-        return "translate(0, 50px)";
+        return { y: 40 };
     }
   };
 
-  if (prefersReducedMotion) {
-    return <div className={className}>{children}</div>;
-  }
-
   return (
-    <div
-      ref={ref}
-      className={className}
-      style={{
-        opacity: isVisible ? 1 : 0,
-        transform: getTransform(),
-        transition: `opacity ${duration}s ease-out, transform ${duration}s ease-out`,
-      }}
+    <motion.div
+      initial={{ opacity: 0, ...getAxis() }}
+      whileInView={{ opacity: 1, x: 0, y: 0 }}
+      transition={{ delay, duration, ease: "easeOut" }}
+      viewport={{ once: true, amount: 0.2 }}
     >
       {children}
-    </div>
+    </motion.div>
   );
 }
