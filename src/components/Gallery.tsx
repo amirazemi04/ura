@@ -108,12 +108,12 @@ export default function Gallery() {
 
         {/* Header */}
         <Reveal>
-          <div className="flex justify-between items-start mb-12">
+          <div className="flex justify-between items-start mb-10">
             <h2 className="text-4xl sm:text-5xl font-light text-[#333333]">
               {activeFilter}
             </h2>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               {categories.map((_, index) => (
                 <button
                   key={index}
@@ -139,12 +139,12 @@ export default function Gallery() {
           </div>
         </Reveal>
 
-        {/* 👉 DESIGN LAYOUT */}
-        <Reveal delay={0.2}>
-          <div className="space-y-6">
+        {/* 👉 TIGHT GRID LAYOUT */}
+        <Reveal delay={0.15}>
+          <div className="space-y-3">
 
             {/* Row 1 */}
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
               {images[0] && (
                 <div className="w-full sm:w-[30%] aspect-[3/4] overflow-hidden cursor-pointer"
                   onClick={() => { setLightboxIndex(0); setLightboxOpen(true); }}>
@@ -159,7 +159,7 @@ export default function Gallery() {
                 </div>
               )}
 
-              <div className="w-full sm:w-[20%] flex sm:flex-col gap-4">
+              <div className="w-full sm:w-[20%] flex sm:flex-col gap-2">
                 {images[2] && (
                   <div className="w-1/2 sm:w-full aspect-square overflow-hidden cursor-pointer"
                     onClick={() => { setLightboxIndex(2); setLightboxOpen(true); }}>
@@ -176,7 +176,7 @@ export default function Gallery() {
             </div>
 
             {/* Row 2 */}
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
               {images[4] && (
                 <div className="w-full sm:w-[29%] aspect-[3/4] overflow-hidden cursor-pointer"
                   onClick={() => { setLightboxIndex(4); setLightboxOpen(true); }}>
