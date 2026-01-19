@@ -12,6 +12,7 @@ import SponsorJoinUs from './pages/SponsorJoinUs';
 import GalleryPage from './pages/GalleryPage';
 import AboutUsPage from './pages/AboutUsPage';
 import SponsorsPage from './pages/SponsorsPage';
+import PartnerPage from './pages/PartnerPage';
 import NewsDetailPage from './components/NewsDetailPage';
 import ScrollToTop from './components/ScrollToTop';
 import CustomCookieBanner from './components/CustomCookieBanner';
@@ -34,6 +35,7 @@ const App = () => {
               <Route path="/gallery" element={<GalleryPage />} />
               <Route path="/about-us" element={<AboutUsPage />} />
               <Route path="/sponsors" element={<SponsorsPage />} />
+              <Route path="/partner" element={<PartnerPage />} />
               <Route path="/news/:id" element={<NewsDetailPage />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/terms-of-service" element={<TermsService />} />

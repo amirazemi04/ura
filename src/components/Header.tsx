@@ -35,6 +35,7 @@ const Header = () => {
     { key: 'header.groups', path: '/groups' },
     { key: 'header.gallery', path: '/gallery' },
     { key: 'header.sponsors', path: '/sponsors' },
+    { key: 'header.partner', path: '/partner' },
   ];
 
   const changeLanguage = (lng: string) => {
