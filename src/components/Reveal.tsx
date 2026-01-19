@@ -1,5 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react";
-import { motion, type Variants } from "framer-motion";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 interface RevealProps {
   children: ReactNode;
@@ -16,7 +15,9 @@ export default function Reveal({
   direction = "up",
   className = "",
 }: RevealProps) {
+  const [isVisible, setIsVisible] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -29,23 +30,50 @@ export default function Reveal({
     return () => mediaQuery.removeEventListener("change", handler);
   }, []);
 
-  const offset =
-    direction === "up"
-      ? { x: 0, y: 50 }
-      : direction === "down"
-      ? { x: 0, y: -50 }
-      : direction === "left"
-      ? { x: 50, y: 0 }
-      : { x: -50, y: 0 };
+  useEffect(() => {
+    const currentRef = ref.current;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => {
+              setIsVisible(true);
+            }, delay * 1000);
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: "0px 0px -100px 0px",
+      }
+    );
 
-  const variants: Variants = {
-    hidden: { opacity: 0, x: offset.x, y: offset.y },
-    visible: {
-      opacity: 1,
-      x: 0,
-      y: 0,
-      transition: { duration, delay, ease: "easeOut" },
-    },
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, [delay]);
+
+  const getTransform = () => {
+    if (isVisible || prefersReducedMotion) return "translate(0, 0)";
+
+    switch (direction) {
+      case "up":
+        return "translate(0, 50px)";
+      case "down":
+        return "translate(0, -50px)";
+      case "left":
+        return "translate(50px, 0)";
+      case "right":
+        return "translate(-50px, 0)";
+      default:
+        return "translate(0, 50px)";
+    }
   };
 
   if (prefersReducedMotion) {
@@ -53,18 +81,16 @@ export default function Reveal({
   }
 
   return (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{
-        once: true,
-        amount: 0.1,
-        margin: "-100px 0px",
-      }}
-      variants={variants}
+    <div
+      ref={ref}
       className={className}
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: getTransform(),
+        transition: `opacity ${duration}s ease-out, transform ${duration}s ease-out`,
+      }}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
