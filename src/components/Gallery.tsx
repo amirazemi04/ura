@@ -126,21 +126,6 @@ export default function Gallery() {
               <h2 className="text-4xl sm:text-5xl font-light text-[#333333] mb-2">
                 {activeFilter}
               </h2>
-              <div className="flex flex-wrap gap-2 mt-4">
-                {categories.map((cat) => (
-                  <button
-                    key={cat}
-                    onClick={() => setActiveFilter(cat)}
-                    className={`px-3 py-1 text-sm transition-colors duration-200 ${
-                      activeFilter === cat
-                        ? 'bg-black text-white'
-                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                    }`}
-                  >
-                    {cat}
-                  </button>
-                ))}
-              </div>
             </div>
 
             <div className="flex items-center gap-4">
