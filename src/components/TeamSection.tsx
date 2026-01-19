@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import client from '../contentfulClient';
+import Reveal from './Reveal';
 
 interface TeamMember {
   id: string;
@@ -64,19 +65,22 @@ const TeamSection = () => {
   return (
     <section className="mx-auto px-4 sm:px-6 lg:px-8">
       {/* Breadcrumb */}
-      <nav className="text-sm text-gray-500 my-6 sm:my-12 text-center sm:text-left">
-        <Link to="/" className="hover:underline text-gray-500 font-medium">
-          {i18n.language === 'sq' ? 'Ballina' : 'Startseite'}
-        </Link>
-        <span className="mx-1 sm:mx-2">/</span>
-        <span className="text-gray-700 font-semibold">
-          {i18n.language === 'sq' ? 'Ekipa' : 'Team'}
-        </span>
-      </nav>
+      <Reveal>
+        <nav className="text-sm text-gray-500 my-6 sm:my-12 text-center sm:text-left">
+          <Link to="/" className="hover:underline text-gray-500 font-medium">
+            {i18n.language === 'sq' ? 'Ballina' : 'Startseite'}
+          </Link>
+          <span className="mx-1 sm:mx-2">/</span>
+          <span className="text-gray-700 font-semibold">
+            {i18n.language === 'sq' ? 'Ekipa' : 'Team'}
+          </span>
+        </nav>
+      </Reveal>
 
       {/* Team grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-12">
-        {members.map((member) => {
+      <Reveal delay={0.2}>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-12">
+          {members.map((member) => {
           const isSelected = selectedMember?.id === member.id;
 
           return (
@@ -117,7 +121,8 @@ const TeamSection = () => {
             </div>
           );
         })}
-      </div>
+        </div>
+      </Reveal>
     </section>
   );
 };

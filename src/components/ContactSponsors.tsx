@@ -6,6 +6,7 @@ import emailjs from 'emailjs-com';
 import client from '../contentfulClient';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { BLOCKS, MARKS, Document } from '@contentful/rich-text-types';
+import Reveal from './Reveal';
 
 type FormValues = {
   vorname: string;
@@ -128,29 +129,32 @@ const ContactSponsors = () => {
   return (
     <section className="py-16" id="sponsors-contact">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-[#333333] mb-6 pb-1 text-center relative inline-block">
-            {textContent.joinTitle || 'No joinTitle loaded'}
-            <svg
-              viewBox="0 0 200 20"
-              preserveAspectRatio="none"
-              className="absolute left-1/2 transform -translate-x-1/2 bottom-[-14px] w-[300px] h-5"
-            >
-              <path
-                d="M0,20 Q100,-10 200,20"
-                fill="none"
-                stroke="#a51e28"
-                strokeWidth="5"
-                strokeLinecap="round"
-              />
-            </svg>
-          </h2>
-          <p className="text-base text-gray-600 leading-relaxed max-w-2xl mx-auto mt-6">
-            {textContent.joinDescriptio || 'No joinDescription loaded'}
-          </p>
-        </div>
+        <Reveal>
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-[#333333] mb-6 pb-1 text-center relative inline-block">
+              {textContent.joinTitle || 'No joinTitle loaded'}
+              <svg
+                viewBox="0 0 200 20"
+                preserveAspectRatio="none"
+                className="absolute left-1/2 transform -translate-x-1/2 bottom-[-14px] w-[300px] h-5"
+              >
+                <path
+                  d="M0,20 Q100,-10 200,20"
+                  fill="none"
+                  stroke="#a51e28"
+                  strokeWidth="5"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </h2>
+            <p className="text-base text-gray-600 leading-relaxed max-w-2xl mx-auto mt-6">
+              {textContent.joinDescriptio || 'No joinDescription loaded'}
+            </p>
+          </div>
+        </Reveal>
 
-        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+        <Reveal delay={0.2}>
+          <Formik initialValues={initialValues} onSubmit={handleSubmit}>
           {() => (
             <Form className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-64">
               <div className="space-y-4">
@@ -209,7 +213,8 @@ const ContactSponsors = () => {
               </div>
             </Form>
           )}
-        </Formik>
+          </Formik>
+        </Reveal>
       </div>
     </section>
   );
