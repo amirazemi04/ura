@@ -49,10 +49,10 @@ export default function Gallery() {
               const fields = defaultEntry.fields;
 
               const assets = [
-                fields.img1, fields.img2, fields.img3, fields.img4, fields.img5, fields.img6,
-                fields.img7, fields.img8, fields.img9, fields.img10, fields.img11, fields.img12,
-                fields.img13, fields.img14, fields.img15, fields.img16, fields.img17, fields.img18,
-                fields.img19, fields.img20
+                fields.img1, fields.img2, fields.img3, fields.img4, fields.img5,
+                fields.img6, fields.img7, fields.img8, fields.img9, fields.img10,
+                fields.img11, fields.img12, fields.img13, fields.img14, fields.img15,
+                fields.img16, fields.img17, fields.img18, fields.img19, fields.img20,
               ];
 
               const images: GalleryImage[] = await Promise.all(
@@ -104,13 +104,7 @@ export default function Gallery() {
   const currentCategoryIndex = categories.indexOf(activeFilter);
   const images = imagesByCat[activeFilter] || [];
 
-  if (loading) {
-    return null;
-  }
-
-  if (!categories.length || !images.length) {
-    return null;
-  }
+  if (loading || !categories.length || !images.length) return null;
 
   const handleCategoryChange = (index: number) => {
     setActiveFilter(categories[index]);
@@ -119,21 +113,20 @@ export default function Gallery() {
   return (
     <section className="py-16 bg-white" id="gallery">
       <div className="container mx-auto px-4 sm:px-6">
-        {/* Header with Category and Pagination Numbers */}
+
+        {/* Header */}
         <Reveal>
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-12">
-            <div className="mb-6 sm:mb-0">
-              <h2 className="text-4xl sm:text-5xl font-light text-[#333333] mb-2">
-                {activeFilter}
-              </h2>
-            </div>
+            <h2 className="text-4xl sm:text-5xl font-light text-[#333333]">
+              {activeFilter}
+            </h2>
 
-            <div className="flex items-center gap-4">
-              {categories.map((cat, index) => (
+            <div className="flex items-center gap-4 mt-6 sm:mt-0">
+              {categories.map((_, index) => (
                 <button
-                  key={cat}
+                  key={index}
                   onClick={() => handleCategoryChange(index)}
-                  className={`text-lg font-light transition-colors duration-200 ${
+                  className={`text-lg font-light transition-colors ${
                     currentCategoryIndex === index
                       ? 'text-black font-medium'
                       : 'text-gray-400 hover:text-gray-600'
@@ -142,6 +135,7 @@ export default function Gallery() {
                   {(index + 1).toString().padStart(2, '0')}
                 </button>
               ))}
+
               {currentCategoryIndex < categories.length - 1 && (
                 <button
                   onClick={() => handleCategoryChange(currentCategoryIndex + 1)}
@@ -154,13 +148,13 @@ export default function Gallery() {
           </div>
         </Reveal>
 
-        {/* Gallery Grid */}
+        {/* Masonry Gallery */}
         <Reveal delay={0.2}>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
             {images.map((image, index) => (
               <div
                 key={index}
-                className="relative overflow-hidden bg-gray-100 aspect-[4/3] cursor-pointer hover:opacity-90 transition-opacity"
+                className="break-inside-avoid relative overflow-hidden bg-gray-100 cursor-pointer hover:opacity-90 transition-opacity"
                 onClick={() => {
                   setLightboxIndex(index);
                   setLightboxOpen(true);
@@ -169,7 +163,7 @@ export default function Gallery() {
                 <img
                   src={image.src}
                   alt={image.alt}
-                  className="w-full h-full object-cover"
+                  className="w-full h-auto object-cover"
                   loading="lazy"
                 />
               </div>
