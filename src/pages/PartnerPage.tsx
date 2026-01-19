@@ -155,80 +155,38 @@ const PartnerPage: React.FC = () => {
                   </div>
 
                   <div className="md:flex-1 flex flex-col items-end gap-3">
-                    {/* Row with icons (left) and name (right) */}
+                    {/* Icons + Name row */}
                     <div className="w-full flex items-center justify-between gap-6">
                       <div className="flex gap-4 flex-wrap">
                         {hasSocialLinks && (
                           <>
                             {partner.instagramLink && (
-                              <a
-                                href={partner.instagramLink}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-gray-600 hover:text-[#E4405F] transition-colors"
-                                onClick={(e) => e.stopPropagation()}
-                                aria-label="Instagram"
-                              >
+                              <a href={partner.instagramLink} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-[#E4405F]" onClick={(e) => e.stopPropagation()}>
                                 <FaInstagram size={22} />
                               </a>
                             )}
                             {partner.linkedinLink && (
-                              <a
-                                href={partner.linkedinLink}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-gray-600 hover:text-[#0077B5] transition-colors"
-                                onClick={(e) => e.stopPropagation()}
-                                aria-label="LinkedIn"
-                              >
+                              <a href={partner.linkedinLink} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-[#0077B5]" onClick={(e) => e.stopPropagation()}>
                                 <FaLinkedin size={22} />
                               </a>
                             )}
                             {partner.facebookLink && (
-                              <a
-                                href={partner.facebookLink}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-gray-600 hover:text-[#1877F2] transition-colors"
-                                onClick={(e) => e.stopPropagation()}
-                                aria-label="Facebook"
-                              >
+                              <a href={partner.facebookLink} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-[#1877F2]" onClick={(e) => e.stopPropagation()}>
                                 <FaFacebook size={22} />
                               </a>
                             )}
                             {partner.twitterLink && (
-                              <a
-                                href={partner.twitterLink}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-gray-600 hover:text-[#1DA1F2] transition-colors"
-                                onClick={(e) => e.stopPropagation()}
-                                aria-label="Twitter"
-                              >
+                              <a href={partner.twitterLink} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-[#1DA1F2]" onClick={(e) => e.stopPropagation()}>
                                 <FaTwitter size={22} />
                               </a>
                             )}
                             {partner.youtubeLink && (
-                              <a
-                                href={partner.youtubeLink}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-gray-600 hover:text-[#FF0000] transition-colors"
-                                onClick={(e) => e.stopPropagation()}
-                                aria-label="YouTube"
-                              >
+                              <a href={partner.youtubeLink} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-[#FF0000]" onClick={(e) => e.stopPropagation()}>
                                 <FaYoutube size={22} />
                               </a>
                             )}
                             {partner.websiteLink && (
-                              <a
-                                href={partner.websiteLink}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-gray-600 hover:text-gray-900 transition-colors"
-                                onClick={(e) => e.stopPropagation()}
-                                aria-label="Website"
-                              >
+                              <a href={partner.websiteLink} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900" onClick={(e) => e.stopPropagation()}>
                                 <FaGlobe size={22} />
                               </a>
                             )}
@@ -241,9 +199,9 @@ const PartnerPage: React.FC = () => {
                       </h2>
                     </div>
 
-                    {/* Description below */}
+                    {/* Description LEFT aligned */}
                     {expandedId === partner.id && partner.description && (
-                      <div className="w-full md:max-w-[95%] text-right">
+                      <div className="w-full md:max-w-[95%] text-left">
                         <p className="text-sm md:text-base text-gray-600 leading-relaxed font-myfont whitespace-pre-line">
                           {partner.description}
                         </p>
