@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import client from '../contentfulClient';
 import {
   documentToReactComponents,
   Options,
@@ -8,8 +7,7 @@ import {
 import { BLOCKS, MARKS, Document } from '@contentful/rich-text-types';
 import LazyImage from './LazyImage';
 import Reveal from './Reveal';
-
-const DEFAULT_LOCALE = 'de';
+import { safeGetEntries, safeGetField, normalizeLocale } from '../utils/contentfulHelpers';
 
 const HeroSection = () => {
   const { i18n } = useTranslation();
@@ -23,23 +21,19 @@ const HeroSection = () => {
   useEffect(() => {
     const fetchHeroContent = async () => {
       setLoading(true);
-      const currentLocale = i18n.language?.substring(0, 2) || DEFAULT_LOCALE;
-
       try {
-        const entries = await client.getEntries({
-          content_type: 'teksti',
-          limit: 1,
-          locale: currentLocale,
-        });
+        const currentLocale = normalizeLocale(i18n.language);
+        const entries = await safeGetEntries('teksti', currentLocale, { limit: 1 });
 
-        if (entries.items.length > 0) {
-          const entry = entries.items[0].fields;
-          setHeading(entry.heroSectionHeading || '');
-          setSlogan(entry.slogani || '');
-          setDescription(entry.heroDescription || null);
+        if (entries.length > 0) {
+          const fields = entries[0].fields || {};
+          setHeading(safeGetField(fields, 'heroSectionHeading', ''));
+          setSlogan(safeGetField(fields, 'slogani', ''));
+          setDescription(safeGetField(fields, 'heroDescription', null));
 
-          if (entry.heroImage?.fields?.file?.url) {
-            setHeroImage(`https:${entry.heroImage.fields.file.url}`);
+          const heroImageRef = fields.heroImage;
+          if (heroImageRef?.fields?.file?.url) {
+            setHeroImage(`https:${heroImageRef.fields.file.url}`);
           }
         }
       } catch (error) {

@@ -1,15 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import client from '../contentfulClient';
 import Reveal from './Reveal';
-
-const DEFAULT_LOCALE = 'de';
+import { safeGetEntries, safeGetField, normalizeLocale } from '../utils/contentfulHelpers';
 
 const GroupsSection = () => {
   const { t, i18n } = useTranslation();
-  const currentLocale = i18n.language?.substring(0, 2) || DEFAULT_LOCALE;
-
   const [groupImages, setGroupImages] = useState<string[]>([]);
   const [sectionDescription, setSectionDescription] = useState<string>('');
   const [scheduleTime, setScheduleTime] = useState<string[]>([]);
@@ -18,27 +14,20 @@ const GroupsSection = () => {
   useEffect(() => {
     const fetchGroupTexts = async () => {
       try {
-        const defaultLocaleResponse = await client.getEntries({
-          content_type: 'teksti',
-          limit: 1,
-          locale: DEFAULT_LOCALE,
-        });
+        const currentLocale = normalizeLocale(i18n.language);
 
-        const localizedResponse = await client.getEntries({
-          content_type: 'teksti',
-          limit: 1,
-          locale: currentLocale,
-        });
+        const defaultEntries = await safeGetEntries('teksti', 'de', { limit: 1 });
+        const localizedEntries = await safeGetEntries('teksti', currentLocale, { limit: 1 });
 
-        if (defaultLocaleResponse.items.length > 0) {
-          const defaultFields = defaultLocaleResponse.items[0].fields;
-          setScheduleTime(defaultFields.groupsScheduleTime || []);
-          setScheduleLocation(defaultFields.groupsScheduleLocation || []);
+        if (defaultEntries.length > 0) {
+          const defaultFields = defaultEntries[0].fields || {};
+          setScheduleTime(safeGetField(defaultFields, 'groupsScheduleTime', []));
+          setScheduleLocation(safeGetField(defaultFields, 'groupsScheduleLocation', []));
         }
 
-        if (localizedResponse.items.length > 0) {
-          const localizedFields = localizedResponse.items[0].fields;
-          setSectionDescription(localizedFields.groupsSectionDescription || '');
+        if (localizedEntries.length > 0) {
+          const localizedFields = localizedEntries[0].fields || {};
+          setSectionDescription(safeGetField(localizedFields, 'groupsSectionDescription', ''));
         }
       } catch (error) {
         console.error('Error fetching group texts:', error);
@@ -46,23 +35,20 @@ const GroupsSection = () => {
     };
 
     fetchGroupTexts();
-  }, [currentLocale]);
+  }, [i18n.language]);
 
   useEffect(() => {
     const fetchGroupImages = async () => {
       try {
-        const response = await client.getEntries({
-          content_type: 'imazhetEwebit',
-          limit: 1,
-          locale: DEFAULT_LOCALE,
-        });
+        const entries = await safeGetEntries('imazhetEwebit', 'de', { limit: 1 });
 
-        if (response.items.length > 0) {
-          const entry = response.items[0];
-          const images = entry.fields.grups || [];
+        if (entries.length > 0) {
+          const fields = entries[0].fields || {};
+          const images = safeGetField(fields, 'grups', []);
           const imageUrls = images
             .slice(0, 3)
-            .map((img: any) => `https:${img.fields.file.url}`);
+            .map((img: any) => img?.fields?.file?.url ? `https:${img.fields.file.url}` : '')
+            .filter(Boolean);
           setGroupImages(imageUrls);
         }
       } catch (error) {

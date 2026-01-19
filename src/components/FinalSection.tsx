@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Plus, Minus } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
-import client from '../contentfulClient';
 import { useTranslation } from 'react-i18next';
 import Reveal from './Reveal';
-
-const DEFAULT_LOCALE = 'de';
+import { safeGetEntries, safeGetField, normalizeLocale } from '../utils/contentfulHelpers';
 
 interface FaqItem {
   title: string;
@@ -27,33 +25,27 @@ const FinalSection = () => {
   useEffect(() => {
     const fetchContent = async () => {
       setLoading(true);
-      const currentLocale = i18n.language?.substring(0, 2) || DEFAULT_LOCALE;
-
       try {
-        const entries = await client.getEntries({
-          content_type: 'faqs',
-          limit: 1,
-          locale: currentLocale,
-        });
+        const currentLocale = normalizeLocale(i18n.language);
+        const entries = await safeGetEntries('faqs', currentLocale, { limit: 1 });
 
-        if (entries.items.length > 0) {
-          const data = entries.items[0].fields;
-          console.log('Fetched data:', data);
+        if (entries.length > 0) {
+          const fields = entries[0].fields || {};
 
-          setSectionTitle(data.sectionTitle || '');
-          setSectionDescription(data.sectionDescription || '');
+          setSectionTitle(safeGetField(fields, 'sectionTitle', ''));
+          setSectionDescription(safeGetField(fields, 'sectionDescription', ''));
 
-          const fetchedFaqs: FaqItem[] = (data.faqList || []).map((faq: any) => ({
+          const faqList = safeGetField(fields, 'faqList', []);
+          const fetchedFaqs: FaqItem[] = faqList.map((faq: any) => ({
             title: faq?.fields?.question || 'Missing question',
             content: faq?.fields?.answer || 'Missing answer',
           }));
 
           setFaqItems(fetchedFaqs);
-        } else {
-          console.warn('No faqs entry found.');
         }
       } catch (error) {
         console.error('Error fetching FinalSection:', error);
+        setFaqItems([]);
       } finally {
         setLoading(false);
       }

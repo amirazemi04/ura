@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import client from '../contentfulClient';
 import Reveal from '../components/Reveal';
+import { safeGetEntries, safeGetAssetFromReference, safeGetField, normalizeLocale } from '../utils/contentfulHelpers';
 
 interface NewsItem {
   id: string;
@@ -13,13 +13,12 @@ interface NewsItem {
   date: string;
 }
 
-const DEFAULT_LOCALE = 'de';
-
 const BlogPage = () => {
   const { i18n } = useTranslation();
   const itemsPerPage = 6;
   const [newsItems, setNewsItems] = useState<NewsItem[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
   const reservationRef = useRef<HTMLDivElement | null>(null);
   const hasChangedPageRef = useRef(false);
 
@@ -31,34 +30,22 @@ const BlogPage = () => {
 
   useEffect(() => {
     const fetchNews = async () => {
+      setLoading(true);
       try {
-        const currentLocale = i18n.language || DEFAULT_LOCALE;
-
-        const response = await client.getEntries({
-          content_type: 'ura',
-          locale: currentLocale,
-        });
+        const currentLocale = normalizeLocale(i18n.language);
+        const entries = await safeGetEntries('ura', currentLocale);
 
         const items = await Promise.all(
-          response.items.map(async (item: any) => {
-            let imageUrl = '';
-            const imageRef = item.fields.image?.sys?.id;
-
-            if (imageRef) {
-              try {
-                const asset = await client.getAsset(imageRef, { locale: DEFAULT_LOCALE });
-                imageUrl = asset?.fields?.file?.url ? `https:${asset.fields.file.url}` : '';
-              } catch (assetError) {
-                console.error('Failed to fetch image asset:', assetError);
-              }
-            }
+          entries.map(async (item: any) => {
+            const fields = item.fields || {};
+            const imageUrl = await safeGetAssetFromReference(fields.image);
 
             return {
               id: item.sys.id,
-              title: item.fields.title || 'No title',
+              title: safeGetField(fields, 'title', 'No title'),
               image: imageUrl,
-              description: item.fields.description || '',
-              author: item.fields.author || 'Unknown',
+              description: safeGetField(fields, 'description', ''),
+              author: safeGetField(fields, 'author', 'Unknown'),
               date: new Date(item.sys.createdAt).toLocaleDateString(
                 currentLocale === 'sq' ? 'sq-AL' : 'de-DE',
                 { year: 'numeric', month: 'long', day: 'numeric' }
@@ -69,8 +56,10 @@ const BlogPage = () => {
 
         setNewsItems(items);
       } catch (error) {
-        console.error('Error fetching data from Contentful:', error);
+        console.error('Error fetching news:', error);
         setNewsItems([]);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -105,7 +94,11 @@ const BlogPage = () => {
           </div>
         </Reveal>
 
-        {newsItems.length === 0 ? (
+        {loading ? (
+          <div className="text-center text-gray-500">
+            {i18n.language === 'sq' ? 'Duke u ngarkuar...' : 'Laden...'}
+          </div>
+        ) : newsItems.length === 0 ? (
           <div className="text-center text-gray-500">
             {i18n.language === 'sq' ? 'Asnjë lajm i disponueshëm' : 'Keine Nachrichten verfügbar'}
           </div>

@@ -1,10 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import client from '../contentfulClient';
 import Reveal from './Reveal';
-
-const DEFAULT_LOCALE = 'de';
+import { safeGetEntries, safeGetField } from '../utils/contentfulHelpers';
 const ROTATION_INTERVAL = 3000; // ms
 const SLIDE_DURATION = 600; // ms
 
@@ -34,17 +32,15 @@ const SponsorsSection: React.FC = () => {
   useEffect(() => {
     const fetchSponsors = async () => {
       try {
-        const entries = await client.getEntries({
-          content_type: 'sponsors',
-          limit: 1,
-          locale: DEFAULT_LOCALE,
-        });
+        const entries = await safeGetEntries('sponsors', 'de', { limit: 1 });
 
-        if (entries.items.length > 0) {
-          const sponsors = entries.items[0].fields.sponsorsImages || [];
-          const images = sponsors.map((asset: any) => `https:${asset.fields.file.url}`);
+        if (entries.length > 0) {
+          const fields = entries[0].fields || {};
+          const sponsors = safeGetField(fields, 'sponsorsImages', []);
+          const images = sponsors
+            .map((asset: any) => asset?.fields?.file?.url ? `https:${asset.fields.file.url}` : '')
+            .filter(Boolean);
           if (images.length > 0) {
-            // Duplicate images for seamless scrolling
             setSponsorImages([...images, ...images]);
           }
         }

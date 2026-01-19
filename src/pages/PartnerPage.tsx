@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Helmet } from "react-helmet-async";
 import { Link } from 'react-router-dom';
 import { FaInstagram, FaLinkedin, FaFacebook, FaTwitter, FaYoutube, FaGlobe } from 'react-icons/fa';
-import contentfulClient from '../contentfulClient';
+import { safeGetEntries, safeGetField, normalizeLocale } from '../utils/contentfulHelpers';
 
 interface Partner {
   id: string;
@@ -27,35 +27,39 @@ const PartnerPage: React.FC = () => {
 
   useEffect(() => {
     const fetchPartners = async () => {
-      try {
-        setLoading(true);
-        setError(null);
+      setLoading(true);
+      setError(null);
 
-        const response = await contentfulClient.getEntries({
-          content_type: 'partner',
+      try {
+        const currentLocale = normalizeLocale(i18n.language);
+        const entries = await safeGetEntries('partner', currentLocale, {
           order: ['fields.order', 'sys.createdAt'],
           include: 2,
         });
 
-        const partnersData: Partner[] = response.items.map((item: any) => ({
-          id: item.sys.id,
-          name: item.fields.name || '',
-          logo: item.fields.logo?.fields?.file?.url
-            ? `https:${item.fields.logo.fields.file.url}`
-            : '',
-          description: item.fields.description || '',
-          instagramLink: item.fields.instagramLink || '',
-          linkedinLink: item.fields.linkedinLink || '',
-          facebookLink: item.fields.facebookLink || '',
-          twitterLink: item.fields.twitterLink || '',
-          youtubeLink: item.fields.youtubeLink || '',
-          websiteLink: item.fields.websiteLink || '',
-        }));
+        const partnersData: Partner[] = entries.map((item: any) => {
+          const fields = item.fields || {};
+          return {
+            id: item.sys.id,
+            name: safeGetField(fields, 'name', ''),
+            logo: fields.logo?.fields?.file?.url
+              ? `https:${fields.logo.fields.file.url}`
+              : '',
+            description: safeGetField(fields, 'description', ''),
+            instagramLink: safeGetField(fields, 'instagramLink', ''),
+            linkedinLink: safeGetField(fields, 'linkedinLink', ''),
+            facebookLink: safeGetField(fields, 'facebookLink', ''),
+            twitterLink: safeGetField(fields, 'twitterLink', ''),
+            youtubeLink: safeGetField(fields, 'youtubeLink', ''),
+            websiteLink: safeGetField(fields, 'websiteLink', ''),
+          };
+        });
 
         setPartners(partnersData);
       } catch (err) {
         console.error('Error fetching partners:', err);
         setError('Failed to load partners. Please try again later.');
+        setPartners([]);
       } finally {
         setLoading(false);
       }

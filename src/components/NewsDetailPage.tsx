@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import client from '../contentfulClient';
 import { Helmet } from 'react-helmet-async';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import { safeGetEntry, safeGetAssetFromReference, safeGetField, normalizeLocale } from '../utils/contentfulHelpers';
 
 interface NewsItem {
   title: string;
@@ -17,9 +17,6 @@ interface NewsItem {
   secondImage: { fields: { file: { url: string } } } | null;
 }
 
-const DEFAULT_LOCALE = 'de';
-
-// Helper to optimize Contentful images
 const getOptimizedImage = (url: string, width: number, format = 'webp', quality = 80) => {
   return `${url}?w=${width}&fm=${format}&q=${quality}`;
 };
@@ -31,41 +28,26 @@ const NewsDetailPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!i18n.isInitialized) return;
-
     const fetchData = async () => {
-      setLoading(true);
-      const currentLocale = i18n.language || DEFAULT_LOCALE;
+      if (!id) {
+        setLoading(false);
+        return;
+      }
 
+      setLoading(true);
       try {
-        let entry;
-        try {
-          entry = await client.getEntry(id!, { locale: currentLocale });
-        } catch {
-          entry = await client.getEntry(id!, { locale: DEFAULT_LOCALE });
-        }
+        const currentLocale = normalizeLocale(i18n.language);
+        const entry = await safeGetEntry(id, currentLocale);
 
         if (!entry) {
           setNews(null);
           return;
         }
 
-        const fields = entry.fields;
-
-        const getAssetUrl = async (asset: any) => {
-          if (!asset?.sys?.id) return '';
-          try {
-            const assetData = await client.getAsset(asset.sys.id, { locale: DEFAULT_LOCALE });
-            return assetData?.fields?.file?.url ? `https:${assetData.fields.file.url}` : '';
-          } catch (error) {
-            console.error('Failed to fetch asset:', asset.sys.id, error);
-            return '';
-          }
-        };
-
-        const imageUrl = await getAssetUrl(fields.image);
-        const thumbnailUrl = await getAssetUrl(fields.thumbnail);
-        const secondImageUrl = await getAssetUrl(fields.secondImage);
+        const fields = entry.fields || {};
+        const imageUrl = await safeGetAssetFromReference(fields.image);
+        const thumbnailUrl = await safeGetAssetFromReference(fields.thumbnail);
+        const secondImageUrl = await safeGetAssetFromReference(fields.secondImage);
 
         const formattedDate = new Date(entry.sys.createdAt).toLocaleDateString(
           currentLocale === 'sq' ? 'sq-AL' : 'de-DE',
@@ -73,10 +55,10 @@ const NewsDetailPage = () => {
         );
 
         setNews({
-          title: fields.title || 'No title',
-          longDescription: fields.longDescription || '',
-          imageWithText: fields.imageWithText || '',
-          author: fields.author || 'Unknown',
+          title: safeGetField(fields, 'title', 'No title'),
+          longDescription: safeGetField(fields, 'longDescription', ''),
+          imageWithText: safeGetField(fields, 'imageWithText', ''),
+          author: safeGetField(fields, 'author', 'Unknown'),
           date: formattedDate,
           image: imageUrl ? { fields: { file: { url: imageUrl } } } : null,
           thumbnail: thumbnailUrl ? { fields: { file: { url: thumbnailUrl } } } : null,
@@ -91,7 +73,7 @@ const NewsDetailPage = () => {
     };
 
     fetchData();
-  }, [id, i18n.language, i18n.isInitialized]);
+  }, [id, i18n.language]);
 
   if (loading) return <div className="text-center mt-20">Loading...</div>;
   if (!news)

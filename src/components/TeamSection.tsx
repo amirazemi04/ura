@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
-import client from '../contentfulClient';
 import Reveal from './Reveal';
+import { safeGetEntries, safeGetAssetFromReference, safeGetField, normalizeLocale } from '../utils/contentfulHelpers';
 
 interface TeamMember {
   id: string;
@@ -13,37 +13,29 @@ interface TeamMember {
   image: string;
 }
 
-const DEFAULT_LOCALE = 'de';
-
 const TeamSection = () => {
   const { i18n } = useTranslation();
   const [members, setMembers] = useState<TeamMember[]>([]);
   const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchMembers = async () => {
+      setLoading(true);
       try {
-        const currentLocale = i18n.language || DEFAULT_LOCALE;
-        const response = await client.getEntries({
-          content_type: 'teamMember',
-          locale: currentLocale,
-        });
+        const currentLocale = normalizeLocale(i18n.language);
+        const entries = await safeGetEntries('teamMember', currentLocale);
 
         const data = await Promise.all(
-          response.items.map(async (item: any) => {
-            const imageId = item.fields.image?.sys?.id;
-            let imageUrl = '';
-
-            if (imageId) {
-              const asset = await client.getAsset(imageId, { locale: DEFAULT_LOCALE });
-              imageUrl = asset?.fields?.file?.url ? `https:${asset.fields.file.url}` : '';
-            }
+          entries.map(async (item: any) => {
+            const fields = item.fields || {};
+            const imageUrl = await safeGetAssetFromReference(fields.image);
 
             return {
               id: item.sys.id,
-              name: item.fields.name || 'Emër pa emër',
-              role: item.fields.role || '',
-              description: item.fields.description || '',
+              name: safeGetField(fields, 'name', 'Emër pa emër'),
+              role: safeGetField(fields, 'role', ''),
+              description: safeGetField(fields, 'description', ''),
               image: imageUrl,
             };
           })
@@ -51,7 +43,10 @@ const TeamSection = () => {
 
         setMembers(data);
       } catch (error) {
-        console.error('Gabim në tërheqjen e të dhënave nga Contentful:', error);
+        console.error('Error fetching team members:', error);
+        setMembers([]);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -61,6 +56,16 @@ const TeamSection = () => {
   const handleSelect = (member: TeamMember) => {
     setSelectedMember((prev) => (prev?.id === member.id ? null : member));
   };
+
+  if (loading) {
+    return (
+      <section className="mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center py-12">
+          <p className="text-gray-500">{i18n.language === 'sq' ? 'Duke u ngarkuar...' : 'Laden...'}</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="mx-auto px-4 sm:px-6 lg:px-8">
@@ -79,6 +84,11 @@ const TeamSection = () => {
 
       {/* Team grid */}
       <Reveal delay={0.2}>
+        {members.length === 0 ? (
+          <div className="text-center text-gray-500 py-12">
+            {i18n.language === 'sq' ? 'Asnjë anëtar ekipi i disponueshëm' : 'Keine Teammitglieder verfügbar'}
+          </div>
+        ) : (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-12">
           {members.map((member) => {
           const isSelected = selectedMember?.id === member.id;
@@ -122,6 +132,7 @@ const TeamSection = () => {
           );
         })}
         </div>
+        )}
       </Reveal>
     </section>
   );

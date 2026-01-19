@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import client from '../contentfulClient';
 import Lightbox from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
 import Reveal from './Reveal';
 import { ChevronRight } from 'lucide-react';
-
-const DEFAULT_LOCALE = 'de';
+import { safeGetEntries, safeGetEntry, safeGetAsset, safeGetField, normalizeLocale } from '../utils/contentfulHelpers';
 
 interface GalleryImage {
   src: string;
@@ -29,41 +27,38 @@ export default function Gallery() {
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
   useEffect(() => {
-    if (!i18n.isInitialized) return;
-
     const fetchGallery = async () => {
       setLoading(true);
       try {
-        const locale = i18n.language || DEFAULT_LOCALE;
-        const localizedEntries = await client.getEntries({
-          content_type: 'galleryBlock',
-          locale,
-        });
+        const locale = normalizeLocale(i18n.language);
+        const localizedEntries = await safeGetEntries('galleryBlock', locale);
 
         const combinedBlocks: GalleryBlock[] = await Promise.all(
-          localizedEntries.items.map(async (item: any) => {
+          localizedEntries.map(async (item: any) => {
             try {
               const id = item.sys.id;
-              const category = item.fields.category?.trim() || t('gallery.uncategorized');
-              const defaultEntry = await client.getEntry(id, { locale: DEFAULT_LOCALE });
-              const fields = defaultEntry.fields;
+              const fields = item.fields || {};
+              const category = safeGetField(fields, 'category', t('gallery.uncategorized')).trim();
+
+              const defaultEntry = await safeGetEntry(id, 'de');
+              const defaultFields = defaultEntry?.fields || {};
 
               const assets = [
-                fields.img1, fields.img2, fields.img3, fields.img4, fields.img5,
-                fields.img6, fields.img7, fields.img8, fields.img9, fields.img10,
-                fields.img11, fields.img12, fields.img13, fields.img14, fields.img15,
-                fields.img16, fields.img17, fields.img18, fields.img19, fields.img20,
+                defaultFields.img1, defaultFields.img2, defaultFields.img3, defaultFields.img4, defaultFields.img5,
+                defaultFields.img6, defaultFields.img7, defaultFields.img8, defaultFields.img9, defaultFields.img10,
+                defaultFields.img11, defaultFields.img12, defaultFields.img13, defaultFields.img14, defaultFields.img15,
+                defaultFields.img16, defaultFields.img17, defaultFields.img18, defaultFields.img19, defaultFields.img20,
               ];
 
               const images: GalleryImage[] = await Promise.all(
                 assets.map(async (asset: any, index: number) => {
                   if (!asset?.sys?.id) return null;
                   try {
-                    const assetData = await client.getAsset(asset.sys.id, { locale: DEFAULT_LOCALE });
-                    if (!assetData?.fields?.file?.url) return null;
+                    const url = await safeGetAsset(asset.sys.id);
+                    if (!url) return null;
                     return {
-                      src: `https:${assetData.fields.file.url}?w=1600&fm=webp`,
-                      alt: assetData.fields.title || t('gallery.imageAlt', { number: index + 1 }),
+                      src: `${url}?w=1600&fm=webp`,
+                      alt: t('gallery.imageAlt', { number: index + 1 }),
                     };
                   } catch {
                     return null;
@@ -89,13 +84,15 @@ export default function Gallery() {
         setCategories(catList);
         setActiveFilter(catList[0] || '');
         setImagesByCat(tmp);
+      } catch (error) {
+        console.error('Error fetching gallery:', error);
       } finally {
         setLoading(false);
       }
     };
 
     fetchGallery();
-  }, [i18n.language, t, i18n.isInitialized]);
+  }, [i18n.language, t]);
 
   const currentCategoryIndex = categories.indexOf(activeFilter);
   const images = imagesByCat[activeFilter] || [];

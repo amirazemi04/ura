@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import client from '../contentfulClient';
 import Reveal from './Reveal';
+import { safeGetEntries, safeGetField, normalizeLocale } from '../utils/contentfulHelpers';
 
 type Tab = 'mission' | 'values' | 'team';
-
-const DEFAULT_LOCALE = 'de';
 
 const MissionValuesTeam = () => {
   const { i18n } = useTranslation();
@@ -26,22 +24,17 @@ const MissionValuesTeam = () => {
   useEffect(() => {
     const fetchContent = async () => {
       setLoading(true);
-      const currentLocale = i18n.language?.substring(0, 2) || DEFAULT_LOCALE;
-
       try {
-        const entries = await client.getEntries({
-          content_type: 'teksti',
-          limit: 1,
-          locale: currentLocale,
-        });
+        const currentLocale = normalizeLocale(i18n.language);
+        const entries = await safeGetEntries('teksti', currentLocale, { limit: 1 });
 
-        if (entries.items.length > 0) {
-          const fields = entries.items[0].fields;
+        if (entries.length > 0) {
+          const fields = entries[0].fields || {};
 
           setContents({
-            mission: fields.missionContent || '',
-            values: fields.valuesContent || '',
-            team: fields.teamContent || '',
+            mission: safeGetField(fields, 'missionContent', ''),
+            values: safeGetField(fields, 'valuesContent', ''),
+            team: safeGetField(fields, 'teamContent', ''),
           });
         }
       } catch (error) {
