@@ -146,6 +146,10 @@ i18n
             uncategorized: 'Ohne Kategorie',
             imageAlt: 'Bild {number}',
           },
+          partner: {
+            title: 'Unsere Partner',
+            description: 'Wir danken unseren strategischen Partnern, die es uns ermöglichen, kulturelle Projekte auf höchstem Niveau zu fördern, Kunst und albanische Traditionen zu präsentieren. Die Zusammenarbeit mit strategischen Partnern ist unerlässlich und qualitativ hochwertig sowie Investitionen in die künstlerische Entwicklung und die Verbesserung der kulturellen Identität mit Würde.',
+          },
         },
       },
       sq: {
@@ -278,6 +282,10 @@ i18n
             noImages: 'Nuk ka imazhe për "{category}"',
             uncategorized: 'Pa kategori',
             imageAlt: 'Imazh {number}',
+          },
+          partner: {
+            title: 'Partnerët tanë',
+            description: 'Falë partnerëve tanë të besueshmë, jemi në gjendje të zhvillojmë projekte që promovojnë kulturën, artin dhe traditën shqiptare në nivele kombëtare dhe ndërkombëtare. Bashkëpunimi me partnerë strategjikë na mundëson të ruajmë cilësinë e paraqitjes, të investojmë në zhvillimin artistik dhe të përfaqësojmë identitetin tonë kulturor me dinjitet.',
           },
         },
       },
