@@ -1,4 +1,4 @@
-import { motion, type Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 
 interface RevealProps {
@@ -6,20 +6,17 @@ interface RevealProps {
   delay?: number;
   duration?: number;
   direction?: "up" | "down" | "left" | "right";
+  className?: string;
 }
-
-const variants: Variants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0 },
-};
 
 export default function Reveal({
   children,
   delay = 0,
   duration = 0.6,
   direction = "up",
+  className = "",
 }: RevealProps) {
-  const getAxis = () => {
+  const getOffset = () => {
     switch (direction) {
       case "down":
         return { y: -40 };
@@ -34,7 +31,8 @@ export default function Reveal({
 
   return (
     <motion.div
-      initial={{ opacity: 0, ...getAxis() }}
+      className={className}
+      initial={{ opacity: 0, ...getOffset() }}
       whileInView={{ opacity: 1, x: 0, y: 0 }}
       transition={{ delay, duration, ease: "easeOut" }}
       viewport={{ once: true, amount: 0.2 }}
