@@ -44,13 +44,13 @@ const Header = () => {
 
   return (
     <header className="bg-[#a51e28] text-white sticky top-0 z-50">
-      <div className="container mx-auto px-6">
-        <nav className="flex items-center justify-between py-5 md:py-8 relative">
+      <div className="container mx-auto px-4 sm:px-6">
+        <nav className="flex items-center justify-between py-4 sm:py-5 md:py-8 relative">
           <Link to="/" className="md:mb-0 z-50 md:z-auto">
-            <img src={Logo} alt="URA Logo" className="h-16 sm:h-20 w-auto mx-auto md:mx-0" />
+            <img src={Logo} alt="URA Logo" className="h-14 sm:h-16 md:h-20 w-auto" />
           </Link>
 
-          <div className="hidden lg:flex space-x-10 justify-center w-full relative items-center">
+          <div className="hidden lg:flex space-x-6 xl:space-x-10 justify-center w-full relative items-center">
             {menuItems.map((item, index) => {
               const isActive = location.pathname === item.path;
               return (
@@ -125,16 +125,16 @@ const Header = () => {
 
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden p-2 z-50"
+            className="lg:hidden p-1 sm:p-2 z-50"
             aria-label="Menu toggle"
           >
-            {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            {isMenuOpen ? <X size={24} className="sm:w-7 sm:h-7" /> : <Menu size={24} className="sm:w-7 sm:h-7" />}
           </button>
         </nav>
 
         <div
           className={`lg:hidden absolute top-0 left-0 w-full bg-[#a51e28] transition-all duration-300 overflow-hidden ${
-            isMenuOpen ? 'max-h-screen py-24 px-6' : 'max-h-0 py-0 px-0'
+            isMenuOpen ? 'max-h-screen py-20 sm:py-24 px-4 sm:px-6' : 'max-h-0 py-0 px-0'
           }`}
         >
           <div className="flex flex-col space-y-4">
@@ -144,7 +144,7 @@ const Header = () => {
                 <Link
                   key={index}
                   to={item.path}
-                  className={`block py-3 px-4 rounded text-lg transition duration-200 text-center ${
+                  className={`block py-2 sm:py-3 px-3 sm:px-4 rounded text-base sm:text-lg transition duration-200 text-center ${
                     isActive ? 'bg-red-900' : 'hover:bg-red-800'
                   }`}
                   onClick={() => setIsMenuOpen(false)}
@@ -158,7 +158,7 @@ const Header = () => {
             <div className="text-center pt-2">
               <button
                 onClick={() => setIsJoinOpenMobile(!isJoinOpenMobile)}
-                className="bg-white text-[#a51e28] font-semibold py-2 px-4 rounded hover:bg-red-100 transition duration-300 flex items-center justify-center gap-2 w-full"
+                className="bg-white text-[#a51e28] font-semibold py-2 px-3 sm:px-4 rounded hover:bg-red-100 transition duration-300 flex items-center justify-center gap-2 w-full text-base sm:text-lg"
               >
                 {t('header.join')}
                 <ChevronDown size={16} />
@@ -190,13 +190,13 @@ const Header = () => {
             </div>
 
             {/* Language switch mobile */}
-            <div className="flex justify-center gap-4 pt-4">
+            <div className="flex justify-center gap-3 sm:gap-4 pt-4">
               <button
                 onClick={() => {
                   changeLanguage('de');
                   setIsMenuOpen(false);
                 }}
-                className="bg-white text-[#a51e28] px-3 py-1 rounded hover:bg-red-100 text-sm"
+                className="bg-white text-[#a51e28] px-2 sm:px-3 py-1.5 sm:py-2 rounded hover:bg-red-100 text-xs sm:text-sm"
               >
                 🇨🇭 Deutsch
               </button>
@@ -205,7 +205,7 @@ const Header = () => {
                   changeLanguage('sq');
                   setIsMenuOpen(false);
                 }}
-                className="bg-white text-[#a51e28] px-3 py-1 rounded hover:bg-red-100 text-sm"
+                className="bg-white text-[#a51e28] px-2 sm:px-3 py-1.5 sm:py-2 rounded hover:bg-red-100 text-xs sm:text-sm"
               >
                 🇦🇱 Shqip
               </button>
