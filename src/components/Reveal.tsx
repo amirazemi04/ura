@@ -33,15 +33,15 @@ const Reveal = ({
   const getDirectionOffset = () => {
     switch (direction) {
       case 'up':
-        return { x: 0, y: 20 };
+        return { x: 0, y: 50 };
       case 'down':
-        return { x: 0, y: -20 };
+        return { x: 0, y: -50 };
       case 'left':
-        return { x: 20, y: 0 };
+        return { x: 50, y: 0 };
       case 'right':
-        return { x: -20, y: 0 };
+        return { x: -50, y: 0 };
       default:
-        return { x: 0, y: 20 };
+        return { x: 0, y: 50 };
     }
   };
 
@@ -73,7 +73,7 @@ const Reveal = ({
     <motion.div
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.1 }}
+      viewport={{ once: true, amount: 0.05, margin: "0px 0px -100px 0px" }}
       variants={variants}
       className={className}
     >
