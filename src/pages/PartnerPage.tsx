@@ -123,71 +123,75 @@ const PartnerPage: React.FC = () => {
         {t('partner.description')}
       </p>
 
-      {partners.length === 0 ? (
-        <div className="text-center py-12">
-          <p className="text-gray-600 font-myfont">No partners available at the moment.</p>
-        </div>
-      ) : (
-        <div className="space-y-4 mt-16">
-          {partners.map((partner) => (
-            <div key={partner.id} className="border-b border-gray-300 pb-4">
-              <div
-                onClick={() => togglePartner(partner.id)}
-                className="cursor-pointer hover:opacity-80 transition-opacity py-4"
-              >
-                {/* Name row */}
-                <div className="flex justify-end">
-                  <h2 className="text-3xl md:text-5xl font-thin font-myfont text-right">
-                    {partner.name}
-                  </h2>
+      <div className="space-y-6 mt-16">
+        {partners.map((partner) => (
+          <div key={partner.id} className="border-b border-gray-300 pb-6">
+            <div
+              onClick={() => togglePartner(partner.id)}
+              className="cursor-pointer hover:opacity-80 transition-opacity"
+            >
+              {/* Top row: Logo (left) + Name (right) */}
+              <div className="flex items-center justify-between gap-6">
+                <div className="flex-shrink-0">
+                  {partner.logo && (
+                    <img
+                      src={partner.logo}
+                      alt={partner.name}
+                      className="w-24 h-24 md:w-32 md:h-32 object-contain grayscale"
+                    />
+                  )}
                 </div>
 
-                {/* Description + Icons (only when expanded) */}
-                {expandedId === partner.id && partner.description && (
-                  <div className="mt-4 flex items-start gap-6 max-w-3xl ml-auto text-left">
-                    <div className="flex gap-3 pt-1">
-                      {partner.instagramLink && (
-                        <a href={partner.instagramLink} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-gray-600 hover:text-[#E4405F]">
-                          <FaInstagram size={20} />
-                        </a>
-                      )}
-                      {partner.linkedinLink && (
-                        <a href={partner.linkedinLink} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-gray-600 hover:text-[#0077B5]">
-                          <FaLinkedin size={20} />
-                        </a>
-                      )}
-                      {partner.facebookLink && (
-                        <a href={partner.facebookLink} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-gray-600 hover:text-[#1877F2]">
-                          <FaFacebook size={20} />
-                        </a>
-                      )}
-                      {partner.twitterLink && (
-                        <a href={partner.twitterLink} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-gray-600 hover:text-[#1DA1F2]">
-                          <FaTwitter size={20} />
-                        </a>
-                      )}
-                      {partner.youtubeLink && (
-                        <a href={partner.youtubeLink} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-gray-600 hover:text-[#FF0000]">
-                          <FaYoutube size={20} />
-                        </a>
-                      )}
-                      {partner.websiteLink && (
-                        <a href={partner.websiteLink} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-gray-600 hover:text-gray-900">
-                          <FaGlobe size={20} />
-                        </a>
-                      )}
-                    </div>
-
-                    <p className="text-sm md:text-base text-gray-600 leading-relaxed font-myfont whitespace-pre-line">
-                      {partner.description}
-                    </p>
-                  </div>
-                )}
+                <h2 className="text-3xl md:text-5xl font-thin font-myfont text-right flex-1">
+                  {partner.name}
+                </h2>
               </div>
+
+              {/* Description + Icons */}
+              {expandedId === partner.id && partner.description && (
+                <div className="mt-4 flex items-start gap-6 max-w-3xl ml-auto text-left">
+                  <div className="flex gap-3 pt-1">
+                    {partner.instagramLink && (
+                      <a href={partner.instagramLink} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-gray-600 hover:text-[#E4405F]">
+                        <FaInstagram size={20} />
+                      </a>
+                    )}
+                    {partner.linkedinLink && (
+                      <a href={partner.linkedinLink} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-gray-600 hover:text-[#0077B5]">
+                        <FaLinkedin size={20} />
+                      </a>
+                    )}
+                    {partner.facebookLink && (
+                      <a href={partner.facebookLink} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-gray-600 hover:text-[#1877F2]">
+                        <FaFacebook size={20} />
+                      </a>
+                    )}
+                    {partner.twitterLink && (
+                      <a href={partner.twitterLink} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-gray-600 hover:text-[#1DA1F2]">
+                        <FaTwitter size={20} />
+                      </a>
+                    )}
+                    {partner.youtubeLink && (
+                      <a href={partner.youtubeLink} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-gray-600 hover:text-[#FF0000]">
+                        <FaYoutube size={20} />
+                      </a>
+                    )}
+                    {partner.websiteLink && (
+                      <a href={partner.websiteLink} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-gray-600 hover:text-gray-900">
+                        <FaGlobe size={20} />
+                      </a>
+                    )}
+                  </div>
+
+                  <p className="text-sm md:text-base text-gray-600 leading-relaxed font-myfont whitespace-pre-line">
+                    {partner.description}
+                  </p>
+                </div>
+              )}
             </div>
-          ))}
-        </div>
-      )}
+          </div>
+        ))}
+      </div>
     </section>
   );
 };
