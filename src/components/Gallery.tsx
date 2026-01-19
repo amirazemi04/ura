@@ -139,69 +139,48 @@ export default function Gallery() {
           </div>
         </Reveal>
 
-        <Reveal delay={0.15}>
-  <div className="grid grid-cols-1 gap-3">
+        <Reveal delay={0.2}>
+  <div className="grid grid-cols-4 auto-rows-[140px] gap-3">
 
-    {/* ROW 1 */}
-    <div className="grid grid-cols-12 gap-3">
-      {images[0] && (
+    {images.map((image, index) => {
+      let span = '';
+
+      // ROW 1
+      if (index === 0) span = 'row-span-3';              // Left tall
+      if (index === 1) span = 'col-span-2 row-span-4';   // Middle BIG 2x2+
+      if (index === 2) span = 'row-span-2';              // Right top
+      if (index === 3) span = 'row-span-2';              // Right bottom
+
+      // ROW 2
+      if (index === 4) span = 'row-span-2';              // Left shorter than first
+      if (index === 5) span = 'col-span-2 row-span-2';   // Wide but not tall
+      if (index === 6) span = 'row-span-1';
+      if (index === 7) span = 'row-span-1';
+
+      // ROW 3 (optional continuation)
+      if (index === 8) span = 'row-span-3';
+      if (index === 9) span = 'col-span-2 row-span-4';
+      if (index === 10) span = 'row-span-2';
+      if (index === 11) span = 'row-span-2';
+
+      return (
         <div
-          className="col-span-12 sm:col-span-4 aspect-[3/4] overflow-hidden cursor-pointer"
-          onClick={() => { setLightboxIndex(0); setLightboxOpen(true); }}
+          key={index}
+          onClick={() => {
+            setLightboxIndex(index);
+            setLightboxOpen(true);
+          }}
+          className={`relative overflow-hidden cursor-pointer ${span}`}
         >
-          <img src={images[0].src} alt={images[0].alt} className="w-full h-full object-cover" />
+          <img
+            src={image.src}
+            alt={image.alt}
+            className="w-full h-full object-cover"
+            loading="lazy"
+          />
         </div>
-      )}
-
-      {images[1] && (
-        <div
-          className="col-span-12 sm:col-span-6 aspect-[16/9] overflow-hidden cursor-pointer"
-          onClick={() => { setLightboxIndex(1); setLightboxOpen(true); }}
-        >
-          <img src={images[1].src} alt={images[1].alt} className="w-full h-full object-cover" />
-        </div>
-      )}
-
-      <div className="col-span-12 sm:col-span-2 grid grid-rows-2 gap-3">
-        {images[2] && (
-          <div
-            className="aspect-square overflow-hidden cursor-pointer"
-            onClick={() => { setLightboxIndex(2); setLightboxOpen(true); }}
-          >
-            <img src={images[2].src} alt={images[2].alt} className="w-full h-full object-cover" />
-          </div>
-        )}
-        {images[3] && (
-          <div
-            className="aspect-square overflow-hidden cursor-pointer"
-            onClick={() => { setLightboxIndex(3); setLightboxOpen(true); }}
-          >
-            <img src={images[3].src} alt={images[3].alt} className="w-full h-full object-cover" />
-          </div>
-        )}
-      </div>
-    </div>
-
-    {/* ROW 2 */}
-    <div className="grid grid-cols-12 gap-3">
-      {images[4] && (
-        <div
-          className="col-span-12 sm:col-span-4 aspect-[3/4] overflow-hidden cursor-pointer"
-          onClick={() => { setLightboxIndex(4); setLightboxOpen(true); }}
-        >
-          <img src={images[4].src} alt={images[4].alt} className="w-full h-full object-cover" />
-        </div>
-      )}
-
-      {images[5] && (
-        <div
-          className="col-span-12 sm:col-span-8 aspect-[21/9] overflow-hidden cursor-pointer"
-          onClick={() => { setLightboxIndex(5); setLightboxOpen(true); }}
-        >
-          <img src={images[5].src} alt={images[5].alt} className="w-full h-full object-cover" />
-        </div>
-      )}
-    </div>
+      );
+    })}
 
   </div>
 </Reveal>
