@@ -139,37 +139,42 @@ export default function Gallery() {
           </div>
         </Reveal>
 
-        {/* DESIGN-MATCHED GRID */}
-        <Reveal delay={0.2}>
-          <div className="grid grid-cols-4 auto-rows-[180px] gap-4">
+{/* DESIGN-MATCHED GRID */}
+<Reveal delay={0.2}>
+  <div className="grid grid-cols-4 auto-rows-[180px] gap-4">
 
-            {images.map((image, index) => {
-              const isHero = index === 1 || index === 6 || index === 11;
-              const isTall = index === 3 || index === 8 || index === 14;
+    {images.map((image, index) => {
+      const isBigLeft = index === 0;        // 👈 FIRST block taller
+      const isHero = index === 1 || index === 6 || index === 11;
+      const isTall = index === 3 || index === 8 || index === 14;
 
-              return (
-                <div
-                  key={index}
-                  onClick={() => {
-                    setLightboxIndex(index);
-                    setLightboxOpen(true);
-                  }}
-                  className={`relative overflow-hidden cursor-pointer
-                    ${isHero ? 'col-span-2 row-span-2' : ''}
-                    ${isTall ? 'row-span-2' : ''}
-                  `}
-                >
-                  <img
-                    src={image.src}
-                    alt={image.alt}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
-              );
-            })}
+      return (
+        <div
+          key={index}
+          onClick={() => {
+            setLightboxIndex(index);
+            setLightboxOpen(true);
+          }}
+          className={`
+            relative overflow-hidden cursor-pointer
+            ${isBigLeft ? 'row-span-2' : ''}
+            ${isHero ? 'col-span-2 row-span-2' : ''}
+            ${isTall ? 'row-span-2' : ''}
+          `}
+        >
+          <img
+            src={image.src}
+            alt={image.alt}
+            className="w-full h-full object-cover"
+            loading="lazy"
+          />
+        </div>
+      );
+    })}
 
-          </div>
+  </div>
+</Reveal>
+
         </Reveal>
       </div>
 
