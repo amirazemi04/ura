@@ -39,18 +39,30 @@ const PartnerPage: React.FC = () => {
       name: 'Audi',
       logo: sponsor2,
       description: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.',
+      social: {
+        instagram: 'https://instagram.com',
+        linkedin: 'https://linkedin.com',
+      }
     },
     {
       id: 3,
       name: 'Chanel',
       logo: sponsor3,
       description: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.',
+      social: {
+        instagram: 'https://instagram.com',
+        linkedin: 'https://linkedin.com',
+      }
     },
     {
       id: 4,
       name: 'GUCCI',
       logo: sponsor4,
       description: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.',
+      social: {
+        instagram: 'https://instagram.com',
+        linkedin: 'https://linkedin.com',
+      }
     },
   ];
 
@@ -93,13 +105,13 @@ const PartnerPage: React.FC = () => {
           >
             <div
               onClick={() => togglePartner(partner.id)}
-              className="flex items-center justify-between cursor-pointer hover:opacity-80 transition-opacity py-4"
+              className="flex flex-col md:flex-row md:items-start md:justify-between cursor-pointer hover:opacity-80 transition-opacity py-4 gap-6"
             >
-              <div className="flex items-center gap-8">
+              <div className="flex items-center gap-8 md:flex-1">
                 <img
                   src={partner.logo}
                   alt={partner.name}
-                  className="w-24 h-24 md:w-32 md:h-32 object-contain grayscale"
+                  className="w-24 h-24 md:w-32 md:h-32 object-contain grayscale flex-shrink-0"
                 />
                 {partner.social && (
                   <div className="flex gap-4">
@@ -128,18 +140,21 @@ const PartnerPage: React.FC = () => {
                   </div>
                 )}
               </div>
-              <h2 className="text-3xl md:text-5xl font-thin font-myfont">
-                {partner.name}
-              </h2>
-            </div>
 
-            {expandedId === partner.id && (
-              <div className="mt-4 pb-6 pl-0 md:pl-40">
-                <p className="text-sm md:text-base text-gray-600 leading-relaxed font-myfont whitespace-pre-line max-w-full md:max-w-[50%]">
-                  {partner.description}
-                </p>
+              <div className="md:flex-1 flex flex-col items-start md:items-end gap-4">
+                <h2 className="text-3xl md:text-5xl font-thin font-myfont text-left md:text-right w-full">
+                  {partner.name}
+                </h2>
+
+                {expandedId === partner.id && (
+                  <div className="w-full md:max-w-[50%]">
+                    <p className="text-sm md:text-base text-gray-600 leading-relaxed font-myfont whitespace-pre-line text-left md:text-right">
+                      {partner.description}
+                    </p>
+                  </div>
+                )}
               </div>
-            )}
+            </div>
           </div>
         ))}
       </div>
