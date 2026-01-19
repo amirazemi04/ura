@@ -1,0 +1,177 @@
+export interface NewsItem {
+  id: number;
+  image: string;
+  title: string;
+  description: string;
+  fullText: string;
+  author: string;
+  date: string;
+}
+
+const newsData: NewsItem[] = [
+  {
+    id: 1,
+    title: 'Investime të reja!',
+    description: 'Ansambli Ura tashmë me sponsor të rinjë, investime në kulturën tonë të pastër!',
+    fullText: `Ansambli Ura ka siguruar bashkëpunime me sponsorë të rinj që do të kontribuojnë në zhvillimin dhe ruajtjen e trashëgimisë kulturore. Këto investime do të shfrytëzohen për të blerë kostume të reja tradicionale, instrumente muzikore dhe për të përmirësuar sallat e provave. Ky është një hap i madh drejt profesionalizmit dhe promovimit të kulturës shqiptare në nivel ndërkombëtar.`,
+    image: 'https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg?auto=compress&cs=tinysrgb&w=600',
+    author: 'Besijan Hoxha',
+    date: 'May 22, 2025',
+  },
+  {
+    id: 2,
+    title: 'Investime të reja!',
+    description: 'Ansambli Ura tashmë me sponsor të rinjë, investime në kulturën tonë të pastër!',
+    fullText: `Pas muajsh përpjekjesh dhe komunikimesh, Ansambli URA ka arritur marrëveshje me disa kompani lokale për mbështetje financiare dhe logjistike. Qëllimi është zhvillimi i projekteve të reja kulturore dhe prezantimi i tyre në skena evropiane. Kjo nismë është një shembull frymëzues për të gjithë artistët e rinj në vend.`,
+    image: 'https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg?auto=compress&cs=tinysrgb&w=600',
+    author: 'Besijan Hoxha',
+    date: 'May 22, 2025',
+  },
+  {
+    id: 3,
+    title: 'Investime të reja!',
+    description: 'Ansambli Ura tashmë me sponsor të rinjë, investime në kulturën tonë të pastër!',
+    fullText: `Me këto investime, ansambli planifikon organizimin e një turneu të ri në Ballkan, ku do të paraqiten vallet më të njohura shqiptare. Kjo iniciativë synon të krijojë ura bashkëpunimi me ansamble të tjera në rajon dhe të rrisë ndërgjegjësimin për vlerat kulturore të Kosovës.`,
+    image: 'https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg?auto=compress&cs=tinysrgb&w=600',
+    author: 'Besijan Hoxha',
+    date: 'May 22, 2025',
+  },
+  {
+    id: 4,
+    title: 'Pjesëmarrje në Festival!',
+    description: 'Ansambli URA mori pjesë në festivalin ndërkombëtar në Gjermani, duke përfaqësuar denjësisht kulturën tonë!',
+    fullText: `Në festivalin "Kulturë pa Kufij" që u mbajt në Berlin, Ansambli URA u prit me duartrokitje nga audienca ndërkombëtare. Me një program të përzgjedhur të valleve tradicionale dhe kostume autentike, grupi rrëmbeu vëmendjen e mediave dhe kritikëve. Kjo pjesëmarrje ka qenë një sukses i jashtëzakonshëm për përfaqësimin kulturor të Kosovës në Evropë.`,
+    image: 'https://images.pexels.com/photos/8899721/pexels-photo-8899721.jpeg?auto=compress&cs=tinysrgb&w=600',
+    author: 'Elira Dervishi',
+    date: 'May 29, 2025',
+  },
+  {
+    id: 5,
+    title: 'Pjesëmarrje në Festival!',
+    description: 'Ansambli URA mori pjesë në festivalin ndërkombëtar në Gjermani, duke përfaqësuar denjësisht kulturën tonë!',
+    fullText: `Në skenën gjermane të festivalit folklorik, ansambli përçoi mesazhin e unitetit dhe dashurisë për traditën. Performanca e tyre u pasqyrua edhe në rrjetet sociale ku mori shumë pëlqime dhe komente pozitive.`,
+    image: 'https://images.pexels.com/photos/8899721/pexels-photo-8899721.jpeg?auto=compress&cs=tinysrgb&w=600',
+    author: 'Elira Dervishi',
+    date: 'May 29, 2025',
+  },
+  {
+    id: 6,
+    title: 'Pjesëmarrje në Festival!',
+    description: 'Ansambli URA mori pjesë në festivalin ndërkombëtar në Gjermani, duke përfaqësuar denjësisht kulturën tonë!',
+    fullText: `Ansambli URA prezantoi një program të pasur kulturor, përfshirë këngë dhe valle të vjetra shqiptare që nuk janë interpretuar më parë në skena ndërkombëtare. Kjo pjesëmarrje forcoi imazhin e tyre si ambasadorë kulturorë të Kosovës.`,
+    image: 'https://images.pexels.com/photos/8899721/pexels-photo-8899721.jpeg?auto=compress&cs=tinysrgb&w=600',
+    author: 'Elira Dervishi',
+    date: 'May 29, 2025',
+  },
+  {
+    id: 7,
+    title: 'Investime të reja!',
+    description: 'Ansambli Ura tashmë me sponsor të rinjë, investime në kulturën tonë të pastër!',
+    fullText: `Me mbështetjen e sponsorëve të rinj, ansambli planifikon të hapë një shkollë verore për vallëzim tradicional. Kjo iniciativë synon të përfshijë të rinj nga e gjithë Kosova në aktivitete kulturore edukative.`,
+    image: 'https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg?auto=compress&cs=tinysrgb&w=600',
+    author: 'Besijan Hoxha',
+    date: 'May 22, 2025',
+  },
+  {
+    id: 8,
+    title: 'Investime të reja!',
+    description: 'Ansambli Ura tashmë me sponsor të rinjë, investime në kulturën tonë të pastër!',
+    fullText: `Kontratat e reja të sponsorizimit përfshijnë mbështetje për marketing dhe promovim në rrjetet sociale, duke rritur dukshmërinë e ansamblit në publikun e gjerë. Investimet gjithashtu do të ndihmojnë në realizimin e dokumentarëve mbi kulturën shqiptare.`,
+    image: 'https://images.pexels.com/photos/15822951/pexels-photo-15822951.jpeg?auto=compress&cs=tinysrgb&w=600',
+    author: 'Besijan Hoxha',
+    date: 'May 22, 2025',
+  },
+  {
+    id: 9,
+    title: 'Investime të reja!',
+    description: 'Ansambli Ura tashmë me sponsor të rinjë, investime në kulturën tonë të pastër!',
+    fullText: `Projektet e reja që do të financohen përfshijnë krijimin e një platforme online për shpërndarjen e përmbajtjes kulturore dhe edukative mbi vallet tradicionale dhe historinë e tyre.`,
+    image: 'https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg?auto=compress&cs=tinysrgb&w=600',
+    author: 'Besijan Hoxha',
+    date: 'May 22, 2025',
+  },
+  {
+    id: 10,
+    title: 'Pjesëmarrje në Festival!',
+    description: 'Ansambli URA mori pjesë në festivalin ndërkombëtar në Gjermani, duke përfaqësuar denjësisht kulturën tonë!',
+    fullText: `Pas performancës së suksesshme në Gjermani, ansambli ka marrë ftesa për të marrë pjesë në festivale të ngjashme në Francë dhe Itali. Organizatorët u shprehën të impresionuar nga profesionalizmi dhe pasioni i grupit.`,
+    image: 'https://images.pexels.com/photos/8899721/pexels-photo-8899721.jpeg?auto=compress&cs=tinysrgb&w=600',
+    author: 'Elira Dervishi',
+    date: 'May 29, 2025',
+  },
+  {
+    id: 11,
+    title: 'Pjesëmarrje në Festival!',
+    description: 'Ansambli URA mori pjesë në festivalin ndërkombëtar në Gjermani, duke përfaqësuar denjësisht kulturën tonë!',
+    fullText: `Në këtë festival, URA prezantoi një spektakël të koreografuar në mënyrë profesionale, që pasqyroi harmoninë midis trashëgimisë kulturore dhe qasjes moderne artistike. Kjo paraqitje i solli ansamblit disa çmime nderi.`,
+    image: 'https://images.pexels.com/photos/8899721/pexels-photo-8899721.jpeg?auto=compress&cs=tinysrgb&w=600',
+    author: 'Elira Dervishi',
+    date: 'May 29, 2025',
+  },
+  {
+    id: 12,
+    title: 'Pjesëmarrje në Festival!',
+    description: 'Ansambli URA mori pjesë në festivalin ndërkombëtar në Gjermani, duke përfaqësuar denjësisht kulturën tonë!',
+    fullText: `URA jo vetëm që performoi, por edhe mori pjesë në panele diskutimi për ruajtjen e kulturave minoritare. Ata ndanë përvojat e tyre për ruajtjen e trashëgimisë kulturore në Kosovë dhe rëndësinë e përfshirjes së të rinjve.`,
+    image: 'https://images.pexels.com/photos/15822951/pexels-photo-15822951.jpeg?auto=compress&cs=tinysrgb&w=600',
+    author: 'Elira Dervishi',
+    date: 'May 29, 2025',
+  },
+  {
+    id: 13,
+    title: 'Koncert në Prishtinë',
+    description: 'Ansambli URA mbajti një koncert madhështor në Prishtinë me publik të zjarrtë.',
+    fullText: `Koncerti në Prishtinë u zhvillua në sheshin "Skënderbeu" me pjesëmarrje të gjerë nga publiku dhe figurat publike. Atmosfera ishte elektrizuese dhe çdo valle u shoqërua me ovacione. Ky koncert u transmetua edhe në disa televizione kombëtare.`,
+    image: 'https://images.pexels.com/photos/20572984/pexels-photo-20572984.jpeg?auto=compress&cs=tinysrgb&w=600',
+    author: 'Ardiana Mehmeti',
+    date: 'June 1, 2025',
+  },
+  {
+    id: 14,
+    title: 'Punëtori për të rinjtë',
+    description: 'U organizua një punëtori për të rinjtë që duan të mësojnë vallëzime tradicionale.',
+    fullText: `Punëtoria u mbajt në ambientet e Qendrës Kulturore dhe pati pjesëmarrje të më shumë se 60 të rinjve. Përmes kësaj iniciative, ata mësuan bazat e valleve tradicionale dhe kuptuan historinë e tyre përmes rrëfimeve të instruktorëve me përvojë.`,
+    image: 'https://images.pexels.com/photos/15822951/pexels-photo-15822951.jpeg?auto=compress&cs=tinysrgb&w=600',
+    author: 'Besijan Hoxha',
+    date: 'June 3, 2025',
+  },
+  {
+    id: 15,
+    title: 'Pjesëmarrje në emision televiziv',
+    description: 'Ansambli URA u ftua në një emision të njohur për të folur për kulturën tradicionale.',
+    fullText: `Në emisionin “Kultura Jonë”, përfaqësuesit e URA-s folën për rëndësinë e ruajtjes së traditave dhe për sfidat që përballen ansamblet në Kosovë. Pamje nga aktivitetet dhe performanca të tyre u transmetuan për publikun e gjerë.`,
+    image: 'https://images.pexels.com/photos/20572984/pexels-photo-20572984.jpeg?auto=compress&cs=tinysrgb&w=600',
+    author: 'Elira Dervishi',
+    date: 'June 5, 2025',
+  },
+  {
+    id: 16,
+    title: 'Workshop me artistë ndërkombëtarë',
+    description: 'Një bashkëpunim me artistë ndërkombëtarë për të shkëmbyer përvoja kulturore.',
+    fullText: `Ansambli URA organizoi një workshop tre-ditor me artistë nga Franca, Italia dhe Turqia. Temat përfshinin bashkëpunimet ndërkulturore dhe integrimin e elementeve moderne në vallet tradicionale. U zhvilluan gjithashtu performanca të përbashkëta dhe ushtrime praktike.`,
+    image: 'https://images.pexels.com/photos/15822951/pexels-photo-15822951.jpeg?auto=compress&cs=tinysrgb&w=600',
+    author: 'Besijan Hoxha',
+    date: 'June 6, 2025',
+  },
+  {
+    id: 17,
+    title: 'Prova e hapur për publikun',
+    description: 'Publiku pati mundësi të shikojë nga afër procesin e përgatitjeve për një koncert.',
+    fullText: `Prova u zhvillua në ambientet e hapura të qendrës kulturore dhe u ndoq nga dhjetëra qytetarë që ishin të interesuar për procesin krijues të një performance. U shpjegua puna koreografike, muzika dhe rëndësia e detajeve në skenografi.`,
+    image: 'https://images.pexels.com/photos/20572984/pexels-photo-20572984.jpeg?auto=compress&cs=tinysrgb&w=600',
+    author: 'Elira Dervishi',
+    date: 'June 7, 2025',
+  },
+  {
+    id: 18,
+    title: 'Nata e vallëzimit folklorik',
+    description: 'U organizua një natë e veçantë ku performuan grupet më të mira të vallëzimit.',
+    fullText: `Eventi u mbajt në amfiteatrin e qytetit dhe mblodhi ansamble nga të gjitha trevat shqiptare. Mbrëmja u përmbyll me një performancë të përbashkët simbolike që përfaqësonte unitetin kulturor të shqiptarëve.`,
+    image: 'https://images.pexels.com/photos/15822951/pexels-photo-15822951.jpeg?auto=compress&cs=tinysrgb&w=600',
+    author: 'Ardiana Mehmeti',
+    date: 'June 8, 2025',
+  }
+  
+];
+
+export default newsData;
