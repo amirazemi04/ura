@@ -185,6 +185,7 @@ export default function Gallery() {
   </div>
 </Reveal>
 
+        
       </div>
 
       <Lightbox
