@@ -39,7 +39,7 @@
 /* Handsome Pro (decorative font) */
 @font-face {
   font-family: 'HandsomePro';
-  src: url('./fonts/Handsome-Pro.otf') format('opentype');
+  src: url('./fonts/handsome-pro.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
