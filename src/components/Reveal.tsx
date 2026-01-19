@@ -1,51 +1,42 @@
-import { useEffect, useState } from 'react';
-import { motion, Variants } from 'framer-motion';
+import { useEffect, useState, type ReactNode } from "react";
+import { motion, type Variants } from "motion/react";
 
 interface RevealProps {
-  children: React.ReactNode;
+  children: ReactNode;
   delay?: number;
   duration?: number;
-  direction?: 'up' | 'down' | 'left' | 'right';
+  direction?: "up" | "down" | "left" | "right";
   className?: string;
 }
 
-const Reveal = ({
+export default function Reveal({
   children,
   delay = 0,
   duration = 0.6,
-  direction = 'up',
-  className = '',
-}: RevealProps) => {
+  direction = "up",
+  className = "",
+}: RevealProps) {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     setPrefersReducedMotion(mediaQuery.matches);
 
-    const handleChange = (e: MediaQueryListEvent) => {
+    const handler = (e: MediaQueryListEvent) =>
       setPrefersReducedMotion(e.matches);
-    };
 
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
+    mediaQuery.addEventListener("change", handler);
+    return () => mediaQuery.removeEventListener("change", handler);
   }, []);
 
-  const getDirectionOffset = () => {
-    switch (direction) {
-      case 'up':
-        return { x: 0, y: 50 };
-      case 'down':
-        return { x: 0, y: -50 };
-      case 'left':
-        return { x: 50, y: 0 };
-      case 'right':
-        return { x: -50, y: 0 };
-      default:
-        return { x: 0, y: 50 };
-    }
-  };
-
-  const offset = getDirectionOffset();
+  const offset =
+    direction === "up"
+      ? { x: 0, y: 50 }
+      : direction === "down"
+      ? { x: 0, y: -50 }
+      : direction === "left"
+      ? { x: 50, y: 0 }
+      : { x: -50, y: 0 };
 
   const variants: Variants = {
     hidden: {
@@ -60,7 +51,7 @@ const Reveal = ({
       transition: {
         duration,
         delay,
-        ease: 'easeOut',
+        ease: "easeOut",
       },
     },
   };
@@ -73,13 +64,11 @@ const Reveal = ({
     <motion.div
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.05, margin: "0px 0px -100px 0px" }}
+      viewport={{ once: true, amount: 0.2 }}
       variants={variants}
       className={className}
     >
       {children}
     </motion.div>
   );
-};
-
-export default Reveal;
+}
