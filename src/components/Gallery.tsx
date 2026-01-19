@@ -139,61 +139,73 @@ export default function Gallery() {
           </div>
         </Reveal>
 
-        {/* 👉 TIGHT GRID LAYOUT */}
         <Reveal delay={0.15}>
-          <div className="space-y-3">
+  <div className="grid grid-cols-1 gap-3">
 
-            {/* Row 1 */}
-            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-              {images[0] && (
-                <div className="w-full sm:w-[30%] aspect-[3/4] overflow-hidden cursor-pointer"
-                  onClick={() => { setLightboxIndex(0); setLightboxOpen(true); }}>
-                  <img src={images[0].src} alt={images[0].alt} className="w-full h-full object-cover" />
-                </div>
-              )}
+    {/* ROW 1 */}
+    <div className="grid grid-cols-12 gap-3">
+      {images[0] && (
+        <div
+          className="col-span-12 sm:col-span-4 aspect-[3/4] overflow-hidden cursor-pointer"
+          onClick={() => { setLightboxIndex(0); setLightboxOpen(true); }}
+        >
+          <img src={images[0].src} alt={images[0].alt} className="w-full h-full object-cover" />
+        </div>
+      )}
 
-              {images[1] && (
-                <div className="w-full sm:w-[50%] aspect-[16/9] overflow-hidden cursor-pointer"
-                  onClick={() => { setLightboxIndex(1); setLightboxOpen(true); }}>
-                  <img src={images[1].src} alt={images[1].alt} className="w-full h-full object-cover" />
-                </div>
-              )}
+      {images[1] && (
+        <div
+          className="col-span-12 sm:col-span-6 aspect-[16/9] overflow-hidden cursor-pointer"
+          onClick={() => { setLightboxIndex(1); setLightboxOpen(true); }}
+        >
+          <img src={images[1].src} alt={images[1].alt} className="w-full h-full object-cover" />
+        </div>
+      )}
 
-              <div className="w-full sm:w-[20%] flex sm:flex-col gap-2">
-                {images[2] && (
-                  <div className="w-1/2 sm:w-full aspect-square overflow-hidden cursor-pointer"
-                    onClick={() => { setLightboxIndex(2); setLightboxOpen(true); }}>
-                    <img src={images[2].src} alt={images[2].alt} className="w-full h-full object-cover" />
-                  </div>
-                )}
-                {images[3] && (
-                  <div className="w-1/2 sm:w-full aspect-square overflow-hidden cursor-pointer"
-                    onClick={() => { setLightboxIndex(3); setLightboxOpen(true); }}>
-                    <img src={images[3].src} alt={images[3].alt} className="w-full h-full object-cover" />
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Row 2 */}
-            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-              {images[4] && (
-                <div className="w-full sm:w-[29%] aspect-[3/4] overflow-hidden cursor-pointer"
-                  onClick={() => { setLightboxIndex(4); setLightboxOpen(true); }}>
-                  <img src={images[4].src} alt={images[4].alt} className="w-full h-full object-cover" />
-                </div>
-              )}
-
-              {images[5] && (
-                <div className="w-full sm:w-[71%] aspect-[21/9] overflow-hidden cursor-pointer"
-                  onClick={() => { setLightboxIndex(5); setLightboxOpen(true); }}>
-                  <img src={images[5].src} alt={images[5].alt} className="w-full h-full object-cover" />
-                </div>
-              )}
-            </div>
-
+      <div className="col-span-12 sm:col-span-2 grid grid-rows-2 gap-3">
+        {images[2] && (
+          <div
+            className="aspect-square overflow-hidden cursor-pointer"
+            onClick={() => { setLightboxIndex(2); setLightboxOpen(true); }}
+          >
+            <img src={images[2].src} alt={images[2].alt} className="w-full h-full object-cover" />
           </div>
-        </Reveal>
+        )}
+        {images[3] && (
+          <div
+            className="aspect-square overflow-hidden cursor-pointer"
+            onClick={() => { setLightboxIndex(3); setLightboxOpen(true); }}
+          >
+            <img src={images[3].src} alt={images[3].alt} className="w-full h-full object-cover" />
+          </div>
+        )}
+      </div>
+    </div>
+
+    {/* ROW 2 */}
+    <div className="grid grid-cols-12 gap-3">
+      {images[4] && (
+        <div
+          className="col-span-12 sm:col-span-4 aspect-[3/4] overflow-hidden cursor-pointer"
+          onClick={() => { setLightboxIndex(4); setLightboxOpen(true); }}
+        >
+          <img src={images[4].src} alt={images[4].alt} className="w-full h-full object-cover" />
+        </div>
+      )}
+
+      {images[5] && (
+        <div
+          className="col-span-12 sm:col-span-8 aspect-[21/9] overflow-hidden cursor-pointer"
+          onClick={() => { setLightboxIndex(5); setLightboxOpen(true); }}
+        >
+          <img src={images[5].src} alt={images[5].alt} className="w-full h-full object-cover" />
+        </div>
+      )}
+    </div>
+
+  </div>
+</Reveal>
+
       </div>
 
       <Lightbox
