@@ -4,8 +4,10 @@ import client from '../contentfulClient';
 import Lightbox from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
 import Reveal from './Reveal';
+import { ChevronRight } from 'lucide-react';
 
 const DEFAULT_LOCALE = 'de';
+const IMAGES_PER_PAGE = 12;
 
 interface GalleryImage {
   src: string;
@@ -26,6 +28,7 @@ export default function Gallery() {
   const [categories, setCategories] = useState<string[]>([]);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     if (!i18n.isInitialized) return;
@@ -47,8 +50,13 @@ export default function Gallery() {
               const defaultEntry = await client.getEntry(id, { locale: DEFAULT_LOCALE });
               const fields = defaultEntry.fields;
 
-              const assets = [fields.img1, fields.img2, fields.img3, fields.img4, fields.img5, fields.img6];
-              
+              const assets = [
+                fields.img1, fields.img2, fields.img3, fields.img4, fields.img5, fields.img6,
+                fields.img7, fields.img8, fields.img9, fields.img10, fields.img11, fields.img12,
+                fields.img13, fields.img14, fields.img15, fields.img16, fields.img17, fields.img18,
+                fields.img19, fields.img20
+              ];
+
               const images: GalleryImage[] = await Promise.all(
                 assets.map(async (asset: any, index: number) => {
                   if (!asset?.sys?.id) return null;
@@ -96,114 +104,103 @@ export default function Gallery() {
   }, [i18n.language, t, i18n.isInitialized]);
 
   const images = imagesByCat[activeFilter] || [];
+  const totalPages = Math.ceil(images.length / IMAGES_PER_PAGE);
+  const startIndex = (currentPage - 1) * IMAGES_PER_PAGE;
+  const endIndex = startIndex + IMAGES_PER_PAGE;
+  const currentImages = images.slice(startIndex, endIndex);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [activeFilter]);
 
   if (loading) {
-    return (
-      <section className="py-12" id="gallery">
-        <div className="text-center">{t('gallery.loading')}</div>
-      </section>
-    );
+    return null;
   }
 
-  if (!images.length) {
-    return (
-      <section className="py-12" id="gallery">
-        <div className="text-center">{t('gallery.noImages', { category: activeFilter })}</div>
-      </section>
-    );
+  if (!categories.length || !images.length) {
+    return null;
   }
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
-    <section className="py-12" id="gallery">
+    <section className="py-16 bg-white" id="gallery">
       <div className="container mx-auto px-4 sm:px-6">
-        {/* Header & Filters */}
+        {/* Header with Category and Pagination */}
         <Reveal>
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-10 gap-4">
-            <h2 className="text-3xl sm:text-4xl font-thin text-[#333333]">
-              {t('header.gallery')}
-            </h2>
-            <div className="flex flex-wrap gap-3">
-              {categories.map((cat) => (
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-12">
+            <div className="mb-6 sm:mb-0">
+              <h2 className="text-4xl sm:text-5xl font-light text-[#333333] mb-2">
+                {activeFilter}
+              </h2>
+              <div className="flex flex-wrap gap-2 mt-4">
+                {categories.map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => setActiveFilter(cat)}
+                    className={`px-3 py-1 text-sm transition-colors duration-200 ${
+                      activeFilter === cat
+                        ? 'bg-black text-white'
+                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                 <button
-                  key={cat}
-                  onClick={() => setActiveFilter(cat)}
-                  className={`text-base font-medium transition-colors duration-200 ${
-                    activeFilter === cat
-                      ? 'text-black'
-                      : 'text-gray-500 hover:text-black'
+                  key={page}
+                  onClick={() => handlePageChange(page)}
+                  className={`text-lg font-light transition-colors duration-200 ${
+                    currentPage === page
+                      ? 'text-black font-medium'
+                      : 'text-gray-400 hover:text-gray-600'
                   }`}
                 >
-                  {cat}
+                  {page.toString().padStart(2, '0')}
                 </button>
               ))}
+              {currentPage < totalPages && (
+                <button
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition-colors"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              )}
             </div>
           </div>
         </Reveal>
 
         {/* Gallery Grid */}
-        <div className="space-y-6">
-          {/* Row 1 */}
-          <Reveal delay={0.1}>
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
-              {images[0] && (
-                <div
-                  className="w-full sm:w-[30%] overflow-hidden shadow-xl aspect-[3/4] cursor-pointer"
-                  onClick={() => { setLightboxIndex(0); setLightboxOpen(true); }}
-                >
-                  <img src={images[0].src} alt={images[0].alt} className="w-full h-full object-cover" />
-                </div>
-              )}
-              {images[1] && (
-                <div
-                  className="w-full sm:w-[50%] overflow-hidden shadow-xl aspect-[16/9] cursor-pointer"
-                  onClick={() => { setLightboxIndex(1); setLightboxOpen(true); }}
-                >
-                  <img src={images[1].src} alt={images[1].alt} className="w-full h-full object-cover" />
-                </div>
-              )}
-              <div className="w-full sm:w-[20%] flex sm:flex-col gap-4">
-                {images[2] && (
-                  <div
-                    className="w-1/2 sm:w-full overflow-hidden shadow-xl aspect-square cursor-pointer"
-                    onClick={() => { setLightboxIndex(2); setLightboxOpen(true); }}
-                  >
-                    <img src={images[2].src} alt={images[2].alt} className="w-full h-full object-cover" />
-                  </div>
-                )}
-                {images[3] && (
-                  <div
-                    className="w-1/2 sm:w-full overflow-hidden shadow-xl aspect-square cursor-pointer"
-                    onClick={() => { setLightboxIndex(3); setLightboxOpen(true); }}
-                  >
-                    <img src={images[3].src} alt={images[3].alt} className="w-full h-full object-cover" />
-                  </div>
-                )}
+        <Reveal delay={0.2}>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {currentImages.map((image, index) => (
+              <div
+                key={index}
+                className="relative overflow-hidden bg-gray-100 aspect-[4/3] cursor-pointer hover:opacity-90 transition-opacity"
+                onClick={() => {
+                  setLightboxIndex(startIndex + index);
+                  setLightboxOpen(true);
+                }}
+              >
+                <img
+                  src={image.src}
+                  alt={image.alt}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
               </div>
-            </div>
-          </Reveal>
-
-          {/* Row 2 */}
-          <Reveal delay={0.3}>
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
-              {images[4] && (
-                <div
-                  className="w-full sm:w-[29%] max-h-[300px] overflow-hidden shadow-xl aspect-[3/4] cursor-pointer"
-                  onClick={() => { setLightboxIndex(4); setLightboxOpen(true); }}
-                >
-                  <img src={images[4].src} alt={images[4].alt} className="w-full h-full object-cover" />
-                </div>
-              )}
-              {images[5] && (
-                <div
-                  className="w-full sm:w-[70%] max-h-[300px] overflow-hidden shadow-xl aspect-[21/9] cursor-pointer"
-                  onClick={() => { setLightboxIndex(5); setLightboxOpen(true); }}
-                >
-                  <img src={images[5].src} alt={images[5].alt} className="w-full h-full object-cover" />
-                </div>
-              )}
-            </div>
-          </Reveal>
-        </div>
+            ))}
+          </div>
+        </Reveal>
       </div>
 
       {/* Lightbox */}
