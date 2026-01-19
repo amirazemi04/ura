@@ -152,6 +152,12 @@ const PartnerPage: React.FC = () => {
                         className="w-24 h-24 md:w-32 md:h-32 object-contain grayscale flex-shrink-0"
                       />
                     )}
+                  </div>
+
+                  <div className="md:flex-1 flex flex-col items-start gap-3">
+                    <h2 className="text-3xl md:text-5xl font-thin font-myfont text-left w-full">
+                      {partner.name}
+                    </h2>
 
                     {hasSocialLinks && (
                       <div className="flex gap-4 flex-wrap">
@@ -164,7 +170,7 @@ const PartnerPage: React.FC = () => {
                             onClick={(e) => e.stopPropagation()}
                             aria-label="Instagram"
                           >
-                            <FaInstagram size={24} />
+                            <FaInstagram size={22} />
                           </a>
                         )}
 
@@ -177,7 +183,7 @@ const PartnerPage: React.FC = () => {
                             onClick={(e) => e.stopPropagation()}
                             aria-label="LinkedIn"
                           >
-                            <FaLinkedin size={24} />
+                            <FaLinkedin size={22} />
                           </a>
                         )}
 
@@ -190,7 +196,7 @@ const PartnerPage: React.FC = () => {
                             onClick={(e) => e.stopPropagation()}
                             aria-label="Facebook"
                           >
-                            <FaFacebook size={24} />
+                            <FaFacebook size={22} />
                           </a>
                         )}
 
@@ -203,7 +209,7 @@ const PartnerPage: React.FC = () => {
                             onClick={(e) => e.stopPropagation()}
                             aria-label="Twitter"
                           >
-                            <FaTwitter size={24} />
+                            <FaTwitter size={22} />
                           </a>
                         )}
 
@@ -216,7 +222,7 @@ const PartnerPage: React.FC = () => {
                             onClick={(e) => e.stopPropagation()}
                             aria-label="YouTube"
                           >
-                            <FaYoutube size={24} />
+                            <FaYoutube size={22} />
                           </a>
                         )}
 
@@ -229,20 +235,14 @@ const PartnerPage: React.FC = () => {
                             onClick={(e) => e.stopPropagation()}
                             aria-label="Website"
                           >
-                            <FaGlobe size={24} />
+                            <FaGlobe size={22} />
                           </a>
                         )}
                       </div>
                     )}
-                  </div>
-
-                  <div className="md:flex-1 flex flex-col items-start md:items-end gap-4">
-                    <h2 className="text-3xl md:text-5xl font-thin font-myfont text-left md:text-right w-full">
-                      {partner.name}
-                    </h2>
 
                     {expandedId === partner.id && partner.description && (
-                      <div className="w-full md:max-w-[95%]">
+                      <div className="w-full max-w-[95%]">
                         <p className="text-sm md:text-base text-gray-600 leading-relaxed font-myfont whitespace-pre-line text-left">
                           {partner.description}
                         </p>
