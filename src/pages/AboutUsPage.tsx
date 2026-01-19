@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet-async";
 import ContactForm from '../components/ContactForm';
 import TeamSection from "../components/TeamSection";
 import client from '../contentfulClient';
+import Reveal from '../components/Reveal';
 
 const DEFAULT_LOCALE = 'de';
 
@@ -118,36 +119,43 @@ const AboutUs = () => {
 
       {/* Title + Subtitle from Contentful */}
       {!aboutLoading && (
-        <div className="flex flex-col sm:flex-row justify-between items-center mb-6 sm:mb-8 gap-2 sm:gap-0 text-center sm:text-left">
-          <h1 className="text-2xl sm:text-3xl font-bold">{aboutTitle}</h1>
-          <span className="text-lg sm:text-xl font-semibold text-[#a51e28]">{aboutSubtitle}</span>
-        </div>
+        <Reveal>
+          <div className="flex flex-col sm:flex-row justify-between items-center mb-6 sm:mb-8 gap-2 sm:gap-0 text-center sm:text-left">
+            <h1 className="text-2xl sm:text-3xl font-bold">{aboutTitle}</h1>
+            <span className="text-lg sm:text-xl font-semibold text-[#a51e28]">{aboutSubtitle}</span>
+          </div>
+        </Reveal>
       )}
 
       {/* Intro Paragraph */}
       {!aboutLoading && (
-        <p className="text-base sm:text-md text-gray-700 mb-8 leading-relaxed px-4 sm:px-0 text-center sm:text-left">
-          {aboutIntro}
-        </p>
+        <Reveal delay={0.1}>
+          <p className="text-base sm:text-md text-gray-700 mb-8 leading-relaxed px-4 sm:px-0 text-center sm:text-left">
+            {aboutIntro}
+          </p>
+        </Reveal>
       )}
 
       {/* Hero Image from Contentful */}
       {heroImageUrl && (
-        <div className="w-full h-40 sm:h-48 mb-8 sm:mb-12">
-          <img
-            src={heroImageUrl}
-            alt={heroImageAlt}
-            className="object-cover w-full h-full shadow-md"
-          />
-        </div>
+        <Reveal delay={0.2}>
+          <div className="w-full h-40 sm:h-48 mb-8 sm:mb-12">
+            <img
+              src={heroImageUrl}
+              alt={heroImageAlt}
+              className="object-cover w-full h-full shadow-md"
+            />
+          </div>
+        </Reveal>
       )}
 
       {/* FAQs from Contentful */}
-      <div className="space-y-4 sm:space-y-6">
-        {faqLoading ? (
-          <p>{i18n.language === 'sq' ? 'Duke u ngarkuar...' : 'Laden...'}</p>
-        ) : (
-          faqItems.map((faq, index) => {
+      <Reveal delay={0.3}>
+        <div className="space-y-4 sm:space-y-6">
+          {faqLoading ? (
+            <p>{i18n.language === 'sq' ? 'Duke u ngarkuar...' : 'Laden...'}</p>
+          ) : (
+            faqItems.map((faq, index) => {
             const isOpen = openIndex === index;
 
             return (
@@ -181,7 +189,8 @@ const AboutUs = () => {
             );
           })
         )}
-      </div>
+        </div>
+      </Reveal>
 
       <div className="mt-12">
         <ContactForm />

@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Plus, Minus } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
-import client from '../contentfulClient'; // Adjust path if needed
+import client from '../contentfulClient';
 import { useTranslation } from 'react-i18next';
+import Reveal from './Reveal';
 
 const DEFAULT_LOCALE = 'de';
 
@@ -82,56 +83,60 @@ const FinalSection = () => {
       <div className="container mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 mb-16 lg:mb-20 items-start">
           {/* Left Column */}
-          <div>
-            <h5 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">
-              {sectionTitle}
-            </h5>
-            <p className="text-gray-600 text-base sm:text-lg leading-relaxed">
-              {sectionDescription}
-            </p>
-          </div>
+          <Reveal>
+            <div>
+              <h5 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">
+                {sectionTitle}
+              </h5>
+              <p className="text-gray-600 text-base sm:text-lg leading-relaxed">
+                {sectionDescription}
+              </p>
+            </div>
+          </Reveal>
 
           {/* Right Column - FAQ */}
-          <div className="space-y-4">
-            <h5 className="text-xl sm:text-2xl font-bold text-black mb-2 sm:mb-4">
-              {t('finalSection.faq.title')} {/* Example: "FAQ" */}
-            </h5>
+          <Reveal delay={0.2}>
+            <div className="space-y-4">
+              <h5 className="text-xl sm:text-2xl font-bold text-black mb-2 sm:mb-4">
+                {t('finalSection.faq.title')}
+              </h5>
 
-            {faqItems.map((item, index) => (
-              <div key={index} className="border-b border-[#DDDDDD]">
-                <button
-                  onClick={() => toggleFaq(index)}
-                  className="w-full px-2 sm:px-3 py-2 text-left flex items-center justify-between transition-colors duration-200"
-                >
-                  <span className="font-medium text-gray-600 text-base sm:text-lg">
-                    {item.title}
-                  </span>
-                  {openFaq === index ? (
-                    <Minus size={20} className="text-gray-500" />
-                  ) : (
-                    <Plus size={20} className="text-gray-500" />
-                  )}
-                </button>
+              {faqItems.map((item, index) => (
+                <div key={index} className="border-b border-[#DDDDDD]">
+                  <button
+                    onClick={() => toggleFaq(index)}
+                    className="w-full px-2 sm:px-3 py-2 text-left flex items-center justify-between transition-colors duration-200"
+                  >
+                    <span className="font-medium text-gray-600 text-base sm:text-lg">
+                      {item.title}
+                    </span>
+                    {openFaq === index ? (
+                      <Minus size={20} className="text-gray-500" />
+                    ) : (
+                      <Plus size={20} className="text-gray-500" />
+                    )}
+                  </button>
 
-                <AnimatePresence initial={false}>
-                  {openFaq === index && (
-                    <motion.div
-                      key="content"
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.5, ease: 'easeInOut' }}
-                      className="px-4 sm:px-6 overflow-hidden"
-                    >
-                      <p className="text-[#333333] text-sm sm:text-base leading-relaxed py-2">
-                        {item.content}
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            ))}
-          </div>
+                  <AnimatePresence initial={false}>
+                    {openFaq === index && (
+                      <motion.div
+                        key="content"
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.5, ease: 'easeInOut' }}
+                        className="px-4 sm:px-6 overflow-hidden"
+                      >
+                        <p className="text-[#333333] text-sm sm:text-base leading-relaxed py-2">
+                          {item.content}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ))}
+            </div>
+          </Reveal>
         </div>
       </div>
     </section>

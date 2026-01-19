@@ -6,7 +6,8 @@ import {
   Options,
 } from '@contentful/rich-text-react-renderer';
 import { BLOCKS, MARKS, Document } from '@contentful/rich-text-types';
-import LazyImage from './LazyImage'; // <- Import LazyImage
+import LazyImage from './LazyImage';
+import Reveal from './Reveal';
 
 const DEFAULT_LOCALE = 'de';
 
@@ -88,17 +89,17 @@ const HeroSection = () => {
       <div className="container mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-10 lg:gap-6 items-center">
           {/* Left Column */}
-          <div className="lg:col-span-6 text-center lg:text-left space-y-3">
+          <Reveal className="lg:col-span-6 text-center lg:text-left space-y-3" delay={0.1}>
             <h1 className="text-3xl lg:text-6xl font-light text-[#333333] tracking-wide font-myfont whitespace-pre-line">
               {heading}
             </h1>
             <p className="text-xl lg:text-4xl text-[#a51e28] font-handsome whitespace-pre-line">
               {slogan}
             </p>
-          </div>
+          </Reveal>
 
           {/* Right Column */}
-          <div className="lg:col-span-6 flex justify-center lg:justify-start text-center lg:text-left lg:pl-28">
+          <Reveal className="lg:col-span-6 flex justify-center lg:justify-start text-center lg:text-left lg:pl-28" delay={0.3}>
             <div className="max-w-xl px-2 sm:px-0 text-[#7c7c7c] text-base sm:text-lg leading-relaxed font-myfont">
               {heroImage && (
                 <div className="mb-6 w-full h-64 sm:h-80">
@@ -119,7 +120,7 @@ const HeroSection = () => {
                 <p>{i18n.language === 'sq' ? 'Përshkrimi mungon.' : 'Beschreibung fehlt.'}</p>
               )}
             </div>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

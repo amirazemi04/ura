@@ -1,0 +1,85 @@
+import { useEffect, useState } from 'react';
+import { motion, Variants } from 'framer-motion';
+
+interface RevealProps {
+  children: React.ReactNode;
+  delay?: number;
+  duration?: number;
+  direction?: 'up' | 'down' | 'left' | 'right';
+  className?: string;
+}
+
+const Reveal = ({
+  children,
+  delay = 0,
+  duration = 0.6,
+  direction = 'up',
+  className = '',
+}: RevealProps) => {
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+
+    const handleChange = (e: MediaQueryListEvent) => {
+      setPrefersReducedMotion(e.matches);
+    };
+
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
+  const getDirectionOffset = () => {
+    switch (direction) {
+      case 'up':
+        return { x: 0, y: 20 };
+      case 'down':
+        return { x: 0, y: -20 };
+      case 'left':
+        return { x: 20, y: 0 };
+      case 'right':
+        return { x: -20, y: 0 };
+      default:
+        return { x: 0, y: 20 };
+    }
+  };
+
+  const offset = getDirectionOffset();
+
+  const variants: Variants = {
+    hidden: {
+      opacity: 0,
+      x: offset.x,
+      y: offset.y,
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      transition: {
+        duration,
+        delay,
+        ease: 'easeOut',
+      },
+    },
+  };
+
+  if (prefersReducedMotion) {
+    return <div className={className}>{children}</div>;
+  }
+
+  return (
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-50px' }}
+      variants={variants}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+export default Reveal;

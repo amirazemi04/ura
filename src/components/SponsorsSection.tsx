@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import client from '../contentfulClient';
+import Reveal from './Reveal';
 
 const DEFAULT_LOCALE = 'de';
 const ROTATION_INTERVAL = 3000; // ms
@@ -77,62 +78,64 @@ const SponsorsSection: React.FC = () => {
 
   return (
     <section className="py-20 bg-white overflow-hidden">
-      {/* Title */}
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-thin text-[#1a1a1a] mb-10 text-left">
-          {t('sponsorsSection.title')}
-        </h2>
-      </div>
+      <Reveal>
+        {/* Title */}
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-thin text-[#1a1a1a] mb-10 text-left">
+            {t('sponsorsSection.title')}
+          </h2>
+        </div>
 
-      {/* Slider */}
-      <div className="container mx-auto">
-        <div className="relative w-full overflow-hidden">
-          <div className="px-4">
-            <div
-              ref={sliderRef}
-              className="flex"
-              style={{
-                width: `${(sponsorImages.length / visibleSlots) * 100}%`,
-                transform: `translateX(-${(offset * 100) / sponsorImages.length}%)`,
-                transition: isTransitioning ? `transform ${SLIDE_DURATION}ms ease-in-out` : 'none',
-              }}
-            >
-              {sponsorImages.map((src, i) => (
-                <div key={i} className="flex-1 flex justify-center items-center px-2">
-                  <img
-                    src={src}
-                    alt={`Sponsor ${i + 1}`}
-                    className="w-36 md:w-52 lg:w-64 grayscale hover:grayscale-0 transition duration-300 object-contain"
-                  />
-                </div>
-              ))}
+        {/* Slider */}
+        <div className="container mx-auto">
+          <div className="relative w-full overflow-hidden">
+            <div className="px-4">
+              <div
+                ref={sliderRef}
+                className="flex"
+                style={{
+                  width: `${(sponsorImages.length / visibleSlots) * 100}%`,
+                  transform: `translateX(-${(offset * 100) / sponsorImages.length}%)`,
+                  transition: isTransitioning ? `transform ${SLIDE_DURATION}ms ease-in-out` : 'none',
+                }}
+              >
+                {sponsorImages.map((src, i) => (
+                  <div key={i} className="flex-1 flex justify-center items-center px-2">
+                    <img
+                      src={src}
+                      alt={`Sponsor ${i + 1}`}
+                      className="w-36 md:w-52 lg:w-64 grayscale hover:grayscale-0 transition duration-300 object-contain"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Button */}
-      <div className="container mx-auto px-4 flex justify-center mt-10">
-        <Link
-          to="/sponsor-contact"
-          className="relative inline-block text-[#8B1D24] cursor-pointer text-center pb-1"
-        >
-          {t('header.join')}
-          <svg
-            viewBox="0 0 100 20"
-            preserveAspectRatio="none"
-            className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[85px] h-[6px]"
+        {/* Button */}
+        <div className="container mx-auto px-4 flex justify-center mt-10">
+          <Link
+            to="/sponsor-contact"
+            className="relative inline-block text-[#8B1D24] cursor-pointer text-center pb-1"
           >
-            <path
-              d="M0,20 Q50,-10 100,20"
-              fill="none"
-              stroke="#a51e28"
-              strokeWidth="8"
-              strokeLinecap="round"
-            />
-          </svg>
-        </Link>
-      </div>
+            {t('header.join')}
+            <svg
+              viewBox="0 0 100 20"
+              preserveAspectRatio="none"
+              className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[85px] h-[6px]"
+            >
+              <path
+                d="M0,20 Q50,-10 100,20"
+                fill="none"
+                stroke="#a51e28"
+                strokeWidth="8"
+                strokeLinecap="round"
+              />
+            </svg>
+          </Link>
+        </div>
+      </Reveal>
     </section>
   );
 };

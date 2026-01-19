@@ -5,6 +5,7 @@ import ContactForm from '../components/ContactForm';
 import { Link } from 'react-router-dom';
 import client from '../contentfulClient';
 import ContactSponsors from '../components/ContactSponsors';
+import Reveal from '../components/Reveal';
 
 const DEFAULT_LOCALE = 'de';
 
@@ -76,34 +77,38 @@ const SponsorsPage: React.FC = () => {
       </nav>
 
       {/* Title and Description */}
-      <h1 className="text-4xl md:text-5xl font-thin mb-6 text-center md:text-left">
-        {title}
-      </h1>
+      <Reveal>
+        <h1 className="text-4xl md:text-5xl font-thin mb-6 text-center md:text-left">
+          {title}
+        </h1>
 
-      <p className="text-lg md:text-xl text-gray-500 leading-relaxed mb-16 text-center md:text-left">
-        {description}
-        <br />
-        {t('sponsorsSection.callToAction')}
-      </p>
+        <p className="text-lg md:text-xl text-gray-500 leading-relaxed mb-16 text-center md:text-left">
+          {description}
+          <br />
+          {t('sponsorsSection.callToAction')}
+        </p>
+      </Reveal>
 
       {/* Sponsors Logo Grid */}
-      <div className="grid grid-cols-2 gap-x-12 gap-y-16 justify-items-center">
-        {sponsorImages.length > 0 ? (
-          sponsorImages.map((src, i) => (
-            <img
-              key={i}
-              src={src}
-              alt={t('sponsorsSection.sponsorAlt', { number: i + 1 })}
-              className="w-80 object-contain grayscale hover:grayscale-0 transition duration-300"
-              style={{ alignSelf: 'center' }}
-            />
-          ))
-        ) : (
-          <p className="col-span-2 text-gray-500">
-            Keine Sponsoren verfügbar.
-          </p>
-        )}
-      </div>
+      <Reveal delay={0.2}>
+        <div className="grid grid-cols-2 gap-x-12 gap-y-16 justify-items-center">
+          {sponsorImages.length > 0 ? (
+            sponsorImages.map((src, i) => (
+              <img
+                key={i}
+                src={src}
+                alt={t('sponsorsSection.sponsorAlt', { number: i + 1 })}
+                className="w-80 object-contain grayscale hover:grayscale-0 transition duration-300"
+                style={{ alignSelf: 'center' }}
+              />
+            ))
+          ) : (
+            <p className="col-span-2 text-gray-500">
+              Keine Sponsoren verfügbar.
+            </p>
+          )}
+        </div>
+      </Reveal>
 
       <ContactSponsors />
     </section>

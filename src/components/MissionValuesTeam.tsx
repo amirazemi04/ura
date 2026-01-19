@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import client from '../contentfulClient';
+import Reveal from './Reveal';
 
 type Tab = 'mission' | 'values' | 'team';
 
@@ -63,56 +64,58 @@ const MissionValuesTeam = () => {
 
   return (
     <section className="px-6 py-12 bg-white">
-      <div className="container mx-auto">
-        {/* Tabs */}
-        <div className="flex space-x-24 mb-8">
-          {(['mission', 'values', 'team'] as Tab[]).map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className="relative pb-1 text-lg font-medium text-gray-700 hover:text-[#8B1D24] font-myfont"
-            >
-              <span>
-                {tab === 'mission'
-                  ? i18n.language === 'sq' ? 'Misioni' : 'Mission'
-                  : tab === 'values'
-                  ? i18n.language === 'sq' ? 'Vlerat' : 'Werte'
-                  : i18n.language === 'sq' ? 'Ekipi' : 'Team'}
-              </span>
+      <Reveal>
+        <div className="container mx-auto">
+          {/* Tabs */}
+          <div className="flex space-x-24 mb-8">
+            {(['mission', 'values', 'team'] as Tab[]).map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className="relative pb-1 text-lg font-medium text-gray-700 hover:text-[#8B1D24] font-myfont"
+              >
+                <span>
+                  {tab === 'mission'
+                    ? i18n.language === 'sq' ? 'Misioni' : 'Mission'
+                    : tab === 'values'
+                    ? i18n.language === 'sq' ? 'Vlerat' : 'Werte'
+                    : i18n.language === 'sq' ? 'Ekipi' : 'Team'}
+                </span>
 
-              {activeTab === tab && (
-                <svg
-                  viewBox="0 0 100 20"
-                  preserveAspectRatio="none"
-                  className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[60px] h-[6px]"
-                >
-                  <path
-                    d="M0,20 Q50,-10 100,20"
-                    fill="none"
-                    stroke="#a51e28"
-                    strokeWidth="7"
-                    strokeLinecap="round"
-                  />
-                </svg>
+                {activeTab === tab && (
+                  <svg
+                    viewBox="0 0 100 20"
+                    preserveAspectRatio="none"
+                    className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[60px] h-[6px]"
+                  >
+                    <path
+                      d="M0,20 Q50,-10 100,20"
+                      fill="none"
+                      stroke="#a51e28"
+                      strokeWidth="7"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                )}
+              </button>
+            ))}
+          </div>
+
+          {/* Content */}
+          <div className="max-w-4xl flex justify-start">
+          <div className="transition-all duration-500 ease-in-out text-[#7c7c7c] leading-relaxed text-[18px] whitespace-pre-line">
+
+              {contents[activeTab] || (
+                <p className="text-gray-400 italic">
+                  {i18n.language === 'sq'
+                    ? 'Përmbajtja nuk është në dispozicion.'
+                    : 'Content is not available.'}
+                </p>
               )}
-            </button>
-          ))}
-        </div>
-
-        {/* Content */}
-        <div className="max-w-4xl flex justify-start">
-        <div className="transition-all duration-500 ease-in-out text-[#7c7c7c] leading-relaxed text-[18px] whitespace-pre-line">
-
-            {contents[activeTab] || (
-              <p className="text-gray-400 italic">
-                {i18n.language === 'sq'
-                  ? 'Përmbajtja nuk është në dispozicion.'
-                  : 'Content is not available.'}
-              </p>
-            )}
+            </div>
           </div>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 };

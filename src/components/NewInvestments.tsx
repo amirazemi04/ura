@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import client from '../contentfulClient';
+import Reveal from './Reveal';
 
 interface NewsItem {
   id: string;
@@ -122,7 +123,7 @@ const NewInvestments = () => {
     <section className="px-6 py-12 bg-white">
       <div className="container mx-auto grid grid-cols-1 lg:grid-cols-[55%_45%] gap-10">
         {/* Left Column: static image */}
-        <div>
+        <Reveal>
           <div className="h-[550px] w-full overflow-hidden shadow-xl">
             {leftImage ? (
               <img
@@ -136,44 +137,46 @@ const NewInvestments = () => {
               </div>
             )}
           </div>
-        </div>
+        </Reveal>
 
         {/* Right Column: news */}
-        <Link
-          to={`/news/${newsItem.id}`}
-          className="flex flex-col justify-between transition-transform duration-300 hover:scale-[1.02] h-[550px]"
-        >
-          <div className="h-[400px] overflow-hidden shadow-xl">
-            {newsItem.image ? (
-              <img
-                src={newsItem.image}
-                alt={newsItem.title}
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-                <p>
-                  {i18n.language === 'sq' ? 'Asnjë imazh i disponueshëm' : 'Kein Bild verfügbar'}
-                </p>
-              </div>
-            )}
-          </div>
+        <Reveal delay={0.2}>
+          <Link
+            to={`/news/${newsItem.id}`}
+            className="flex flex-col justify-between transition-transform duration-300 hover:scale-[1.02] h-[550px]"
+          >
+            <div className="h-[400px] overflow-hidden shadow-xl">
+              {newsItem.image ? (
+                <img
+                  src={newsItem.image}
+                  alt={newsItem.title}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full bg-gray-100 flex items-center justify-center">
+                  <p>
+                    {i18n.language === 'sq' ? 'Asnjë imazh i disponueshëm' : 'Kein Bild verfügbar'}
+                  </p>
+                </div>
+              )}
+            </div>
 
-          <div className="bg-[#a51e28] text-white px-7 py-4 -mt-16">
-            <h3 className="text-lg font-semibold">{newsItem.title}</h3>
-          </div>
+            <div className="bg-[#a51e28] text-white px-7 py-4 -mt-16">
+              <h3 className="text-lg font-semibold">{newsItem.title}</h3>
+            </div>
 
-          <div className="mt-2 text-[#333333] leading-relaxed px-2 sm:px-5">
-            <p className="text-sm">{newsItem.description}</p>
-          </div>
+            <div className="mt-2 text-[#333333] leading-relaxed px-2 sm:px-5">
+              <p className="text-sm">{newsItem.description}</p>
+            </div>
 
-          <hr className="border-t border-[#DDDDDD] my-2 mx-4 sm:mx-7" />
+            <hr className="border-t border-[#DDDDDD] my-2 mx-4 sm:mx-7" />
 
-          <div className="flex justify-between items-center text-xs italic text-[#333333] px-4 sm:px-7">
-            <p>by {newsItem.author}</p>
-            <p>{newsItem.date}</p>
-          </div>
-        </Link>
+            <div className="flex justify-between items-center text-xs italic text-[#333333] px-4 sm:px-7">
+              <p>by {newsItem.author}</p>
+              <p>{newsItem.date}</p>
+            </div>
+          </Link>
+        </Reveal>
       </div>
     </section>
   );

@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import client from '../contentfulClient';
+import Reveal from '../components/Reveal';
 
 interface NewsItem {
   id: string;
@@ -96,11 +97,13 @@ const BlogPage = () => {
         className="container mx-auto px-4 sm:px-6 mt-12 sm:mt-16 mb-20 sm:mb-24 space-y-12 sm:space-y-16"
         ref={reservationRef}
       >
-        <div className="text-center mb-12">
-          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-            {i18n.language === 'sq' ? 'Blogu' : 'Blog'}
-          </h1>
-        </div>
+        <Reveal>
+          <div className="text-center mb-12">
+            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
+              {i18n.language === 'sq' ? 'Blogu' : 'Blog'}
+            </h1>
+          </div>
+        </Reveal>
 
         {newsItems.length === 0 ? (
           <div className="text-center text-gray-500">
@@ -108,12 +111,12 @@ const BlogPage = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {currentNews.map((news) => (
-              <Link
-                key={news.id}
-                to={`/news/${news.id}`}
-                className="flex flex-col justify-between transition-transform duration-300 hover:scale-[1.02] h-auto min-h-[550px] sm:min-h-[600px]"
-              >
+            {currentNews.map((news, index) => (
+              <Reveal key={news.id} delay={index * 0.1}>
+                <Link
+                  to={`/news/${news.id}`}
+                  className="flex flex-col justify-between transition-transform duration-300 hover:scale-[1.02] h-auto min-h-[550px] sm:min-h-[600px]"
+                >
                 <div>
                   <div className="h-[250px] sm:h-[300px] overflow-hidden">
                     {news.image ? (
@@ -143,6 +146,7 @@ const BlogPage = () => {
                   <p>{news.date}</p>
                 </div>
               </Link>
+            </Reveal>
             ))}
           </div>
         )}
