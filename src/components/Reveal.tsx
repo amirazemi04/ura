@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactNode } from "react";
-import { motion, type Variants } from "motion/react";
+import { motion, type Variants } from "framer-motion";
 
 interface RevealProps {
   children: ReactNode;
@@ -29,14 +29,22 @@ export default function Reveal({
     return () => mediaQuery.removeEventListener("change", handler);
   }, []);
 
-  const offset =
-    direction === "up"
-      ? { x: 0, y: 50 }
-      : direction === "down"
-      ? { x: 0, y: -50 }
-      : direction === "left"
-      ? { x: 50, y: 0 }
-      : { x: -50, y: 0 };
+  const getDirectionOffset = () => {
+    switch (direction) {
+      case "up":
+        return { x: 0, y: 50 };
+      case "down":
+        return { x: 0, y: -50 };
+      case "left":
+        return { x: 50, y: 0 };
+      case "right":
+        return { x: -50, y: 0 };
+      default:
+        return { x: 0, y: 50 };
+    }
+  };
+
+  const offset = getDirectionOffset();
 
   const variants: Variants = {
     hidden: {
