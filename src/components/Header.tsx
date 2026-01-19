@@ -57,7 +57,7 @@ const Header = () => {
                 <Link
                   key={index}
                   to={item.path}
-                  className={`relative font-medium py-2 px-4 rounded transition duration-300 hover:text-red-200 ${
+                  className={`relative font-medium py-2 px-4 rounded transition duration-300 hover:text-red-200 font-myfont ${
                     isActive ? 'after:opacity-100' : 'after:opacity-0'
                   } after:content-[""] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-full after:bg-white after:transition-opacity after:duration-300 hover:after:opacity-100`}
                 >
@@ -70,13 +70,13 @@ const Header = () => {
             <div className="relative" ref={langRef}>
               <button
                 onClick={() => setIsLangOpen(!isLangOpen)}
-                className="flex items-center gap-1 py-2 px-4 font-medium hover:text-red-200"
+                className="flex items-center gap-1 py-2 px-4 font-medium hover:text-red-200 font-myfont"
               >
                 <Globe size={18} />
                 <ChevronDown size={16} />
               </button>
               {isLangOpen && (
-                <div className="absolute left-0 mt-2 bg-white text-[#a51e28] shadow-md rounded text-sm z-50 min-w-max text-left">
+                <div className="absolute left-0 mt-2 bg-white text-[#a51e28] shadow-md rounded text-sm z-50 min-w-max text-left font-myfont">
                   <button
                     onClick={() => changeLanguage('de')}
                     className="block w-full px-4 py-2 hover:bg-red-100 whitespace-nowrap text-left"
@@ -97,13 +97,13 @@ const Header = () => {
             <div className="relative" ref={joinRef}>
               <button
                 onClick={() => setIsJoinOpen(!isJoinOpen)}
-                className="bg-white text-[#a51e28] font-semibold py-2 px-4 rounded hover:bg-red-100 transition duration-300 flex items-center gap-2"
+                className="bg-white text-[#a51e28] font-semibold py-2 px-4 rounded hover:bg-red-100 transition duration-300 flex items-center gap-2 font-myfont"
               >
                 {t('header.join')}
                 <ChevronDown size={16} />
               </button>
               {isJoinOpen && (
-                <div className="absolute right-0 mt-2 bg-white text-[#a51e28] shadow-md rounded z-50 text-sm min-w-max text-right">
+                <div className="absolute right-0 mt-2 bg-white text-[#a51e28] shadow-md rounded z-50 text-sm min-w-max text-right font-myfont">
                   <Link
                     to="/join-us"
                     className="block px-4 py-2 hover:bg-red-100 text-right whitespace-nowrap"
@@ -144,7 +144,7 @@ const Header = () => {
                 <Link
                   key={index}
                   to={item.path}
-                  className={`block py-2 sm:py-3 px-3 sm:px-4 rounded text-base sm:text-lg transition duration-200 text-center ${
+                  className={`block py-2 sm:py-3 px-3 sm:px-4 rounded text-base sm:text-lg transition duration-200 text-center font-myfont ${
                     isActive ? 'bg-red-900' : 'hover:bg-red-800'
                   }`}
                   onClick={() => setIsMenuOpen(false)}
@@ -158,13 +158,13 @@ const Header = () => {
             <div className="text-center pt-2">
               <button
                 onClick={() => setIsJoinOpenMobile(!isJoinOpenMobile)}
-                className="bg-white text-[#a51e28] font-semibold py-2 px-3 sm:px-4 rounded hover:bg-red-100 transition duration-300 flex items-center justify-center gap-2 w-full text-base sm:text-lg"
+                className="bg-white text-[#a51e28] font-semibold py-2 px-3 sm:px-4 rounded hover:bg-red-100 transition duration-300 flex items-center justify-center gap-2 w-full text-base sm:text-lg font-myfont"
               >
                 {t('header.join')}
                 <ChevronDown size={16} />
               </button>
               {isJoinOpenMobile && (
-                <div className="mt-2 space-y-2">
+                <div className="mt-2 space-y-2 font-myfont">
                   <Link
                     to="/join-us"
                     className="block bg-white text-[#a51e28] font-medium py-2 rounded hover:bg-red-100"
@@ -190,7 +190,7 @@ const Header = () => {
             </div>
 
             {/* Language switch mobile */}
-            <div className="flex justify-center gap-3 sm:gap-4 pt-4">
+            <div className="flex justify-center gap-3 sm:gap-4 pt-4 font-myfont">
               <button
                 onClick={() => {
                   changeLanguage('de');
