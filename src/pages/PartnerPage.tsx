@@ -147,7 +147,7 @@ const PartnerPage: React.FC = () => {
                 </h2>
 
                 {expandedId === partner.id && (
-                  <div className="w-full md:max-w-[50%]">
+                  <div className="w-full md:max-w-[70%]">
                     <p className="text-sm md:text-base text-gray-600 leading-relaxed font-myfont whitespace-pre-line text-left md:text-right">
                       {partner.description}
                     </p>
