@@ -101,7 +101,7 @@ const PartnerPage: React.FC = () => {
                   alt={partner.name}
                   className="w-24 h-24 md:w-32 md:h-32 object-contain grayscale"
                 />
-                {expandedId === partner.id && partner.social && (
+                {partner.social && (
                   <div className="flex gap-4">
                     {partner.social.instagram && (
                       <a
@@ -135,7 +135,7 @@ const PartnerPage: React.FC = () => {
 
             {expandedId === partner.id && (
               <div className="mt-4 pb-6 pl-0 md:pl-40">
-                <p className="text-sm md:text-base text-gray-600 leading-relaxed font-myfont whitespace-pre-line">
+                <p className="text-sm md:text-base text-gray-600 leading-relaxed font-myfont whitespace-pre-line max-w-full md:max-w-[50%]">
                   {partner.description}
                 </p>
               </div>
