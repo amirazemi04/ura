@@ -139,7 +139,8 @@ export default function Gallery() {
           </div>
         </Reveal>
 
-{/* DESIGN-MATCHED GRID */}
+
+        {/* DESIGN-MATCHED GRID */}
 <Reveal delay={0.2}>
   <div className="grid grid-cols-4 auto-rows-[180px] gap-4">
 
@@ -175,7 +176,6 @@ export default function Gallery() {
   </div>
 </Reveal>
 
-        </Reveal>
       </div>
 
       <Lightbox
