@@ -62,7 +62,7 @@ export default function Gallery() {
                     const assetData = await client.getAsset(asset.sys.id, { locale: DEFAULT_LOCALE });
                     if (!assetData?.fields?.file?.url) return null;
                     return {
-                      src: `https:${assetData.fields.file.url}?w=1200&fm=webp`,
+                      src: `https:${assetData.fields.file.url}?w=1600&fm=webp`,
                       alt: assetData.fields.title || t('gallery.imageAlt', { number: index + 1 }),
                     };
                   } catch {
@@ -87,12 +87,8 @@ export default function Gallery() {
 
         const catList = Object.keys(tmp);
         setCategories(catList);
-        setActiveFilter((prev) => (catList.includes(prev) ? prev : catList[0] || ''));
+        setActiveFilter(catList[0] || '');
         setImagesByCat(tmp);
-      } catch {
-        setImagesByCat({});
-        setCategories([]);
-        setActiveFilter('');
       } finally {
         setLoading(false);
       }
@@ -104,11 +100,7 @@ export default function Gallery() {
   const currentCategoryIndex = categories.indexOf(activeFilter);
   const images = imagesByCat[activeFilter] || [];
 
-  if (loading || !categories.length || !images.length) return null;
-
-  const handleCategoryChange = (index: number) => {
-    setActiveFilter(categories[index]);
-  };
+  if (loading || !images.length) return null;
 
   return (
     <section className="py-16 bg-white" id="gallery">
@@ -116,17 +108,17 @@ export default function Gallery() {
 
         {/* Header */}
         <Reveal>
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-12">
+          <div className="flex justify-between items-start mb-12">
             <h2 className="text-4xl sm:text-5xl font-light text-[#333333]">
               {activeFilter}
             </h2>
 
-            <div className="flex items-center gap-4 mt-6 sm:mt-0">
+            <div className="flex items-center gap-4">
               {categories.map((_, index) => (
                 <button
                   key={index}
-                  onClick={() => handleCategoryChange(index)}
-                  className={`text-lg font-light transition-colors ${
+                  onClick={() => setActiveFilter(categories[index])}
+                  className={`text-lg font-light ${
                     currentCategoryIndex === index
                       ? 'text-black font-medium'
                       : 'text-gray-400 hover:text-gray-600'
@@ -135,11 +127,10 @@ export default function Gallery() {
                   {(index + 1).toString().padStart(2, '0')}
                 </button>
               ))}
-
               {currentCategoryIndex < categories.length - 1 && (
                 <button
-                  onClick={() => handleCategoryChange(currentCategoryIndex + 1)}
-                  className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition-colors"
+                  onClick={() => setActiveFilter(categories[currentCategoryIndex + 1])}
+                  className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center"
                 >
                   <ChevronRight className="w-4 h-4" />
                 </button>
@@ -148,31 +139,40 @@ export default function Gallery() {
           </div>
         </Reveal>
 
-        {/* Masonry Gallery */}
+        {/* DESIGN-MATCHED GRID */}
         <Reveal delay={0.2}>
-          <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
-            {images.map((image, index) => (
-              <div
-                key={index}
-                className="break-inside-avoid relative overflow-hidden bg-gray-100 cursor-pointer hover:opacity-90 transition-opacity"
-                onClick={() => {
-                  setLightboxIndex(index);
-                  setLightboxOpen(true);
-                }}
-              >
-                <img
-                  src={image.src}
-                  alt={image.alt}
-                  className="w-full h-auto object-cover"
-                  loading="lazy"
-                />
-              </div>
-            ))}
+          <div className="grid grid-cols-4 auto-rows-[180px] gap-4">
+
+            {images.map((image, index) => {
+              const isHero = index === 1 || index === 6 || index === 11;
+              const isTall = index === 3 || index === 8 || index === 14;
+
+              return (
+                <div
+                  key={index}
+                  onClick={() => {
+                    setLightboxIndex(index);
+                    setLightboxOpen(true);
+                  }}
+                  className={`relative overflow-hidden cursor-pointer
+                    ${isHero ? 'col-span-2 row-span-2' : ''}
+                    ${isTall ? 'row-span-2' : ''}
+                  `}
+                >
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
+              );
+            })}
+
           </div>
         </Reveal>
       </div>
 
-      {/* Lightbox */}
       <Lightbox
         open={lightboxOpen}
         close={() => setLightboxOpen(false)}
