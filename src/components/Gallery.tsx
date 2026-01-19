@@ -114,7 +114,6 @@ export default function Gallery() {
 
   const handleCategoryChange = (index: number) => {
     setActiveFilter(categories[index]);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
