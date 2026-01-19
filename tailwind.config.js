@@ -13,8 +13,9 @@ export default {
         },
       },
       fontFamily: {
-        myfont: ['MyFont', 'sans-serif'],        // Erbaum
-        handsome: ['HandsomePro', 'cursive'],    // Handsome Pro (OTF)
+        sans: ['Erbaum', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+        myfont: ['Erbaum', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+        handsome: ['HandsomePro', 'cursive'],
       },
     },
   },
