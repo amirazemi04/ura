@@ -7,7 +7,6 @@ import Reveal from './Reveal';
 import { ChevronRight } from 'lucide-react';
 
 const DEFAULT_LOCALE = 'de';
-const IMAGES_PER_PAGE = 12;
 
 interface GalleryImage {
   src: string;
@@ -28,7 +27,6 @@ export default function Gallery() {
   const [categories, setCategories] = useState<string[]>([]);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     if (!i18n.isInitialized) return;
@@ -103,15 +101,8 @@ export default function Gallery() {
     fetchGallery();
   }, [i18n.language, t, i18n.isInitialized]);
 
+  const currentCategoryIndex = categories.indexOf(activeFilter);
   const images = imagesByCat[activeFilter] || [];
-  const totalPages = Math.ceil(images.length / IMAGES_PER_PAGE);
-  const startIndex = (currentPage - 1) * IMAGES_PER_PAGE;
-  const endIndex = startIndex + IMAGES_PER_PAGE;
-  const currentImages = images.slice(startIndex, endIndex);
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [activeFilter]);
 
   if (loading) {
     return null;
@@ -121,15 +112,15 @@ export default function Gallery() {
     return null;
   }
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
+  const handleCategoryChange = (index: number) => {
+    setActiveFilter(categories[index]);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
     <section className="py-16 bg-white" id="gallery">
       <div className="container mx-auto px-4 sm:px-6">
-        {/* Header with Category and Pagination */}
+        {/* Header with Category and Pagination Numbers */}
         <Reveal>
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-12">
             <div className="mb-6 sm:mb-0">
@@ -154,22 +145,22 @@ export default function Gallery() {
             </div>
 
             <div className="flex items-center gap-4">
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              {categories.map((cat, index) => (
                 <button
-                  key={page}
-                  onClick={() => handlePageChange(page)}
+                  key={cat}
+                  onClick={() => handleCategoryChange(index)}
                   className={`text-lg font-light transition-colors duration-200 ${
-                    currentPage === page
+                    currentCategoryIndex === index
                       ? 'text-black font-medium'
                       : 'text-gray-400 hover:text-gray-600'
                   }`}
                 >
-                  {page.toString().padStart(2, '0')}
+                  {(index + 1).toString().padStart(2, '0')}
                 </button>
               ))}
-              {currentPage < totalPages && (
+              {currentCategoryIndex < categories.length - 1 && (
                 <button
-                  onClick={() => handlePageChange(currentPage + 1)}
+                  onClick={() => handleCategoryChange(currentCategoryIndex + 1)}
                   className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition-colors"
                 >
                   <ChevronRight className="w-4 h-4" />
@@ -182,12 +173,12 @@ export default function Gallery() {
         {/* Gallery Grid */}
         <Reveal delay={0.2}>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {currentImages.map((image, index) => (
+            {images.map((image, index) => (
               <div
                 key={index}
                 className="relative overflow-hidden bg-gray-100 aspect-[4/3] cursor-pointer hover:opacity-90 transition-opacity"
                 onClick={() => {
-                  setLightboxIndex(startIndex + index);
+                  setLightboxIndex(index);
                   setLightboxOpen(true);
                 }}
               >
