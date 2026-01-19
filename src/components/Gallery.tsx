@@ -140,14 +140,29 @@ export default function Gallery() {
         </Reveal>
 
 
-        {/* DESIGN-MATCHED GRID */}
-<Reveal delay={0.2}>
+        <Reveal delay={0.2}>
   <div className="grid grid-cols-4 auto-rows-[180px] gap-4">
 
     {images.map((image, index) => {
-      const isBigLeft = index === 0;        // 👈 FIRST block taller
-      const isHero = index === 1 || index === 6 || index === 11;
-      const isTall = index === 3 || index === 8 || index === 14;
+      let span = '';
+
+      // ROW 1
+      if (index === 0) span = 'row-span-2';                 // Left tall
+      if (index === 1) span = 'col-span-2 row-span-2';      // Middle big hero
+      if (index === 2) span = 'row-span-1';                 // Right top small
+      if (index === 3) span = 'row-span-1';                 // Right bottom small
+
+      // ROW 2
+      if (index === 4) span = 'col-span-2 row-span-2';      // Big left
+      if (index === 5) span = 'row-span-2';                 // Tall middle
+      if (index === 6) span = 'row-span-1';
+      if (index === 7) span = 'row-span-1';
+
+      // ROW 3
+      if (index === 8) span = 'row-span-2';
+      if (index === 9) span = 'col-span-2 row-span-2';
+      if (index === 10) span = 'row-span-1';
+      if (index === 11) span = 'row-span-1';
 
       return (
         <div
@@ -156,12 +171,7 @@ export default function Gallery() {
             setLightboxIndex(index);
             setLightboxOpen(true);
           }}
-          className={`
-            relative overflow-hidden cursor-pointer
-            ${isBigLeft ? 'row-span-2' : ''}
-            ${isHero ? 'col-span-2 row-span-2' : ''}
-            ${isTall ? 'row-span-2' : ''}
-          `}
+          className={`relative overflow-hidden cursor-pointer ${span}`}
         >
           <img
             src={image.src}
