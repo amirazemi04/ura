@@ -80,7 +80,9 @@ const HeroSection = () => {
           </svg>
         </span>
       ),
-      [MARKS.BOLD]: (text) => <strong className="font-bold text-black">{text}</strong>,
+      [MARKS.BOLD]: (text) => (
+        <strong className="font-bold text-black">{text}</strong>
+      ),
     },
   };
 
@@ -89,7 +91,10 @@ const HeroSection = () => {
       <div className="container mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-10 lg:gap-6 items-center">
           {/* Left Column */}
-          <Reveal className="lg:col-span-6 text-center lg:text-left space-y-3" delay={0.1}>
+          <Reveal
+            className="lg:col-span-6 text-center lg:text-left space-y-3"
+            delay={0.1}
+          >
             <h1 className="text-3xl lg:text-6xl font-light text-[#333333] tracking-wide font-myfont whitespace-pre-line">
               {heading}
             </h1>
@@ -99,7 +104,10 @@ const HeroSection = () => {
           </Reveal>
 
           {/* Right Column */}
-          <Reveal className="lg:col-span-6 flex justify-center lg:justify-start text-center lg:text-left lg:pl-28" delay={0.3}>
+          <Reveal
+            className="lg:col-span-6 flex justify-center lg:justify-start text-center lg:text-left lg:pl-28"
+            delay={0.3}
+          >
             <div className="max-w-xl px-2 sm:px-0 text-[#7c7c7c] text-base sm:text-lg leading-relaxed font-myfont">
               {heroImage && (
                 <div className="mb-6 w-full h-64 sm:h-80">
@@ -117,7 +125,11 @@ const HeroSection = () => {
                   {documentToReactComponents(description, options)}
                 </div>
               ) : (
-                <p>{i18n.language === 'sq' ? 'Përshkrimi mungon.' : 'Beschreibung fehlt.'}</p>
+                <p>
+                  {i18n.language === 'sq'
+                    ? 'Përshkrimi mungon.'
+                    : 'Beschreibung fehlt.'}
+                </p>
               )}
             </div>
           </Reveal>
