@@ -1,74 +1,101 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from "react-helmet-async";
 import { Link } from 'react-router-dom';
-import { FaInstagram, FaLinkedin } from 'react-icons/fa';
-import sponsor1 from '../assets/sponsor1.png';
-import sponsor2 from '../assets/sponsor2.png';
-import sponsor3 from '../assets/sponsor3.png';
-import sponsor4 from '../assets/sponsor4.png';
+import { FaInstagram, FaLinkedin, FaFacebook, FaTwitter, FaYoutube, FaGlobe } from 'react-icons/fa';
+import contentfulClient from '../contentfulClient';
 
 interface Partner {
-  id: number;
+  id: string;
   name: string;
   logo: string;
   description: string;
-  social?: {
-    instagram?: string;
-    linkedin?: string;
-  };
+  instagramLink?: string;
+  linkedinLink?: string;
+  facebookLink?: string;
+  twitterLink?: string;
+  youtubeLink?: string;
+  websiteLink?: string;
 }
 
 const PartnerPage: React.FC = () => {
-  const { t } = useTranslation();
-  const [expandedId, setExpandedId] = useState<number | null>(null);
+  const { t, i18n } = useTranslation();
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [partners, setPartners] = useState<Partner[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const partners: Partner[] = [
-    {
-      id: 1,
-      name: 'amag',
-      logo: sponsor1,
-      description: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.\n\nLorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.\n\nLorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
-      social: {
-        instagram: 'https://instagram.com',
-        linkedin: 'https://linkedin.com',
-      }
-    },
-    {
-      id: 2,
-      name: 'Audi',
-      logo: sponsor2,
-      description: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.',
-      social: {
-        instagram: 'https://instagram.com',
-        linkedin: 'https://linkedin.com',
-      }
-    },
-    {
-      id: 3,
-      name: 'Chanel',
-      logo: sponsor3,
-      description: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.',
-      social: {
-        instagram: 'https://instagram.com',
-        linkedin: 'https://linkedin.com',
-      }
-    },
-    {
-      id: 4,
-      name: 'GUCCI',
-      logo: sponsor4,
-      description: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.',
-      social: {
-        instagram: 'https://instagram.com',
-        linkedin: 'https://linkedin.com',
-      }
-    },
-  ];
+  useEffect(() => {
+    const fetchPartners = async () => {
+      try {
+        setLoading(true);
+        setError(null);
 
-  const togglePartner = (id: number) => {
+        const response = await contentfulClient.getEntries({
+          content_type: 'partner',
+          locale: i18n.language === 'sq' ? 'sq' : 'de',
+          order: ['fields.order', 'sys.createdAt'],
+        });
+
+        const partnersData: Partner[] = response.items.map((item: any) => ({
+          id: item.sys.id,
+          name: item.fields.name || '',
+          logo: item.fields.logo?.fields?.file?.url ? `https:${item.fields.logo.fields.file.url}` : '',
+          description: item.fields.description || '',
+          instagramLink: item.fields.instagramLink || '',
+          linkedinLink: item.fields.linkedinLink || '',
+          facebookLink: item.fields.facebookLink || '',
+          twitterLink: item.fields.twitterLink || '',
+          youtubeLink: item.fields.youtubeLink || '',
+          websiteLink: item.fields.websiteLink || '',
+        }));
+
+        setPartners(partnersData);
+      } catch (err) {
+        console.error('Error fetching partners:', err);
+        setError('Failed to load partners. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPartners();
+  }, [i18n.language]);
+
+  const togglePartner = (id: string) => {
     setExpandedId(expandedId === id ? null : id);
   };
+
+  if (loading) {
+    return (
+      <section className="container mx-auto px-4 sm:px-6 mb-6 sm:mb-8">
+        <Helmet>
+          <title>{t('header.partner')} – Ansambli Ura</title>
+        </Helmet>
+        <div className="flex items-center justify-center min-h-[400px]">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#a51e28] mx-auto mb-4"></div>
+            <p className="text-gray-600 font-myfont">Loading partners...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="container mx-auto px-4 sm:px-6 mb-6 sm:mb-8">
+        <Helmet>
+          <title>{t('header.partner')} – Ansambli Ura</title>
+        </Helmet>
+        <div className="flex items-center justify-center min-h-[400px]">
+          <div className="text-center">
+            <p className="text-red-600 font-myfont">{error}</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="container mx-auto px-4 sm:px-6 mb-6 sm:mb-8">
@@ -97,67 +124,131 @@ const PartnerPage: React.FC = () => {
         {t('partner.description')}
       </p>
 
-      <div className="space-y-4 mt-16">
-        {partners.map((partner) => (
-          <div
-            key={partner.id}
-            className="border-b border-gray-300 pb-4"
-          >
-            <div
-              onClick={() => togglePartner(partner.id)}
-              className="flex flex-col md:flex-row md:items-start md:justify-between cursor-pointer hover:opacity-80 transition-opacity py-4 gap-6"
-            >
-              <div className="flex items-center gap-8 md:flex-1">
-                <img
-                  src={partner.logo}
-                  alt={partner.name}
-                  className="w-24 h-24 md:w-32 md:h-32 object-contain grayscale flex-shrink-0"
-                />
-                {partner.social && (
-                  <div className="flex gap-4">
-                    {partner.social.instagram && (
-                      <a
-                        href={partner.social.instagram}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-gray-600 hover:text-gray-900 transition-colors"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <FaInstagram size={24} />
-                      </a>
+      {partners.length === 0 ? (
+        <div className="text-center py-12">
+          <p className="text-gray-600 font-myfont">No partners available at the moment.</p>
+        </div>
+      ) : (
+        <div className="space-y-4 mt-16">
+          {partners.map((partner) => {
+            const hasSocialLinks = partner.instagramLink || partner.linkedinLink ||
+                                   partner.facebookLink || partner.twitterLink ||
+                                   partner.youtubeLink || partner.websiteLink;
+
+            return (
+              <div
+                key={partner.id}
+                className="border-b border-gray-300 pb-4"
+              >
+                <div
+                  onClick={() => togglePartner(partner.id)}
+                  className="flex flex-col md:flex-row md:items-start md:justify-between cursor-pointer hover:opacity-80 transition-opacity py-4 gap-6"
+                >
+                  <div className="flex items-center gap-8 md:flex-1">
+                    {partner.logo && (
+                      <img
+                        src={partner.logo}
+                        alt={partner.name}
+                        className="w-24 h-24 md:w-32 md:h-32 object-contain grayscale flex-shrink-0"
+                      />
                     )}
-                    {partner.social.linkedin && (
-                      <a
-                        href={partner.social.linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-gray-600 hover:text-gray-900 transition-colors"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <FaLinkedin size={24} />
-                      </a>
+                    {hasSocialLinks && (
+                      <div className="flex gap-4 flex-wrap">
+                        {partner.instagramLink && (
+                          <a
+                            href={partner.instagramLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-gray-600 hover:text-[#E4405F] transition-colors"
+                            onClick={(e) => e.stopPropagation()}
+                            aria-label="Instagram"
+                          >
+                            <FaInstagram size={24} />
+                          </a>
+                        )}
+                        {partner.linkedinLink && (
+                          <a
+                            href={partner.linkedinLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-gray-600 hover:text-[#0077B5] transition-colors"
+                            onClick={(e) => e.stopPropagation()}
+                            aria-label="LinkedIn"
+                          >
+                            <FaLinkedin size={24} />
+                          </a>
+                        )}
+                        {partner.facebookLink && (
+                          <a
+                            href={partner.facebookLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-gray-600 hover:text-[#1877F2] transition-colors"
+                            onClick={(e) => e.stopPropagation()}
+                            aria-label="Facebook"
+                          >
+                            <FaFacebook size={24} />
+                          </a>
+                        )}
+                        {partner.twitterLink && (
+                          <a
+                            href={partner.twitterLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-gray-600 hover:text-[#1DA1F2] transition-colors"
+                            onClick={(e) => e.stopPropagation()}
+                            aria-label="Twitter"
+                          >
+                            <FaTwitter size={24} />
+                          </a>
+                        )}
+                        {partner.youtubeLink && (
+                          <a
+                            href={partner.youtubeLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-gray-600 hover:text-[#FF0000] transition-colors"
+                            onClick={(e) => e.stopPropagation()}
+                            aria-label="YouTube"
+                          >
+                            <FaYoutube size={24} />
+                          </a>
+                        )}
+                        {partner.websiteLink && (
+                          <a
+                            href={partner.websiteLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-gray-600 hover:text-gray-900 transition-colors"
+                            onClick={(e) => e.stopPropagation()}
+                            aria-label="Website"
+                          >
+                            <FaGlobe size={24} />
+                          </a>
+                        )}
+                      </div>
                     )}
                   </div>
-                )}
-              </div>
 
-              <div className="md:flex-1 flex flex-col items-start md:items-end gap-4">
-                <h2 className="text-3xl md:text-5xl font-thin font-myfont text-left md:text-right w-full">
-                  {partner.name}
-                </h2>
+                  <div className="md:flex-1 flex flex-col items-start md:items-end gap-4">
+                    <h2 className="text-3xl md:text-5xl font-thin font-myfont text-left md:text-right w-full">
+                      {partner.name}
+                    </h2>
 
-                {expandedId === partner.id && (
-                  <div className="w-full md:max-w-[95%]">
-                    <p className="text-sm md:text-base text-gray-600 leading-relaxed font-myfont whitespace-pre-line text-left">
-                      {partner.description}
-                    </p>
+                    {expandedId === partner.id && partner.description && (
+                      <div className="w-full md:max-w-[95%]">
+                        <p className="text-sm md:text-base text-gray-600 leading-relaxed font-myfont whitespace-pre-line text-left">
+                          {partner.description}
+                        </p>
+                      </div>
+                    )}
                   </div>
-                )}
+                </div>
               </div>
-            </div>
-          </div>
-        ))}
-      </div>
+            );
+          })}
+        </div>
+      )}
     </section>
   );
 };
