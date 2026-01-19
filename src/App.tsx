@@ -10,6 +10,7 @@ import GroupsPage from './pages/GroupsPage';
 import JoinUsPage from './pages/JoinUsPage';
 import SponsorJoinUs from './pages/SponsorJoinUs';
 import GalleryPage from './pages/GalleryPage';
+import BlogPage from './pages/BlogPage';
 import AboutUsPage from './pages/AboutUsPage';
 import SponsorsPage from './pages/SponsorsPage';
 import PartnerPage from './pages/PartnerPage';
@@ -33,6 +34,7 @@ const App = () => {
               <Route path="/join-us" element={<JoinUsPage />} />
               <Route path="/sponsor-contact" element={<SponsorJoinUs />} />
               <Route path="/gallery" element={<GalleryPage />} />
+              <Route path="/blog" element={<BlogPage />} />
               <Route path="/about-us" element={<AboutUsPage />} />
               <Route path="/sponsors" element={<SponsorsPage />} />
               <Route path="/partner" element={<PartnerPage />} />

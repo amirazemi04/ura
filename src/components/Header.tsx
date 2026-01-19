@@ -34,6 +34,7 @@ const Header = () => {
     { key: 'header.about', path: '/about-us' },
     { key: 'header.groups', path: '/groups' },
     { key: 'header.gallery', path: '/gallery' },
+    { key: 'header.blog', path: '/blog' },
     { key: 'header.sponsors', path: '/sponsors' },
     { key: 'header.partner', path: '/partner' },
   ];
