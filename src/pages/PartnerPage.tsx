@@ -33,14 +33,16 @@ const PartnerPage: React.FC = () => {
 
         const response = await contentfulClient.getEntries({
           content_type: 'partner',
-          locale: i18n.language === 'sq' ? 'sq' : 'de',
           order: ['fields.order', 'sys.createdAt'],
+          include: 2,
         });
 
         const partnersData: Partner[] = response.items.map((item: any) => ({
           id: item.sys.id,
           name: item.fields.name || '',
-          logo: item.fields.logo?.fields?.file?.url ? `https:${item.fields.logo.fields.file.url}` : '',
+          logo: item.fields.logo?.fields?.file?.url
+            ? `https:${item.fields.logo.fields.file.url}`
+            : '',
           description: item.fields.description || '',
           instagramLink: item.fields.instagramLink || '',
           linkedinLink: item.fields.linkedinLink || '',
@@ -101,10 +103,7 @@ const PartnerPage: React.FC = () => {
     <section className="container mx-auto px-4 sm:px-6 mb-6 sm:mb-8">
       <Helmet>
         <title>{t('header.partner')} – Ansambli Ura</title>
-        <meta
-          name="description"
-          content={t('partner.description')}
-        />
+        <meta name="description" content={t('partner.description')} />
         <link rel="canonical" href="https://ansambli-ura.ch/partner" />
       </Helmet>
 
@@ -131,15 +130,16 @@ const PartnerPage: React.FC = () => {
       ) : (
         <div className="space-y-4 mt-16">
           {partners.map((partner) => {
-            const hasSocialLinks = partner.instagramLink || partner.linkedinLink ||
-                                   partner.facebookLink || partner.twitterLink ||
-                                   partner.youtubeLink || partner.websiteLink;
+            const hasSocialLinks =
+              partner.instagramLink ||
+              partner.linkedinLink ||
+              partner.facebookLink ||
+              partner.twitterLink ||
+              partner.youtubeLink ||
+              partner.websiteLink;
 
             return (
-              <div
-                key={partner.id}
-                className="border-b border-gray-300 pb-4"
-              >
+              <div key={partner.id} className="border-b border-gray-300 pb-4">
                 <div
                   onClick={() => togglePartner(partner.id)}
                   className="flex flex-col md:flex-row md:items-start md:justify-between cursor-pointer hover:opacity-80 transition-opacity py-4 gap-6"
@@ -152,6 +152,7 @@ const PartnerPage: React.FC = () => {
                         className="w-24 h-24 md:w-32 md:h-32 object-contain grayscale flex-shrink-0"
                       />
                     )}
+
                     {hasSocialLinks && (
                       <div className="flex gap-4 flex-wrap">
                         {partner.instagramLink && (
@@ -166,6 +167,7 @@ const PartnerPage: React.FC = () => {
                             <FaInstagram size={24} />
                           </a>
                         )}
+
                         {partner.linkedinLink && (
                           <a
                             href={partner.linkedinLink}
@@ -178,6 +180,7 @@ const PartnerPage: React.FC = () => {
                             <FaLinkedin size={24} />
                           </a>
                         )}
+
                         {partner.facebookLink && (
                           <a
                             href={partner.facebookLink}
@@ -190,6 +193,7 @@ const PartnerPage: React.FC = () => {
                             <FaFacebook size={24} />
                           </a>
                         )}
+
                         {partner.twitterLink && (
                           <a
                             href={partner.twitterLink}
@@ -202,6 +206,7 @@ const PartnerPage: React.FC = () => {
                             <FaTwitter size={24} />
                           </a>
                         )}
+
                         {partner.youtubeLink && (
                           <a
                             href={partner.youtubeLink}
@@ -214,6 +219,7 @@ const PartnerPage: React.FC = () => {
                             <FaYoutube size={24} />
                           </a>
                         )}
+
                         {partner.websiteLink && (
                           <a
                             href={partner.websiteLink}
