@@ -139,53 +139,61 @@ export default function Gallery() {
           </div>
         </Reveal>
 
-
+        {/* 👉 DESIGN LAYOUT */}
         <Reveal delay={0.2}>
-  <div className="grid grid-cols-4 auto-rows-[180px] gap-4">
+          <div className="space-y-6">
 
-    {images.map((image, index) => {
-      let span = '';
+            {/* Row 1 */}
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+              {images[0] && (
+                <div className="w-full sm:w-[30%] aspect-[3/4] overflow-hidden cursor-pointer"
+                  onClick={() => { setLightboxIndex(0); setLightboxOpen(true); }}>
+                  <img src={images[0].src} alt={images[0].alt} className="w-full h-full object-cover" />
+                </div>
+              )}
 
-      // ROW 1
-      if (index === 0) span = 'row-span-2';                 // Left tall
-      if (index === 1) span = 'col-span-2 row-span-2';      // Middle big hero
-      if (index === 2) span = 'row-span-1';                 // Right top small
-      if (index === 3) span = 'row-span-1';                 // Right bottom small
+              {images[1] && (
+                <div className="w-full sm:w-[50%] aspect-[16/9] overflow-hidden cursor-pointer"
+                  onClick={() => { setLightboxIndex(1); setLightboxOpen(true); }}>
+                  <img src={images[1].src} alt={images[1].alt} className="w-full h-full object-cover" />
+                </div>
+              )}
 
-      // ROW 2
-      if (index === 4) span = 'col-span-2 row-span-2';      // Big left
-      if (index === 5) span = 'row-span-2';                 // Tall middle
-      if (index === 6) span = 'row-span-1';
-      if (index === 7) span = 'row-span-1';
+              <div className="w-full sm:w-[20%] flex sm:flex-col gap-4">
+                {images[2] && (
+                  <div className="w-1/2 sm:w-full aspect-square overflow-hidden cursor-pointer"
+                    onClick={() => { setLightboxIndex(2); setLightboxOpen(true); }}>
+                    <img src={images[2].src} alt={images[2].alt} className="w-full h-full object-cover" />
+                  </div>
+                )}
+                {images[3] && (
+                  <div className="w-1/2 sm:w-full aspect-square overflow-hidden cursor-pointer"
+                    onClick={() => { setLightboxIndex(3); setLightboxOpen(true); }}>
+                    <img src={images[3].src} alt={images[3].alt} className="w-full h-full object-cover" />
+                  </div>
+                )}
+              </div>
+            </div>
 
-      // ROW 3
-      if (index === 8) span = 'row-span-2';
-      if (index === 9) span = 'col-span-2 row-span-2';
-      if (index === 10) span = 'row-span-1';
-      if (index === 11) span = 'row-span-1';
+            {/* Row 2 */}
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+              {images[4] && (
+                <div className="w-full sm:w-[29%] aspect-[3/4] overflow-hidden cursor-pointer"
+                  onClick={() => { setLightboxIndex(4); setLightboxOpen(true); }}>
+                  <img src={images[4].src} alt={images[4].alt} className="w-full h-full object-cover" />
+                </div>
+              )}
 
-      return (
-        <div
-          key={index}
-          onClick={() => {
-            setLightboxIndex(index);
-            setLightboxOpen(true);
-          }}
-          className={`relative overflow-hidden cursor-pointer ${span}`}
-        >
-          <img
-            src={image.src}
-            alt={image.alt}
-            className="w-full h-full object-cover"
-            loading="lazy"
-          />
-        </div>
-      );
-    })}
+              {images[5] && (
+                <div className="w-full sm:w-[71%] aspect-[21/9] overflow-hidden cursor-pointer"
+                  onClick={() => { setLightboxIndex(5); setLightboxOpen(true); }}>
+                  <img src={images[5].src} alt={images[5].alt} className="w-full h-full object-cover" />
+                </div>
+              )}
+            </div>
 
-  </div>
-</Reveal>
-
+          </div>
+        </Reveal>
       </div>
 
       <Lightbox
