@@ -56,17 +56,17 @@ const MissionValuesTeam = () => {
   }
 
   return (
-    <section className="px-6 py-12 bg-white">
+    <section className="px-4 sm:px-6 py-12 bg-white">
       <Reveal>
         <div className="container mx-auto">
 
           {/* Tabs */}
-          <div className="flex space-x-24 mb-8">
+          <div className="flex flex-wrap justify-center sm:justify-start gap-6 sm:gap-24 mb-8">
             {(['mission', 'values', 'team'] as Tab[]).map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className="relative pb-1 text-lg font-medium text-gray-700 hover:text-[#8B1D24] font-myfont"
+                className="relative pb-2 text-base sm:text-lg font-medium text-gray-700 hover:text-[#8B1D24] font-myfont"
               >
                 <span>
                   {tab === 'mission'
@@ -80,13 +80,13 @@ const MissionValuesTeam = () => {
                   <svg
                     viewBox="0 0 100 20"
                     preserveAspectRatio="none"
-                    className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[60px] h-[6px]"
+                    className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[50px] sm:w-[60px] h-[5px]"
                   >
                     <path
                       d="M0,20 Q50,-10 100,20"
                       fill="none"
                       stroke="#a51e28"
-                      strokeWidth="7"
+                      strokeWidth="6"
                       strokeLinecap="round"
                     />
                   </svg>
@@ -95,9 +95,9 @@ const MissionValuesTeam = () => {
             ))}
           </div>
 
-          {/* Content – full width INSIDE container */}
+          {/* Content */}
           <div className="w-full flex justify-start">
-            <div className="w-full transition-all duration-500 ease-in-out text-[#7c7c7c] leading-relaxed text-[18px] whitespace-pre-line">
+            <div className="w-full transition-all duration-500 ease-in-out text-[#7c7c7c] leading-relaxed text-base sm:text-[18px] whitespace-pre-line">
               {contents[activeTab] || (
                 <p className="text-gray-400 italic">
                   {i18n.language === 'sq'
