@@ -105,11 +105,14 @@ export default function Gallery() {
 
         {/* Header */}
         <Reveal>
-          <div className="flex justify-between items-start mb-12">
-            <h2 className="text-4xl sm:text-5xl font-light text-[#333333]">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-12 gap-4">
+
+            {/* Title */}
+            <h2 className="text-2xl sm:text-3xl font-light text-[#333333]">
               {activeFilter}
             </h2>
 
+            {/* Pagination */}
             <div className="flex items-center gap-4">
               {categories.map((_, index) => (
                 <button
@@ -133,6 +136,7 @@ export default function Gallery() {
                 </button>
               )}
             </div>
+
           </div>
         </Reveal>
 
