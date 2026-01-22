@@ -61,7 +61,7 @@ const MissionValuesTeam = () => {
         <div className="container mx-auto">
 
           {/* Tabs */}
-          <div className="flex flex-wrap justify-center sm:justify-start gap-6 sm:gap-24 mb-8">
+          <div className="flex flex-wrap justify-start gap-10 sm:gap-20 mb-8">
             {(['mission', 'values', 'team'] as Tab[]).map((tab) => (
               <button
                 key={tab}
@@ -80,7 +80,7 @@ const MissionValuesTeam = () => {
                   <svg
                     viewBox="0 0 100 20"
                     preserveAspectRatio="none"
-                    className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[50px] sm:w-[60px] h-[5px]"
+                    className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[55px] sm:w-[65px] h-[5px]"
                   >
                     <path
                       d="M0,20 Q50,-10 100,20"
