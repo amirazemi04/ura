@@ -108,7 +108,7 @@ export default function Gallery() {
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-12 gap-4">
 
             {/* Title */}
-            <h2 className="text-2xl sm:text-3xl font-light text-[#333333]">
+            <h2 className="text-xl sm:text-2xl font-light text-[#333333]">
               {activeFilter}
             </h2>
 
