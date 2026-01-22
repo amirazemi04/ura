@@ -130,14 +130,13 @@ const PartnerPage: React.FC = () => {
               onClick={() => togglePartner(partner.id)}
               className="cursor-pointer hover:opacity-80 transition-opacity"
             >
-              {/* Top row: Logo (left) + Name (right) */}
               <div className="flex items-center justify-between gap-6">
                 <div className="flex-shrink-0">
                   {partner.logo && (
                     <img
                       src={partner.logo}
                       alt={partner.name}
-                      className="w-24 h-24 md:w-32 md:h-32 object-contain grayscale"
+                      className="w-24 h-24 md:w-32 md:h-32 object-contain grayscale hover:grayscale-0 transition-all duration-300"
                     />
                   )}
                 </div>
@@ -147,7 +146,6 @@ const PartnerPage: React.FC = () => {
                 </h2>
               </div>
 
-              {/* Description + Icons */}
               {expandedId === partner.id && partner.description && (
                 <div className="mt-4 flex items-start gap-6 max-w-3xl ml-auto text-left">
                   <div className="flex gap-3 pt-1">
