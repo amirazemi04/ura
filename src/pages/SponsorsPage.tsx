@@ -184,7 +184,7 @@ const SponsorsPage: React.FC = () => {
                   {content.otherSponsors.map((name, i) => (
                     <li
                       key={i}
-                      className="py-3 border-b border-gray-200 text-[#333333] text-base font-medium hover:bg-gray-50 px-2 transition-colors duration-200"
+                      className="py-3 border-b border-gray-200 text-[#333333] text-base font-medium hover:bg-[#A41E28] hover:text-white px-2 transition-colors duration-200 cursor-pointer"
                     >
                       {name}
                     </li>
