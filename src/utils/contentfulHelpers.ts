@@ -1,5 +1,10 @@
 import client from '../contentfulClient';
-import { Entry, Asset } from 'contentful';
+import { Entry } from 'contentful';
+import {
+  getCachedEntries,
+  getCachedEntry,
+  getCachedAssetUrl,
+} from '../services/cacheService';
 
 const DEFAULT_LOCALE = 'de';
 
@@ -15,6 +20,9 @@ export const safeGetEntries = async <T = any>(
   options: any = {}
 ): Promise<Entry<T>[]> => {
   const normalizedLocale = normalizeLocale(locale);
+
+  const cached = await getCachedEntries(contentType, normalizedLocale);
+  if (cached !== null) return cached as Entry<T>[];
 
   try {
     const response = await client.getEntries({
@@ -51,6 +59,9 @@ export const safeGetEntry = async <T = any>(
 ): Promise<Entry<T> | null> => {
   const normalizedLocale = normalizeLocale(locale);
 
+  const cached = await getCachedEntry(entryId, normalizedLocale);
+  if (cached !== null) return cached as Entry<T>;
+
   try {
     const entry = await client.getEntry<T>(entryId, { locale: normalizedLocale });
     return entry;
@@ -76,6 +87,9 @@ export const safeGetAsset = async (
   locale: string = DEFAULT_LOCALE
 ): Promise<string> => {
   if (!assetId) return '';
+
+  const cached = await getCachedAssetUrl(assetId);
+  if (cached !== null) return cached;
 
   try {
     const asset = await client.getAsset(assetId, { locale: DEFAULT_LOCALE });

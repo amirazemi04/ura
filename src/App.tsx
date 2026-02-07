@@ -19,6 +19,7 @@ import ScrollToTop from './components/ScrollToTop';
 import CustomCookieBanner from './components/CustomCookieBanner';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsService from './pages/TermsService';
+import SyncPage from './pages/SyncPage';
 
 const App = () => {
   return (
@@ -43,6 +44,7 @@ const App = () => {
               <Route path="/terms-of-service" element={<TermsService />} />
               <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/terms" element={<TermsService />} />
+              <Route path="/admin/sync-content" element={<SyncPage />} />
             </Routes>
           </main>
           <Footer />
