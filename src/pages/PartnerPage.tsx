@@ -108,7 +108,7 @@ const PartnerPage: React.FC = () => {
       </Helmet>
 
       <nav className="text-sm text-gray-500 my-6 sm:my-12 text-center md:text-left font-myfont">
-        <Link to="/" className="hover:underline text-gray-500 font-medium">
+        <Link to="/" className="hover:underline hover:underline-offset-4 text-gray-500 font-medium">
           {t('header.home')}
         </Link>
         <span className="mx-1 sm:mx-2">/</span>

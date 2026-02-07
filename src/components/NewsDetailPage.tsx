@@ -103,7 +103,7 @@ const NewsDetailPage = () => {
 
       <div className="container mx-auto mt-16 sm:mt-24 px-4 sm:px-6">
         <nav className="text-sm text-gray-500 my-6 sm:my-12 text-center sm:text-left">
-          <Link to="/" className="hover:underline text-gray-500 font-medium">
+          <Link to="/" className="hover:underline hover:underline-offset-4 text-gray-500 font-medium">
             {i18n.language === 'sq' ? 'Ballina' : 'Startseite'}
           </Link>
           <span className="mx-1 sm:mx-2">/</span>

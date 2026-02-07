@@ -22,7 +22,7 @@ const GroupsPage = () => {
       <div className="container mx-auto px-4 sm:px-6 mb-6 sm:mb-8">
         {/* Breadcrumb Navigation */}
         <nav className="text-sm text-gray-500 my-6 sm:my-12 text-center sm:text-left">
-          <Link to="/" className="hover:underline text-gray-500 font-medium">
+          <Link to="/" className="hover:underline hover:underline-offset-4 text-gray-500 font-medium">
             {t('header.home')}
           </Link>
           <span className="mx-1 sm:mx-2">/</span>

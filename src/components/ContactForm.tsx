@@ -158,12 +158,12 @@ const ContactForm = () => {
       <div className="container mx-auto px-6">
         <Reveal>
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-[#333333] mb-6 pb-1 text-center relative inline-block">
+            <h2 className="text-4xl font-bold text-[#333333] mb-6 pb-4 text-center relative inline-block">
               {textContent.joinTitle}
               <svg
                 viewBox="-4 -4 208 28"
                 preserveAspectRatio="none"
-                className="absolute left-1/2 transform -translate-x-1/2 bottom-[-14px] w-full h-6 overflow-visible"
+                className="absolute left-1/2 transform -translate-x-1/2 bottom-[-20px] w-full h-6 overflow-visible"
               >
                 <path
                   d="M4,22 Q100,-15 196,22"
@@ -252,11 +252,11 @@ const ContactForm = () => {
                     className="text-sm text-gray-700 pt-[2px]"
                   >
                     {t('form.agreement_start')}{' '}
-                    <Link to="/terms" className="underline text-[#a51e28]">
+                    <Link to="/terms" className="underline underline-offset-4 text-[#a51e28]">
                       {t('form.terms_conditions')}
                     </Link>{' '}
                     {i18n.language === 'sq' ? 'si dhe' : 'und'}{' '}
-                    <Link to="/privacy" className="underline text-[#a51e28]">
+                    <Link to="/privacy" className="underline underline-offset-4 text-[#a51e28]">
                       {t('form.privacy_policy')}
                     </Link>.
                   </label>

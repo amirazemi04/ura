@@ -27,7 +27,7 @@ const CustomCookieBanner = () => {
     >
       <p className="text-white text-sm">
         {t('cookieBanner.message')}{' '}
-        <Link to="/privacy-policy" className="underline" style={{ color: '#9BA2AF' }}>
+        <Link to="/privacy-policy" className="underline underline-offset-4" style={{ color: '#9BA2AF' }}>
           {t('cookieBanner.learnMore')}
         </Link>
       </p>
