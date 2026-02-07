@@ -161,15 +161,15 @@ const ContactForm = () => {
             <h2 className="text-4xl font-bold text-[#333333] mb-6 pb-1 text-center relative inline-block">
               {textContent.joinTitle}
               <svg
-                viewBox="0 0 200 12"
+                viewBox="0 0 200 20"
                 preserveAspectRatio="none"
-                className="absolute left-0 bottom-[-14px] w-full h-[8px]"
+                className="absolute left-0 bottom-[-14px] w-full h-[10px]"
               >
                 <path
-                  d="M2,10 Q100,0 198,10"
+                  d="M2,16 Q100,-4 198,16"
                   fill="none"
                   stroke="#a51e28"
-                  strokeWidth="4"
+                  strokeWidth="6"
                   strokeLinecap="round"
                 />
               </svg>
