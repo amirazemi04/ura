@@ -146,68 +146,94 @@ export default function Gallery() {
 
             {/* Row 1 */}
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-              <div className={`w-full sm:w-[30%] aspect-[3/4] overflow-hidden ${images[0] ? 'cursor-pointer' : ''}`}
-                onClick={images[0] ? () => { setLightboxIndex(0); setLightboxOpen(true); } : undefined}>
-                {images[0] && <img src={images[0].src} alt={images[0].alt} className="w-full h-full object-cover" />}
-              </div>
-
-              <div className={`w-full sm:w-[50%] aspect-[16/9] overflow-hidden ${images[1] ? 'cursor-pointer' : ''}`}
-                onClick={images[1] ? () => { setLightboxIndex(1); setLightboxOpen(true); } : undefined}>
-                {images[1] && <img src={images[1].src} alt={images[1].alt} className="w-full h-full object-cover" />}
-              </div>
-
-              <div className="w-full sm:w-[20%] flex sm:flex-col gap-2">
-                <div className={`w-1/2 sm:w-full aspect-square overflow-hidden ${images[2] ? 'cursor-pointer' : ''}`}
-                  onClick={images[2] ? () => { setLightboxIndex(2); setLightboxOpen(true); } : undefined}>
-                  {images[2] && <img src={images[2].src} alt={images[2].alt} className="w-full h-full object-cover" />}
+              {images[0] && (
+                <div className="w-full sm:w-[30%] aspect-[3/4] overflow-hidden cursor-pointer"
+                  onClick={() => { setLightboxIndex(0); setLightboxOpen(true); }}>
+                  <img src={images[0].src} alt={images[0].alt} className="w-full h-full object-cover" />
                 </div>
-                <div className={`w-1/2 sm:w-full aspect-square overflow-hidden ${images[3] ? 'cursor-pointer' : ''}`}
-                  onClick={images[3] ? () => { setLightboxIndex(3); setLightboxOpen(true); } : undefined}>
-                  {images[3] && <img src={images[3].src} alt={images[3].alt} className="w-full h-full object-cover" />}
+              )}
+
+              {images[1] && (
+                <div className="w-full sm:w-[50%] aspect-[16/9] overflow-hidden cursor-pointer"
+                  onClick={() => { setLightboxIndex(1); setLightboxOpen(true); }}>
+                  <img src={images[1].src} alt={images[1].alt} className="w-full h-full object-cover" />
                 </div>
-              </div>
+              )}
+
+              {(images[2] || images[3]) && (
+                <div className="w-full sm:w-[20%] flex sm:flex-col gap-2">
+                  {images[2] && (
+                    <div className="w-1/2 sm:w-full aspect-square overflow-hidden cursor-pointer"
+                      onClick={() => { setLightboxIndex(2); setLightboxOpen(true); }}>
+                      <img src={images[2].src} alt={images[2].alt} className="w-full h-full object-cover" />
+                    </div>
+                  )}
+                  {images[3] && (
+                    <div className="w-1/2 sm:w-full aspect-square overflow-hidden cursor-pointer"
+                      onClick={() => { setLightboxIndex(3); setLightboxOpen(true); }}>
+                      <img src={images[3].src} alt={images[3].alt} className="w-full h-full object-cover" />
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Row 2 */}
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-              <div className={`w-full sm:w-[29%] aspect-[3/4] overflow-hidden ${images[4] ? 'cursor-pointer' : ''}`}
-                onClick={images[4] ? () => { setLightboxIndex(4); setLightboxOpen(true); } : undefined}>
-                {images[4] && <img src={images[4].src} alt={images[4].alt} className="w-full h-full object-cover" />}
-              </div>
+              {images[4] && (
+                <div className="w-full sm:w-[29%] aspect-[3/4] overflow-hidden cursor-pointer"
+                  onClick={() => { setLightboxIndex(4); setLightboxOpen(true); }}>
+                  <img src={images[4].src} alt={images[4].alt} className="w-full h-full object-cover" />
+                </div>
+              )}
 
-              <div className={`w-full sm:w-[71%] aspect-[21/9] overflow-hidden ${images[5] ? 'cursor-pointer' : ''}`}
-                onClick={images[5] ? () => { setLightboxIndex(5); setLightboxOpen(true); } : undefined}>
-                {images[5] && <img src={images[5].src} alt={images[5].alt} className="w-full h-full object-cover" />}
-              </div>
+              {images[5] && (
+                <div className="w-full sm:w-[71%] aspect-[21/9] overflow-hidden cursor-pointer"
+                  onClick={() => { setLightboxIndex(5); setLightboxOpen(true); }}>
+                  <img src={images[5].src} alt={images[5].alt} className="w-full h-full object-cover" />
+                </div>
+              )}
             </div>
 
             {/* Row 3 */}
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
               {/* Left section with 2 images on top and 1 below */}
-              <div className="w-full sm:w-[45%] flex flex-col gap-2">
-                {/* Top row: 2 images side by side */}
-                <div className="flex gap-2">
-                  <div className={`w-1/2 aspect-[4/3] overflow-hidden ${images[6] ? 'cursor-pointer' : ''}`}
-                    onClick={images[6] ? () => { setLightboxIndex(6); setLightboxOpen(true); } : undefined}>
-                    {images[6] && <img src={images[6].src} alt={images[6].alt} className="w-full h-full object-cover" />}
-                  </div>
-                  <div className={`w-1/2 aspect-[4/3] overflow-hidden ${images[7] ? 'cursor-pointer' : ''}`}
-                    onClick={images[7] ? () => { setLightboxIndex(7); setLightboxOpen(true); } : undefined}>
-                    {images[7] && <img src={images[7].src} alt={images[7].alt} className="w-full h-full object-cover" />}
-                  </div>
+              {(images[6] || images[7] || images[8]) && (
+                <div className="w-full sm:w-[45%] flex flex-col gap-2">
+                  {/* Top row: 2 images side by side */}
+                  {(images[6] || images[7]) && (
+                    <div className="flex gap-2">
+                      {images[6] && (
+                        <div className="w-1/2 aspect-[4/3] overflow-hidden cursor-pointer"
+                          onClick={() => { setLightboxIndex(6); setLightboxOpen(true); }}>
+                          <img src={images[6].src} alt={images[6].alt} className="w-full h-full object-cover" />
+                        </div>
+                      )}
+                      {images[7] && (
+                        <div className="w-1/2 aspect-[4/3] overflow-hidden cursor-pointer"
+                          onClick={() => { setLightboxIndex(7); setLightboxOpen(true); }}>
+                          <img src={images[7].src} alt={images[7].alt} className="w-full h-full object-cover" />
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  {/* Bottom: 1 image centered */}
+                  {images[8] && (
+                    <div className="w-full aspect-[16/9] overflow-hidden cursor-pointer"
+                      onClick={() => { setLightboxIndex(8); setLightboxOpen(true); }}>
+                      <img src={images[8].src} alt={images[8].alt} className="w-full h-full object-cover" />
+                    </div>
+                  )}
                 </div>
-                {/* Bottom: 1 image centered */}
-                <div className={`w-full aspect-[16/9] overflow-hidden ${images[8] ? 'cursor-pointer' : ''}`}
-                  onClick={images[8] ? () => { setLightboxIndex(8); setLightboxOpen(true); } : undefined}>
-                  {images[8] && <img src={images[8].src} alt={images[8].alt} className="w-full h-full object-cover" />}
-                </div>
-              </div>
+              )}
 
               {/* Right section: large landscape image */}
-              <div className={`w-full sm:w-[55%] aspect-[16/9] overflow-hidden ${images[9] ? 'cursor-pointer' : ''}`}
-                onClick={images[9] ? () => { setLightboxIndex(9); setLightboxOpen(true); } : undefined}>
-                {images[9] && <img src={images[9].src} alt={images[9].alt} className="w-full h-full object-cover" />}
-              </div>
+              {images[9] && (
+                <div className="w-full sm:w-[55%] aspect-[16/9] overflow-hidden cursor-pointer"
+                  onClick={() => { setLightboxIndex(9); setLightboxOpen(true); }}>
+                  <img src={images[9].src} alt={images[9].alt} className="w-full h-full object-cover" />
+                </div>
+              )}
             </div>
 
           </div>
