@@ -185,11 +185,11 @@ const SponsorsPage: React.FC = () => {
             <Reveal delay={0.1}>
               <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 py-10">
                 {content.topSponsors.map((src, i) => (
-                  <div key={i} className="flex items-center justify-center h-20 md:h-28">
+                  <div key={i} className="flex items-center justify-center h-32 md:h-44 lg:h-52">
                     <img
                       src={src}
                       alt={`Top Sponsor ${i + 1}`}
-                      className="max-h-full w-auto object-contain grayscale hover:grayscale-0 transition duration-300"
+                      className="max-h-full w-auto object-contain transition duration-300"
                     />
                   </div>
                 ))}
