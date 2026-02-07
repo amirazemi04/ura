@@ -78,15 +78,15 @@ const MissionValuesTeam = () => {
 
                 {activeTab === tab && (
                   <svg
-                    viewBox="0 0 100 20"
+                    viewBox="0 0 200 12"
                     preserveAspectRatio="none"
-                    className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[55px] sm:w-[65px] h-[5px]"
+                    className="absolute left-0 bottom-0 w-full h-[6px]"
                   >
                     <path
-                      d="M0,20 Q50,-10 100,20"
+                      d="M2,10 Q100,0 198,10"
                       fill="none"
                       stroke="#a51e28"
-                      strokeWidth="6"
+                      strokeWidth="4"
                       strokeLinecap="round"
                     />
                   </svg>
