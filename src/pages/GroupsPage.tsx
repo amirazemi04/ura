@@ -19,7 +19,7 @@ const GroupsPage = () => {
         <link rel="canonical" href="https://ansambli-ura.ch/groups" />
       </Helmet>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 mb-6 sm:mb-8">
+      <div className="container mx-auto px-4 sm:px-6 mb-6 sm:mb-8">
         {/* Breadcrumb Navigation */}
         <nav className="text-sm text-gray-500 my-6 sm:my-12 text-center sm:text-left">
           <Link to="/" className="hover:underline hover:underline-offset-4 text-gray-500 font-medium">

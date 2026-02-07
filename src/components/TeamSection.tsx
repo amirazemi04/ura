@@ -59,7 +59,7 @@ const TeamSection = () => {
 
   if (loading) {
     return (
-      <section className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center py-12">
           <p className="text-gray-500">{i18n.language === 'sq' ? 'Duke u ngarkuar...' : 'Laden...'}</p>
         </div>
@@ -68,7 +68,7 @@ const TeamSection = () => {
   }
 
   return (
-    <section className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="mx-auto px-4 sm:px-6 lg:px-8">
       {/* Breadcrumb */}
       <Reveal>
         <nav className="text-sm text-gray-500 my-6 sm:my-12 text-center sm:text-left">
