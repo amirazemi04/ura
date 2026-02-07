@@ -76,16 +76,15 @@ const SponsorsSection: React.FC = () => {
     <section className="py-20 bg-white overflow-hidden">
       <Reveal>
         {/* Title */}
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-thin text-[#1a1a1a] mb-10 text-left">
             {t('sponsorsSection.title')}
           </h2>
         </div>
 
         {/* Slider */}
-        <div className="container mx-auto">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative w-full overflow-hidden">
-            <div className="px-4">
               <div
                 ref={sliderRef}
                 className="flex"
@@ -105,12 +104,11 @@ const SponsorsSection: React.FC = () => {
                   </div>
                 ))}
               </div>
-            </div>
           </div>
         </div>
 
         {/* Button */}
-        <div className="container mx-auto px-4 flex justify-center mt-10">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-center mt-10">
           <Link
             to="/sponsor-contact"
             className="relative inline-block text-[#8B1D24] cursor-pointer text-center pb-1"
