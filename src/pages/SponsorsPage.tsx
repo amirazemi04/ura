@@ -200,7 +200,7 @@ const SponsorsPage: React.FC = () => {
           {sliderImages.length > 0 && (
             <Reveal delay={0.2}>
               <div className="border-t border-gray-200 my-4" />
-              <div className="relative w-full overflow-hidden py-10">
+              <div className="relative w-full overflow-hidden py-4">
                 <div
                   ref={sliderRef}
                   className="flex"
