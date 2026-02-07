@@ -185,7 +185,7 @@ const SponsorsPage: React.FC = () => {
             <Reveal delay={0.1}>
               <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 py-10">
                 {content.topSponsors.map((src, i) => (
-                  <div key={i} className="flex items-center justify-center h-32 md:h-44 lg:h-52">
+                  <div key={i} className="flex items-center justify-center h-40 md:h-56 lg:h-72">
                     <img
                       src={src}
                       alt={`Top Sponsor ${i + 1}`}
