@@ -136,13 +136,13 @@ const ContactSponsors = () => {
               <svg
                 viewBox="-4 -4 208 28"
                 preserveAspectRatio="none"
-                className="absolute left-1/2 transform -translate-x-1/2 bottom-[-14px] w-full h-5 overflow-visible"
+                className="absolute left-1/2 transform -translate-x-1/2 bottom-[-14px] w-full h-6 overflow-visible"
               >
                 <path
-                  d="M4,20 Q100,-10 196,20"
+                  d="M4,22 Q100,-15 196,22"
                   fill="none"
                   stroke="#a51e28"
-                  strokeWidth="5"
+                  strokeWidth="8"
                   strokeLinecap="round"
                 />
               </svg>

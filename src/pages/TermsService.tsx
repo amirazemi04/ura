@@ -49,13 +49,13 @@ const TermsService = () => {
           <svg
             viewBox="-4 -4 208 28"
             preserveAspectRatio="none"
-            className="absolute left-0 bottom-0 w-full h-3 overflow-visible"
+            className="absolute left-0 bottom-0 w-full h-4 overflow-visible"
           >
             <path
-              d="M4,20 Q100,-10 196,20"
+              d="M4,22 Q100,-15 196,22"
               fill="none"
               stroke="#8B1D24"
-              strokeWidth="4"
+              strokeWidth="7"
               strokeLinecap="round"
             />
           </svg>
