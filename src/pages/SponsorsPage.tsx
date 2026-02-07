@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from "react-helmet-async";
-import ContactForm from '../components/ContactForm';
 import { Link } from 'react-router-dom';
-import client from '../contentfulClient';
 import ContactSponsors from '../components/ContactSponsors';
 import Reveal from '../components/Reveal';
-
-const DEFAULT_LOCALE = 'de';
+import { safeGetEntries, safeGetField, normalizeLocale } from '../utils/contentfulHelpers';
 
 const SponsorsPage: React.FC = () => {
   const { t, i18n } = useTranslation();
@@ -15,40 +12,36 @@ const SponsorsPage: React.FC = () => {
   const [sponsorImages, setSponsorImages] = useState<string[]>([]);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchSponsorsContent = async () => {
+      setLoading(true);
       try {
-        const currentLocale = i18n.language?.substring(0, 2) || DEFAULT_LOCALE;
+        const currentLocale = normalizeLocale(i18n.language);
 
-        // Marrim përmbajtjen e përkthyer për titullin dhe përshkrimin
-        const textEntries = await client.getEntries({
-          content_type: 'sponsors',
-          limit: 1,
-          locale: currentLocale,
-        });
+        const textEntries = await safeGetEntries('sponsors', currentLocale, { limit: 1 });
+        const imageEntries = await safeGetEntries('sponsors', 'de', { limit: 1 });
 
-        // Marrim imazhet gjithmonë nga 'de'
-        const imageEntries = await client.getEntries({
-          content_type: 'sponsors',
-          limit: 1,
-          locale: DEFAULT_LOCALE,
-        });
-
-        if (textEntries.items.length > 0) {
-          const fields = textEntries.items[0].fields;
-          setTitle(fields.title || '');
-          setDescription(fields.description || '');
+        if (textEntries.length > 0) {
+          const fields = textEntries[0].fields || {};
+          setTitle(safeGetField(fields, 'title', ''));
+          setDescription(safeGetField(fields, 'description', ''));
         }
 
-        if (imageEntries.items.length > 0) {
-          const imageFields = imageEntries.items[0].fields;
-          const sponsors = imageFields.sponsorsImages || [];
-          const images = sponsors.slice(0, 4).map((asset: any) => `https:${asset.fields.file.url}`);
+        if (imageEntries.length > 0) {
+          const imageFields = imageEntries[0].fields || {};
+          const sponsors = safeGetField(imageFields, 'sponsorsImages', []);
+          const images = sponsors
+            .map((asset: any) => asset?.fields?.file?.url ? `https:${asset.fields.file.url}` : '')
+            .filter(Boolean);
           setSponsorImages(images);
         }
       } catch (error) {
-        console.error('❌ Error loading sponsor content:', error);
+        console.error('Error loading sponsor content:', error);
+        setSponsorImages([]);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -91,23 +84,31 @@ const SponsorsPage: React.FC = () => {
 
       {/* Sponsors Logo Grid */}
       <Reveal delay={0.2}>
-        <div className="grid grid-cols-2 gap-x-12 gap-y-16 justify-items-center">
-          {sponsorImages.length > 0 ? (
-            sponsorImages.map((src, i) => (
-              <img
-                key={i}
-                src={src}
-                alt={t('sponsorsSection.sponsorAlt', { number: i + 1 })}
-                className="w-80 object-contain grayscale hover:grayscale-0 transition duration-300"
-                style={{ alignSelf: 'center' }}
-              />
-            ))
-          ) : (
-            <p className="col-span-2 text-gray-500">
-              Keine Sponsoren verfügbar.
+        {loading ? (
+          <div className="text-center py-12">
+            <p className="text-gray-500">
+              {i18n.language === 'sq' ? 'Duke u ngarkuar...' : 'Laden...'}
             </p>
-          )}
-        </div>
+          </div>
+        ) : sponsorImages.length > 0 ? (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-12 justify-items-center">
+            {sponsorImages.map((src, i) => (
+              <div key={i} className="flex items-center justify-center w-full h-32">
+                <img
+                  src={src}
+                  alt={`Sponsor ${i + 1}`}
+                  className="max-w-full max-h-full object-contain grayscale hover:grayscale-0 transition duration-300"
+                />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12">
+            <p className="text-gray-500">
+              {i18n.language === 'sq' ? 'Asnjë sponsor i disponueshëm' : 'Keine Sponsoren verfügbar'}
+            </p>
+          </div>
+        )}
       </Reveal>
 
       <ContactSponsors />
