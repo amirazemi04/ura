@@ -231,7 +231,7 @@ const SponsorsPage: React.FC = () => {
                 <p className="text-gray-400 text-xl md:text-2xl mb-2">
                   {content.otherSponsorsTitle || t('sponsorsSection.otherSponsorsDefault')}
                 </p>
-                <div className="border-b-2 border-gray-300 mb-6" />
+                <div className="border-b border-gray-200 mb-6" />
                 <ul>
                   {content.otherSponsors.map((name, i) => (
                     <li
