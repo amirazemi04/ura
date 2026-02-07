@@ -163,7 +163,7 @@ const ContactForm = () => {
               <svg
                 viewBox="0 0 200 20"
                 preserveAspectRatio="none"
-                className="absolute left-1/2 transform -translate-x-1/2 bottom-[-14px] w-[300px] h-5"
+                className="absolute left-1/2 transform -translate-x-1/2 bottom-[-14px] w-full h-5"
               >
                 <path
                   d="M0,20 Q100,-10 200,20"

@@ -80,7 +80,7 @@ const MissionValuesTeam = () => {
                   <svg
                     viewBox="0 0 100 20"
                     preserveAspectRatio="none"
-                    className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[55px] sm:w-[65px] h-[5px]"
+                    className="absolute left-1/2 -translate-x-1/2 bottom-0 w-full h-[5px]"
                   >
                     <path
                       d="M0,20 Q50,-10 100,20"

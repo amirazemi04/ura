@@ -119,7 +119,7 @@ const SponsorsSection: React.FC = () => {
             <svg
               viewBox="0 0 100 20"
               preserveAspectRatio="none"
-              className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[85px] h-[6px]"
+              className="absolute left-1/2 -translate-x-1/2 bottom-0 w-full h-[6px]"
             >
               <path
                 d="M0,20 Q50,-10 100,20"
