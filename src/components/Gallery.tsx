@@ -193,6 +193,38 @@ export default function Gallery() {
               )}
             </div>
 
+            {/* Row 3 */}
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+              <div className="w-full sm:w-[20%] flex sm:flex-col gap-4">
+                {images[6] && (
+                  <div className="w-1/2 sm:w-full aspect-[4/3] overflow-hidden cursor-pointer"
+                    onClick={() => { setLightboxIndex(6); setLightboxOpen(true); }}>
+                    <img src={images[6].src} alt={images[6].alt} className="w-full h-full object-cover" />
+                  </div>
+                )}
+                {images[7] && (
+                  <div className="w-1/2 sm:w-full aspect-[4/3] overflow-hidden cursor-pointer"
+                    onClick={() => { setLightboxIndex(7); setLightboxOpen(true); }}>
+                    <img src={images[7].src} alt={images[7].alt} className="w-full h-full object-cover" />
+                  </div>
+                )}
+              </div>
+
+              {images[8] && (
+                <div className="w-full sm:w-[30%] aspect-[3/4] overflow-hidden cursor-pointer"
+                  onClick={() => { setLightboxIndex(8); setLightboxOpen(true); }}>
+                  <img src={images[8].src} alt={images[8].alt} className="w-full h-full object-cover" />
+                </div>
+              )}
+
+              {images[9] && (
+                <div className="w-full sm:w-[50%] aspect-[16/9] overflow-hidden cursor-pointer"
+                  onClick={() => { setLightboxIndex(9); setLightboxOpen(true); }}>
+                  <img src={images[9].src} alt={images[9].alt} className="w-full h-full object-cover" />
+                </div>
+              )}
+            </div>
+
           </div>
         </Reveal>
       </div>
