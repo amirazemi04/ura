@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from "react-helmet-async";
 import { Link } from 'react-router-dom';
@@ -6,6 +6,9 @@ import { BLOCKS, Document } from '@contentful/rich-text-types';
 import ContactSponsors from '../components/ContactSponsors';
 import Reveal from '../components/Reveal';
 import { safeGetEntries, safeGetField, normalizeLocale } from '../utils/contentfulHelpers';
+
+const ROTATION_INTERVAL = 3000;
+const SLIDE_DURATION = 600;
 
 interface SponsorContent {
   title: string;
@@ -48,6 +51,44 @@ const SponsorsPage: React.FC = () => {
     otherSponsors: [],
   });
   const [loading, setLoading] = useState(true);
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const [sliderOffset, setSliderOffset] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(true);
+  const [visibleSlots, setVisibleSlots] = useState(4);
+  const [sliderImages, setSliderImages] = useState<string[]>([]);
+
+  useEffect(() => {
+    const updateVisibleSlots = () => {
+      setVisibleSlots(window.innerWidth < 768 ? 2 : 4);
+    };
+    updateVisibleSlots();
+    window.addEventListener('resize', updateVisibleSlots);
+    return () => window.removeEventListener('resize', updateVisibleSlots);
+  }, []);
+
+  useEffect(() => {
+    if (content.secondarySponsors.length > 0) {
+      setSliderImages([...content.secondarySponsors, ...content.secondarySponsors]);
+    }
+  }, [content.secondarySponsors]);
+
+  useEffect(() => {
+    if (sliderImages.length <= visibleSlots) return;
+    const interval = setInterval(() => {
+      setIsTransitioning(true);
+      setSliderOffset((prev) => prev + 1);
+    }, ROTATION_INTERVAL);
+    return () => clearInterval(interval);
+  }, [sliderImages, visibleSlots]);
+
+  useEffect(() => {
+    if (sliderImages.length > 0 && sliderOffset >= sliderImages.length / 2) {
+      setTimeout(() => {
+        setIsTransitioning(false);
+        setSliderOffset(0);
+      }, SLIDE_DURATION);
+    }
+  }, [sliderOffset, sliderImages.length]);
 
   useEffect(() => {
     const fetchSponsorsContent = async () => {
@@ -156,19 +197,29 @@ const SponsorsPage: React.FC = () => {
             </Reveal>
           )}
 
-          {content.secondarySponsors.length > 0 && (
+          {sliderImages.length > 0 && (
             <Reveal delay={0.2}>
               <div className="border-t border-gray-200 my-4" />
-              <div className="flex flex-wrap justify-center items-center gap-6 md:gap-12 py-10">
-                {content.secondarySponsors.map((src, i) => (
-                  <div key={i} className="flex items-center justify-center h-14 md:h-20">
-                    <img
-                      src={src}
-                      alt={`Sponsor ${i + 1}`}
-                      className="max-h-full w-auto object-contain grayscale hover:grayscale-0 transition duration-300"
-                    />
-                  </div>
-                ))}
+              <div className="relative w-full overflow-hidden py-10">
+                <div
+                  ref={sliderRef}
+                  className="flex"
+                  style={{
+                    width: `${(sliderImages.length / visibleSlots) * 100}%`,
+                    transform: `translateX(-${(sliderOffset * 100) / sliderImages.length}%)`,
+                    transition: isTransitioning ? `transform ${SLIDE_DURATION}ms ease-in-out` : 'none',
+                  }}
+                >
+                  {sliderImages.map((src, i) => (
+                    <div key={i} className="flex-1 flex justify-center items-center px-2">
+                      <img
+                        src={src}
+                        alt={`Sponsor ${i + 1}`}
+                        className="w-28 md:w-40 lg:w-48 grayscale hover:grayscale-0 transition duration-300 object-contain"
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
             </Reveal>
           )}
