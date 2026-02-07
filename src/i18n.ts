@@ -76,6 +76,7 @@ i18n
             callToAction:
               'Wenn Sie Sponsor des Ensembles URA werden und zur Erhaltung unserer kulturellen Identität beitragen möchten, laden wir Sie ein, uns zu kontaktieren.',
             sponsorAlt: 'Sponsor {{number}}',
+            otherSponsorsDefault: 'Weitere Sponsoren:',
           },
           groupsSection: {
             title: 'Gruppen',
@@ -215,6 +216,7 @@ i18n
             callToAction:
               'Nëse dëshironi të bëheni sponsor i Ansamblit URA dhe të kontribuoni në ruajtjen e identitetit tonë kulturor, ju ftojmë të na kontaktoni.',
             sponsorAlt: 'Sponsori {{number}}',
+            otherSponsorsDefault: 'Sponsoret tjere:',
           },
           groupsSection: {
             title: 'Grupet',

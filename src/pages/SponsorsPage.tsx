@@ -2,16 +2,51 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from "react-helmet-async";
 import { Link } from 'react-router-dom';
+import { BLOCKS, Document } from '@contentful/rich-text-types';
 import ContactSponsors from '../components/ContactSponsors';
 import Reveal from '../components/Reveal';
 import { safeGetEntries, safeGetField, normalizeLocale } from '../utils/contentfulHelpers';
 
+interface SponsorContent {
+  title: string;
+  description: string;
+  topSponsors: string[];
+  secondarySponsors: string[];
+  otherSponsorsTitle: string;
+  otherSponsors: string[];
+}
+
+const extractTextFromRichText = (doc: Document | null): string[] => {
+  if (!doc || !doc.content) return [];
+  return doc.content
+    .filter((node: any) => node.nodeType === BLOCKS.PARAGRAPH)
+    .map((node: any) => {
+      const text = node.content
+        ?.map((child: any) => child.value || '')
+        .join('')
+        .trim();
+      return text;
+    })
+    .filter(Boolean);
+};
+
+const extractImagesFromAssets = (assets: any[]): string[] => {
+  if (!Array.isArray(assets)) return [];
+  return assets
+    .map((asset: any) => asset?.fields?.file?.url ? `https:${asset.fields.file.url}` : '')
+    .filter(Boolean);
+};
+
 const SponsorsPage: React.FC = () => {
   const { t, i18n } = useTranslation();
-
-  const [sponsorImages, setSponsorImages] = useState<string[]>([]);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const [content, setContent] = useState<SponsorContent>({
+    title: '',
+    description: '',
+    topSponsors: [],
+    secondarySponsors: [],
+    otherSponsorsTitle: '',
+    otherSponsors: [],
+  });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -23,23 +58,41 @@ const SponsorsPage: React.FC = () => {
         const textEntries = await safeGetEntries('sponsors', currentLocale, { limit: 1 });
         const imageEntries = await safeGetEntries('sponsors', 'de', { limit: 1 });
 
+        let title = '';
+        let description = '';
+        let otherSponsorsTitle = '';
+        let otherSponsors: string[] = [];
+
         if (textEntries.length > 0) {
           const fields = textEntries[0].fields || {};
-          setTitle(safeGetField(fields, 'title', ''));
-          setDescription(safeGetField(fields, 'description', ''));
+          title = safeGetField(fields, 'title', '');
+          description = safeGetField(fields, 'description', '');
+          otherSponsorsTitle = safeGetField(fields, 'otherSponsorsTitle', '');
+          const otherSponsorsRich = safeGetField(fields, 'otherSponsors', null);
+          if (otherSponsorsRich) {
+            otherSponsors = extractTextFromRichText(otherSponsorsRich);
+          }
         }
+
+        let topSponsors: string[] = [];
+        let secondarySponsors: string[] = [];
 
         if (imageEntries.length > 0) {
           const imageFields = imageEntries[0].fields || {};
-          const sponsors = safeGetField(imageFields, 'sponsorsImages', []);
-          const images = sponsors
-            .map((asset: any) => asset?.fields?.file?.url ? `https:${asset.fields.file.url}` : '')
-            .filter(Boolean);
-          setSponsorImages(images);
+          topSponsors = extractImagesFromAssets(safeGetField(imageFields, 'topSponsors', []));
+          secondarySponsors = extractImagesFromAssets(safeGetField(imageFields, 'secondarySponsors', []));
         }
+
+        setContent({
+          title,
+          description,
+          topSponsors,
+          secondarySponsors,
+          otherSponsorsTitle,
+          otherSponsors,
+        });
       } catch (error) {
         console.error('Error loading sponsor content:', error);
-        setSponsorImages([]);
       } finally {
         setLoading(false);
       }
@@ -50,7 +103,6 @@ const SponsorsPage: React.FC = () => {
 
   return (
     <section className="container mx-auto px-4 sm:px-6 mb-6 sm:mb-8">
-      {/* SEO Meta für Sponsors-Seite */}
       <Helmet>
         <title>Sponsoren – Ansambli Ura</title>
         <meta
@@ -60,7 +112,6 @@ const SponsorsPage: React.FC = () => {
         <link rel="canonical" href="https://ansambli-ura.ch/sponsors" />
       </Helmet>
 
-      {/* Breadcrumb Navigation */}
       <nav className="text-sm text-gray-500 my-6 sm:my-12 text-center md:text-left">
         <Link to="/" className="hover:underline text-gray-500 font-medium">
           {t('header.home')}
@@ -69,47 +120,81 @@ const SponsorsPage: React.FC = () => {
         <span className="text-gray-700 font-semibold">{t('header.sponsors')}</span>
       </nav>
 
-      {/* Title and Description */}
       <Reveal>
         <h1 className="text-4xl md:text-5xl font-thin mb-6 text-center md:text-left">
-          {title}
+          {content.title}
         </h1>
 
         <p className="text-lg md:text-xl text-gray-500 leading-relaxed mb-16 text-center md:text-left">
-          {description}
+          {content.description}
           <br />
           {t('sponsorsSection.callToAction')}
         </p>
       </Reveal>
 
-      {/* Sponsors Logo Grid */}
-      <Reveal delay={0.2}>
-        {loading ? (
-          <div className="text-center py-12">
-            <p className="text-gray-500">
-              {i18n.language === 'sq' ? 'Duke u ngarkuar...' : 'Laden...'}
-            </p>
-          </div>
-        ) : sponsorImages.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-12 justify-items-center">
-            {sponsorImages.map((src, i) => (
-              <div key={i} className="flex items-center justify-center w-full h-32">
-                <img
-                  src={src}
-                  alt={`Sponsor ${i + 1}`}
-                  className="max-w-full max-h-full object-contain grayscale hover:grayscale-0 transition duration-300"
-                />
+      {loading ? (
+        <div className="text-center py-12">
+          <p className="text-gray-500">
+            {i18n.language === 'sq' ? 'Duke u ngarkuar...' : 'Laden...'}
+          </p>
+        </div>
+      ) : (
+        <>
+          {content.topSponsors.length > 0 && (
+            <Reveal delay={0.1}>
+              <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 py-10">
+                {content.topSponsors.map((src, i) => (
+                  <div key={i} className="flex items-center justify-center h-20 md:h-28">
+                    <img
+                      src={src}
+                      alt={`Top Sponsor ${i + 1}`}
+                      className="max-h-full w-auto object-contain grayscale hover:grayscale-0 transition duration-300"
+                    />
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-12">
-            <p className="text-gray-500">
-              {i18n.language === 'sq' ? 'Asnjë sponsor i disponueshëm' : 'Keine Sponsoren verfügbar'}
-            </p>
-          </div>
-        )}
-      </Reveal>
+            </Reveal>
+          )}
+
+          {content.secondarySponsors.length > 0 && (
+            <Reveal delay={0.2}>
+              <div className="border-t border-gray-200 my-4" />
+              <div className="flex flex-wrap justify-center items-center gap-6 md:gap-12 py-10">
+                {content.secondarySponsors.map((src, i) => (
+                  <div key={i} className="flex items-center justify-center h-14 md:h-20">
+                    <img
+                      src={src}
+                      alt={`Sponsor ${i + 1}`}
+                      className="max-h-full w-auto object-contain grayscale hover:grayscale-0 transition duration-300"
+                    />
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+          )}
+
+          {content.otherSponsors.length > 0 && (
+            <Reveal delay={0.3}>
+              <div className="border-t border-gray-200 mt-4 mb-8" />
+              <div className="max-w-2xl py-6">
+                <p className="text-gray-400 text-lg mb-6">
+                  {content.otherSponsorsTitle || t('sponsorsSection.otherSponsorsDefault')}
+                </p>
+                <ul>
+                  {content.otherSponsors.map((name, i) => (
+                    <li
+                      key={i}
+                      className="py-3 border-b border-gray-200 text-[#333333] text-base font-medium hover:bg-gray-50 px-2 transition-colors duration-200"
+                    >
+                      {name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+          )}
+        </>
+      )}
 
       <ContactSponsors />
     </section>
