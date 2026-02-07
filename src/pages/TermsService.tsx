@@ -44,8 +44,21 @@ const TermsService = () => {
   const options: Options = {
     renderMark: {
       [MARKS.UNDERLINE]: (text) => (
-        <span className="curved-underline">
+        <span className="relative inline-block pb-1">
           {text}
+          <svg
+            viewBox="0 0 200 20"
+            preserveAspectRatio="none"
+            className="absolute left-0 bottom-0 w-full h-3"
+          >
+            <path
+              d="M0,20 Q100,-10 200,20"
+              fill="none"
+              stroke="#8B1D24"
+              strokeWidth="4"
+              strokeLinecap="round"
+            />
+          </svg>
         </span>
       ),
       [MARKS.BOLD]: (text) => <strong className="font-bold text-black">{text}</strong>,
