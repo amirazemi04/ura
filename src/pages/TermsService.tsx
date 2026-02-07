@@ -46,7 +46,19 @@ const TermsService = () => {
       [MARKS.UNDERLINE]: (text) => (
         <span className="relative inline-block pb-1">
           {text}
-          <span className="absolute left-0 bottom-0 w-full h-[3px] bg-[#8B1D24] rounded-full" />
+          <svg
+            viewBox="0 0 200 12"
+            preserveAspectRatio="none"
+            className="absolute left-0 bottom-0 w-full h-[6px]"
+          >
+            <path
+              d="M2,10 Q100,0 198,10"
+              fill="none"
+              stroke="#8B1D24"
+              strokeWidth="4"
+              strokeLinecap="round"
+            />
+          </svg>
         </span>
       ),
       [MARKS.BOLD]: (text) => <strong className="font-bold text-black">{text}</strong>,
