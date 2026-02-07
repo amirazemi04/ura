@@ -44,21 +44,8 @@ const PrivacyPolicy = () => {
   const options: Options = {
     renderMark: {
       [MARKS.UNDERLINE]: (text) => (
-        <span className="relative inline-block pb-1">
+        <span className="curved-underline">
           {text}
-          <svg
-            viewBox="0 0 200 28"
-            preserveAspectRatio="none"
-            className="absolute left-0 bottom-0 w-full h-[14px]"
-          >
-            <path
-              d="M2,24 Q100,-10 198,24"
-              fill="none"
-              stroke="#8B1D24"
-              strokeWidth="8"
-              strokeLinecap="round"
-            />
-          </svg>
         </span>
       ),
       [MARKS.BOLD]: (text) => <strong className="font-bold text-black">{text}</strong>,
