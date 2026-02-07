@@ -142,10 +142,10 @@ export default function Gallery() {
 
         {/* 👉 DESIGN LAYOUT */}
         <Reveal delay={0.2}>
-          <div className="space-y-6">
+          <div className="space-y-2 sm:space-y-3">
 
             {/* Row 1 */}
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
               <div className={`w-full sm:w-[30%] aspect-[3/4] overflow-hidden ${images[0] ? 'cursor-pointer' : 'bg-gradient-to-br from-gray-100 to-gray-200'}`}
                 onClick={images[0] ? () => { setLightboxIndex(0); setLightboxOpen(true); } : undefined}>
                 {images[0] && <img src={images[0].src} alt={images[0].alt} className="w-full h-full object-cover" />}
@@ -156,7 +156,7 @@ export default function Gallery() {
                 {images[1] && <img src={images[1].src} alt={images[1].alt} className="w-full h-full object-cover" />}
               </div>
 
-              <div className="w-full sm:w-[20%] flex sm:flex-col gap-4">
+              <div className="w-full sm:w-[20%] flex sm:flex-col gap-2">
                 <div className={`w-1/2 sm:w-full aspect-square overflow-hidden ${images[2] ? 'cursor-pointer' : 'bg-gradient-to-br from-gray-100 to-gray-200'}`}
                   onClick={images[2] ? () => { setLightboxIndex(2); setLightboxOpen(true); } : undefined}>
                   {images[2] && <img src={images[2].src} alt={images[2].alt} className="w-full h-full object-cover" />}
@@ -169,7 +169,7 @@ export default function Gallery() {
             </div>
 
             {/* Row 2 */}
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
               <div className={`w-full sm:w-[29%] aspect-[3/4] overflow-hidden ${images[4] ? 'cursor-pointer' : 'bg-gradient-to-br from-gray-100 to-gray-200'}`}
                 onClick={images[4] ? () => { setLightboxIndex(4); setLightboxOpen(true); } : undefined}>
                 {images[4] && <img src={images[4].src} alt={images[4].alt} className="w-full h-full object-cover" />}
@@ -182,11 +182,11 @@ export default function Gallery() {
             </div>
 
             {/* Row 3 */}
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
               {/* Left section with 2 images on top and 1 below */}
-              <div className="w-full sm:w-[45%] flex flex-col gap-4">
+              <div className="w-full sm:w-[45%] flex flex-col gap-2">
                 {/* Top row: 2 images side by side */}
-                <div className="flex gap-4">
+                <div className="flex gap-2">
                   <div className={`w-1/2 aspect-[4/3] overflow-hidden ${images[6] ? 'cursor-pointer' : 'bg-gradient-to-br from-gray-100 to-gray-200'}`}
                     onClick={images[6] ? () => { setLightboxIndex(6); setLightboxOpen(true); } : undefined}>
                     {images[6] && <img src={images[6].src} alt={images[6].alt} className="w-full h-full object-cover" />}
