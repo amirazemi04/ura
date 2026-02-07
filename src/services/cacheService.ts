@@ -1,20 +1,32 @@
-import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { db } from '../firebaseClient';
+const PREFIX = 'contentful_cache__';
 
-const COLLECTION = 'contentful_cache';
+const getItem = (key: string): any | null => {
+  try {
+    const raw = localStorage.getItem(`${PREFIX}${key}`);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+};
+
+const setItem = (key: string, value: any): void => {
+  try {
+    localStorage.setItem(
+      `${PREFIX}${key}`,
+      JSON.stringify({ ...value, syncedAt: new Date().toISOString() })
+    );
+  } catch {
+    // storage full or unavailable
+  }
+};
 
 export const getCachedEntries = async (
   contentType: string,
   locale: string
 ): Promise<any[] | null> => {
-  try {
-    const ref = doc(db, COLLECTION, `entries__${contentType}__${locale}`);
-    const snap = await getDoc(ref);
-    if (snap.exists()) return snap.data().items ?? [];
-    return null;
-  } catch {
-    return null;
-  }
+  const data = getItem(`entries__${contentType}__${locale}`);
+  return data?.items ?? null;
 };
 
 export const setCachedEntries = async (
@@ -22,22 +34,15 @@ export const setCachedEntries = async (
   locale: string,
   items: any[]
 ): Promise<void> => {
-  const ref = doc(db, COLLECTION, `entries__${contentType}__${locale}`);
-  await setDoc(ref, { items, syncedAt: new Date().toISOString() });
+  setItem(`entries__${contentType}__${locale}`, { items });
 };
 
 export const getCachedEntry = async (
   entryId: string,
   locale: string
 ): Promise<any | null> => {
-  try {
-    const ref = doc(db, COLLECTION, `entry__${entryId}__${locale}`);
-    const snap = await getDoc(ref);
-    if (snap.exists()) return snap.data().data ?? null;
-    return null;
-  } catch {
-    return null;
-  }
+  const data = getItem(`entry__${entryId}__${locale}`);
+  return data?.data ?? null;
 };
 
 export const setCachedEntry = async (
@@ -45,27 +50,19 @@ export const setCachedEntry = async (
   locale: string,
   data: any
 ): Promise<void> => {
-  const ref = doc(db, COLLECTION, `entry__${entryId}__${locale}`);
-  await setDoc(ref, { data, syncedAt: new Date().toISOString() });
+  setItem(`entry__${entryId}__${locale}`, { data });
 };
 
 export const getCachedAssetUrl = async (
   assetId: string
 ): Promise<string | null> => {
-  try {
-    const ref = doc(db, COLLECTION, `asset__${assetId}`);
-    const snap = await getDoc(ref);
-    if (snap.exists()) return snap.data().url ?? '';
-    return null;
-  } catch {
-    return null;
-  }
+  const data = getItem(`asset__${assetId}`);
+  return data?.url ?? null;
 };
 
 export const setCachedAssetUrl = async (
   assetId: string,
   url: string
 ): Promise<void> => {
-  const ref = doc(db, COLLECTION, `asset__${assetId}`);
-  await setDoc(ref, { url, syncedAt: new Date().toISOString() });
+  setItem(`asset__${assetId}`, { url });
 };

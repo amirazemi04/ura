@@ -14,7 +14,6 @@
     "@contentful/rich-text-react-renderer": "^16.0.2",
     "contentful": "^11.7.3",
     "emailjs-com": "^3.2.0",
-    "firebase": "^12.9.0",
     "formik": "^2.4.6",
     "framer-motion": "^12.23.0",
     "i18next": "^25.2.1",
