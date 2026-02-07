@@ -227,15 +227,16 @@ const SponsorsPage: React.FC = () => {
           {content.otherSponsors.length > 0 && (
             <Reveal delay={0.3}>
               <div className="border-t border-gray-200 mt-4 mb-8" />
-              <div className="max-w-2xl py-6">
-                <p className="text-gray-400 text-lg mb-6">
+              <div className="w-full py-6">
+                <p className="text-gray-400 text-xl md:text-2xl mb-2">
                   {content.otherSponsorsTitle || t('sponsorsSection.otherSponsorsDefault')}
                 </p>
+                <div className="border-b-2 border-gray-300 mb-6" />
                 <ul>
                   {content.otherSponsors.map((name, i) => (
                     <li
                       key={i}
-                      className="py-3 border-b border-gray-200 text-[#333333] text-base font-medium hover:bg-[#A41E28] hover:text-white px-2 transition-colors duration-200 cursor-pointer"
+                      className="py-3 border-b border-gray-200 text-[#333333] text-lg font-medium hover:bg-[#A41E28] hover:text-white px-2 transition-colors duration-200 cursor-pointer"
                     >
                       {name}
                     </li>
