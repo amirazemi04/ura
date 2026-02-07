@@ -6,8 +6,8 @@ const MySwal = withReactContent(Swal);
 const baseStyle = {
   customClass: {
     title: 'text-base font-semibold',       // smaller font
-    popup: 'rounded-lg px-6 py-4',          // padding
-    confirmButton: 'text-sm px-4 py-2 rounded bg-[#a51e28] text-white',
+    popup: 'rounded-xl px-6 py-4',          // padding
+    confirmButton: 'text-sm px-4 py-2 rounded-lg bg-[#a51e28] text-white',
   },
   buttonsStyling: false, // use custom Tailwind classes
 };

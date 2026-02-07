@@ -110,7 +110,7 @@ const HeroSection = () => {
                     alt={heading || 'Hero Image'}
                     width={800}
                     height={600}
-                    className="rounded-md shadow-md"
+                    className="rounded-xl shadow-md"
                   />
                 </div>
               )}

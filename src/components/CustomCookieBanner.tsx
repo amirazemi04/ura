@@ -33,7 +33,7 @@ const CustomCookieBanner = () => {
       </p>
       <button
         onClick={acceptCookies}
-        className="ml-4 px-4 py-2 rounded font-medium"
+        className="ml-4 px-4 py-2 rounded-lg font-medium"
         style={{ backgroundColor: 'white', color: 'black' }}
       >
         {t('cookieBanner.accept')}

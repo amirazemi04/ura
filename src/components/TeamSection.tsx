@@ -96,10 +96,10 @@ const TeamSection = () => {
           return (
             <div
               key={member.id}
-              className="cursor-pointer transition-transform duration-300 hover:scale-105 rounded-md overflow-hidden"
+              className="cursor-pointer transition-transform duration-300 hover:scale-105 rounded-xl overflow-hidden"
               onClick={() => handleSelect(member)}
             >
-              <div className="relative bg-white shadow-md rounded-md overflow-hidden">
+              <div className="relative bg-white shadow-md rounded-xl overflow-hidden">
                 <img
                   src={member.image}
                   alt={member.name}
@@ -107,7 +107,7 @@ const TeamSection = () => {
                   loading="lazy"
                 />
                 {isSelected && (
-                  <span className="absolute inset-0 ring-4 ring-red-500 pointer-events-none rounded-md" />
+                  <span className="absolute inset-0 ring-4 ring-red-500 pointer-events-none rounded-xl" />
                 )}
               </div>
 

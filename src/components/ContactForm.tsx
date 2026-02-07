@@ -264,7 +264,7 @@ const ContactForm = () => {
 
                 <button
                   type="submit"
-                  className="mt-4 bg-[#a51e28] text-white px-4 py-2 rounded hover:bg-[#891b22] transition"
+                  className="mt-4 bg-[#a51e28] text-white px-4 py-2 rounded-lg hover:bg-[#891b22] transition"
                 >
                   {t('form.send')}
                 </button>

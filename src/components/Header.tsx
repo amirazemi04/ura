@@ -80,7 +80,7 @@ const Header = () => {
                 <ChevronDown size={16} className={`transition-transform duration-200 ${isLangOpen ? 'rotate-180' : ''}`} />
               </button>
               {isLangOpen && (
-                <div className="absolute left-0 mt-2 bg-white text-[#a51e28] shadow-lg rounded-md text-sm z-50 min-w-max overflow-hidden font-myfont">
+                <div className="absolute left-0 mt-2 bg-white text-[#a51e28] shadow-lg rounded-xl text-sm z-50 min-w-max overflow-hidden font-myfont">
                   <button
                     onClick={() => changeLanguage('de')}
                     className="flex items-center w-full px-4 py-2.5 hover:bg-red-50 transition duration-150 whitespace-nowrap text-left"
@@ -100,13 +100,13 @@ const Header = () => {
             <div className="relative" ref={joinRef}>
               <button
                 onClick={() => setIsJoinOpen(!isJoinOpen)}
-                className="bg-white text-[#a51e28] font-semibold py-2.5 px-5 rounded-md hover:bg-red-50 transition duration-300 flex items-center gap-2 font-myfont shadow-sm"
+                className="bg-white text-[#a51e28] font-semibold py-2.5 px-5 rounded-xl hover:bg-red-50 transition duration-300 flex items-center gap-2 font-myfont shadow-sm"
               >
                 {t('header.join')}
                 <ChevronDown size={16} className={`transition-transform duration-200 ${isJoinOpen ? 'rotate-180' : ''}`} />
               </button>
               {isJoinOpen && (
-                <div className="absolute right-0 mt-2 bg-white text-[#a51e28] shadow-lg rounded-md z-50 text-sm min-w-max overflow-hidden font-myfont">
+                <div className="absolute right-0 mt-2 bg-white text-[#a51e28] shadow-lg rounded-xl z-50 text-sm min-w-max overflow-hidden font-myfont">
                   <Link
                     to="/join-us"
                     className="block px-5 py-2.5 hover:bg-red-50 transition duration-150 text-right whitespace-nowrap"
@@ -128,7 +128,7 @@ const Header = () => {
 
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden p-2 z-50 hover:bg-red-800 rounded transition duration-200"
+            className="lg:hidden p-2 z-50 hover:bg-red-800 rounded-lg transition duration-200"
             aria-label="Menu toggle"
           >
             {isMenuOpen ? <X size={24} className="sm:w-6 sm:h-6" /> : <Menu size={24} className="sm:w-6 sm:h-6" />}
@@ -147,7 +147,7 @@ const Header = () => {
                 <Link
                   key={index}
                   to={item.path}
-                  className={`block py-3 px-4 rounded-md text-base transition duration-200 text-center font-myfont ${
+                  className={`block py-3 px-4 rounded-xl text-base transition duration-200 text-center font-myfont ${
                     isActive ? 'bg-red-900 shadow-sm' : 'hover:bg-red-800'
                   }`}
                   onClick={() => setIsMenuOpen(false)}
@@ -160,7 +160,7 @@ const Header = () => {
             <div className="pt-3 border-t border-red-700/50">
               <button
                 onClick={() => setIsJoinOpenMobile(!isJoinOpenMobile)}
-                className="bg-white text-[#a51e28] font-semibold py-3 px-4 rounded-md hover:bg-red-50 transition duration-300 flex items-center justify-center gap-2 w-full text-base font-myfont shadow-sm"
+                className="bg-white text-[#a51e28] font-semibold py-3 px-4 rounded-xl hover:bg-red-50 transition duration-300 flex items-center justify-center gap-2 w-full text-base font-myfont shadow-sm"
               >
                 {t('header.join')}
                 <ChevronDown size={16} className={`transition-transform duration-200 ${isJoinOpenMobile ? 'rotate-180' : ''}`} />
@@ -169,7 +169,7 @@ const Header = () => {
                 <div className="mt-3 space-y-2 font-myfont">
                   <Link
                     to="/join-us"
-                    className="block bg-white text-[#a51e28] font-medium py-2.5 rounded-md hover:bg-red-50 transition duration-150 shadow-sm"
+                    className="block bg-white text-[#a51e28] font-medium py-2.5 rounded-xl hover:bg-red-50 transition duration-150 shadow-sm"
                     onClick={() => {
                       setIsMenuOpen(false);
                       setIsJoinOpenMobile(false);
@@ -179,7 +179,7 @@ const Header = () => {
                   </Link>
                   <Link
                     to="/sponsor-contact"
-                    className="block bg-white text-[#a51e28] font-medium py-2.5 rounded-md hover:bg-red-50 transition duration-150 shadow-sm"
+                    className="block bg-white text-[#a51e28] font-medium py-2.5 rounded-xl hover:bg-red-50 transition duration-150 shadow-sm"
                     onClick={() => {
                       setIsMenuOpen(false);
                       setIsJoinOpenMobile(false);
@@ -197,7 +197,7 @@ const Header = () => {
                   changeLanguage('de');
                   setIsMenuOpen(false);
                 }}
-                className="flex items-center bg-white text-[#a51e28] px-4 py-2.5 rounded-md hover:bg-red-50 transition duration-150 text-sm shadow-sm"
+                className="flex items-center bg-white text-[#a51e28] px-4 py-2.5 rounded-xl hover:bg-red-50 transition duration-150 text-sm shadow-sm"
               >
                 <span className="mr-1.5">🇨🇭</span> Deutsch
               </button>
@@ -206,7 +206,7 @@ const Header = () => {
                   changeLanguage('sq');
                   setIsMenuOpen(false);
                 }}
-                className="flex items-center bg-white text-[#a51e28] px-4 py-2.5 rounded-md hover:bg-red-50 transition duration-150 text-sm shadow-sm"
+                className="flex items-center bg-white text-[#a51e28] px-4 py-2.5 rounded-xl hover:bg-red-50 transition duration-150 text-sm shadow-sm"
               >
                 <span className="mr-1.5">🇦🇱</span> Shqip
               </button>
