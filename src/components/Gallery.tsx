@@ -183,23 +183,28 @@ export default function Gallery() {
 
             {/* Row 3 */}
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
-              <div className="w-full sm:w-[20%] flex sm:flex-col gap-4">
-                <div className={`w-1/2 sm:w-full aspect-[4/3] overflow-hidden ${images[6] ? 'cursor-pointer' : 'bg-gradient-to-br from-gray-100 to-gray-200'}`}
-                  onClick={images[6] ? () => { setLightboxIndex(6); setLightboxOpen(true); } : undefined}>
-                  {images[6] && <img src={images[6].src} alt={images[6].alt} className="w-full h-full object-cover" />}
+              {/* Left section with 2 images on top and 1 below */}
+              <div className="w-full sm:w-[45%] flex flex-col gap-4">
+                {/* Top row: 2 images side by side */}
+                <div className="flex gap-4">
+                  <div className={`w-1/2 aspect-[4/3] overflow-hidden ${images[6] ? 'cursor-pointer' : 'bg-gradient-to-br from-gray-100 to-gray-200'}`}
+                    onClick={images[6] ? () => { setLightboxIndex(6); setLightboxOpen(true); } : undefined}>
+                    {images[6] && <img src={images[6].src} alt={images[6].alt} className="w-full h-full object-cover" />}
+                  </div>
+                  <div className={`w-1/2 aspect-[4/3] overflow-hidden ${images[7] ? 'cursor-pointer' : 'bg-gradient-to-br from-gray-100 to-gray-200'}`}
+                    onClick={images[7] ? () => { setLightboxIndex(7); setLightboxOpen(true); } : undefined}>
+                    {images[7] && <img src={images[7].src} alt={images[7].alt} className="w-full h-full object-cover" />}
+                  </div>
                 </div>
-                <div className={`w-1/2 sm:w-full aspect-[4/3] overflow-hidden ${images[7] ? 'cursor-pointer' : 'bg-gradient-to-br from-gray-100 to-gray-200'}`}
-                  onClick={images[7] ? () => { setLightboxIndex(7); setLightboxOpen(true); } : undefined}>
-                  {images[7] && <img src={images[7].src} alt={images[7].alt} className="w-full h-full object-cover" />}
+                {/* Bottom: 1 image centered */}
+                <div className={`w-full aspect-[16/9] overflow-hidden ${images[8] ? 'cursor-pointer' : 'bg-gradient-to-br from-gray-100 to-gray-200'}`}
+                  onClick={images[8] ? () => { setLightboxIndex(8); setLightboxOpen(true); } : undefined}>
+                  {images[8] && <img src={images[8].src} alt={images[8].alt} className="w-full h-full object-cover" />}
                 </div>
               </div>
 
-              <div className={`w-full sm:w-[30%] aspect-[3/4] overflow-hidden ${images[8] ? 'cursor-pointer' : 'bg-gradient-to-br from-gray-100 to-gray-200'}`}
-                onClick={images[8] ? () => { setLightboxIndex(8); setLightboxOpen(true); } : undefined}>
-                {images[8] && <img src={images[8].src} alt={images[8].alt} className="w-full h-full object-cover" />}
-              </div>
-
-              <div className={`w-full sm:w-[50%] aspect-[16/9] overflow-hidden ${images[9] ? 'cursor-pointer' : 'bg-gradient-to-br from-gray-100 to-gray-200'}`}
+              {/* Right section: large landscape image */}
+              <div className={`w-full sm:w-[55%] aspect-[16/9] overflow-hidden ${images[9] ? 'cursor-pointer' : 'bg-gradient-to-br from-gray-100 to-gray-200'}`}
                 onClick={images[9] ? () => { setLightboxIndex(9); setLightboxOpen(true); } : undefined}>
                 {images[9] && <img src={images[9].src} alt={images[9].alt} className="w-full h-full object-cover" />}
               </div>
