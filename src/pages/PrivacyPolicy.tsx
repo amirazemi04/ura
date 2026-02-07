@@ -47,12 +47,12 @@ const PrivacyPolicy = () => {
         <span className="relative inline-block pb-1">
           {text}
           <svg
-            viewBox="0 0 200 20"
+            viewBox="-4 -4 208 28"
             preserveAspectRatio="none"
-            className="absolute left-0 bottom-0 w-full h-3"
+            className="absolute left-0 bottom-0 w-full h-3 overflow-visible"
           >
             <path
-              d="M0,20 Q100,-10 200,20"
+              d="M4,20 Q100,-10 196,20"
               fill="none"
               stroke="#8B1D24"
               strokeWidth="4"

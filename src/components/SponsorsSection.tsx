@@ -117,12 +117,12 @@ const SponsorsSection: React.FC = () => {
           >
             {t('header.join')}
             <svg
-              viewBox="0 0 100 20"
+              viewBox="-5 -5 110 30"
               preserveAspectRatio="none"
-              className="absolute left-1/2 -translate-x-1/2 bottom-0 w-full h-[6px]"
+              className="absolute left-1/2 -translate-x-1/2 bottom-0 w-full h-[6px] overflow-visible"
             >
               <path
-                d="M0,20 Q50,-10 100,20"
+                d="M5,20 Q50,-10 95,20"
                 fill="none"
                 stroke="#a51e28"
                 strokeWidth="8"
