@@ -17,6 +17,7 @@ type FormValues = {
   geburtsdatum: string;
   email_adresse: string;
   telefonnummer: string;
+  prejardhja: string;
   agreed: boolean;
   role: string;
 };
@@ -98,6 +99,7 @@ const JoinUsPage = () => {
     geburtsdatum: '',
     email_adresse: '',
     telefonnummer: '',
+    prejardhja: '',
     agreed: false,
     role: 'antar',
   };
@@ -110,6 +112,7 @@ const JoinUsPage = () => {
     { label: t('form.birthdate'), name: 'geburtsdatum', type: 'date' },
     { label: t('form.email'), name: 'email_adresse', type: 'email' },
     { label: t('form.phone'), name: 'telefonnummer', type: 'tel' },
+    { label: t('form.origin'), name: 'prejardhja' },
   ];
 
   const handleSubmit = (values: FormValues, { resetForm }: any) => {

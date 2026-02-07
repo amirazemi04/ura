@@ -132,6 +132,7 @@ i18n
             birthdate: 'Geburtsdatum',
             email: 'E-Mail-Adresse',
             phone: 'Telefonnummer',
+            origin: 'Herkunft',
             businessNumber: 'Unternehmensnummer', // Added German translation
             send: 'Absenden',
             success: 'Ihre Nachricht wurde erfolgreich gesendet!',
@@ -270,6 +271,7 @@ i18n
             birthdate: 'Data e Lindjes',
             email: 'Adresa e E-Mailit',
             phone: 'Numri i Telefonit',
+            origin: 'Prejardhja',
             businessNumber: 'Numri i biznesit', // Existing Albanian translation
             send: 'Dërgo',
             success: 'Mesazhi juaj u dërgua me sukses!',
