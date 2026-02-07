@@ -116,19 +116,7 @@ const SponsorsSection: React.FC = () => {
             className="relative inline-block text-[#8B1D24] cursor-pointer text-center pb-1"
           >
             {t('header.join')}
-            <svg
-              viewBox="0 0 100 20"
-              preserveAspectRatio="none"
-              className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[85px] h-[6px]"
-            >
-              <path
-                d="M0,20 Q50,-10 100,20"
-                fill="none"
-                stroke="#a51e28"
-                strokeWidth="8"
-                strokeLinecap="round"
-              />
-            </svg>
+            <span className="absolute left-0 bottom-0 w-full h-[3px] bg-[#a51e28] rounded-full" />
           </Link>
         </div>
       </Reveal>
