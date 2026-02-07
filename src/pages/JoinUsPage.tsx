@@ -192,13 +192,16 @@ const JoinUsPage = () => {
               <h2 className="text-4xl font-bold text-[#333333] mb-6 pb-1 text-center relative inline-block">
                 {textContent.joinTitle}
                 <svg
-                  viewBox="0 0 768.9 65.28"
+                  viewBox="0 0 300 30"
                   preserveAspectRatio="none"
-                  className="absolute left-1/2 transform -translate-x-1/2 bottom-[-14px] w-[300px] h-[8px]"
+                  className="absolute left-1/2 transform -translate-x-1/2 bottom-[-18px] w-[120%] h-[16px]"
                 >
                   <path
-                    fill="#a61e29"
-                    d="M22.08,48.81c82.09-11.37,164.95-17.33,247.75-20.22,97.88-3.42,195.97-2.19,293.72,4.02,56.9,3.62,113.69,8.98,170.23,16.42,3.24.43,5.97-3.06,6-6,.04-3.59-2.8-5.58-6-6-100.74-13.25-202.31-20-303.88-21.8-93.06-1.65-186.27.79-279.07,7.98-44.1,3.42-88.11,7.96-131.93,14.03-7.62,1.05-4.38,12.62,3.19,11.57"
+                    d="M5,2 Q150,28 295,2"
+                    fill="none"
+                    stroke="#a61e29"
+                    strokeWidth="5"
+                    strokeLinecap="round"
                   />
                 </svg>
               </h2>
