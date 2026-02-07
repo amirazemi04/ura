@@ -47,13 +47,16 @@ const PrivacyPolicy = () => {
         <span className="relative inline-block pb-1">
           {text}
           <svg
-            viewBox="0 0 768.9 65.28"
+            viewBox="0 0 200 20"
             preserveAspectRatio="none"
-            className="absolute left-0 bottom-0 w-full h-[6px]"
+            className="absolute left-0 bottom-0 w-full h-3"
           >
             <path
-              fill="#a61e29"
-              d="M22.08,48.81c82.09-11.37,164.95-17.33,247.75-20.22,97.88-3.42,195.97-2.19,293.72,4.02,56.9,3.62,113.69,8.98,170.23,16.42,3.24.43,5.97-3.06,6-6,.04-3.59-2.8-5.58-6-6-100.74-13.25-202.31-20-303.88-21.8-93.06-1.65-186.27.79-279.07,7.98-44.1,3.42-88.11,7.96-131.93,14.03-7.62,1.05-4.38,12.62,3.19,11.57"
+              d="M0,20 Q100,-10 200,20"
+              fill="none"
+              stroke="#8B1D24"
+              strokeWidth="4"
+              strokeLinecap="round"
             />
           </svg>
         </span>

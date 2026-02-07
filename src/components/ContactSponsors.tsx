@@ -134,14 +134,14 @@ const ContactSponsors = () => {
             <h2 className="text-4xl font-bold text-[#333333] mb-6 pb-1 text-center relative inline-block">
               {textContent.joinTitle || 'No joinTitle loaded'}
               <svg
-                viewBox="0 0 300 30"
+                viewBox="0 0 200 20"
                 preserveAspectRatio="none"
-                className="absolute left-1/2 transform -translate-x-1/2 bottom-[-18px] w-[120%] h-[16px]"
+                className="absolute left-1/2 transform -translate-x-1/2 bottom-[-14px] w-[300px] h-5"
               >
                 <path
-                  d="M5,2 Q150,28 295,2"
+                  d="M0,20 Q100,-10 200,20"
                   fill="none"
-                  stroke="#a61e29"
+                  stroke="#a51e28"
                   strokeWidth="5"
                   strokeLinecap="round"
                 />
