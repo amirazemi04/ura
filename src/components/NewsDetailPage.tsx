@@ -49,10 +49,24 @@ const NewsDetailPage = () => {
         const thumbnailUrl = await safeGetAssetFromReference(fields.thumbnail);
         const secondImageUrl = await safeGetAssetFromReference(fields.secondImage);
 
-        const formattedDate = new Date(entry.sys.createdAt).toLocaleDateString(
-          currentLocale === 'sq' ? 'sq-AL' : 'de-DE',
-          { year: 'numeric', month: 'long', day: 'numeric' }
-        );
+        const dateField = safeGetField(fields, 'date', '');
+        let formattedDate = '';
+
+        if (dateField) {
+          try {
+            const parsedDate = new Date(dateField);
+            if (!isNaN(parsedDate.getTime())) {
+              formattedDate = parsedDate.toLocaleDateString(
+                currentLocale === 'sq' ? 'sq-AL' : 'de-DE',
+                { year: 'numeric', month: 'long', day: 'numeric' }
+              );
+            } else {
+              formattedDate = dateField;
+            }
+          } catch {
+            formattedDate = dateField;
+          }
+        }
 
         setNews({
           title: safeGetField(fields, 'title', 'No title'),

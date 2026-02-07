@@ -40,16 +40,32 @@ const BlogPage = () => {
             const fields = item.fields || {};
             const imageUrl = await safeGetAssetFromReference(fields.image);
 
+            const dateField = safeGetField(fields, 'date', '');
+            let formattedDate = '';
+
+            if (dateField) {
+              try {
+                const parsedDate = new Date(dateField);
+                if (!isNaN(parsedDate.getTime())) {
+                  formattedDate = parsedDate.toLocaleDateString(
+                    currentLocale === 'sq' ? 'sq-AL' : 'de-DE',
+                    { year: 'numeric', month: 'long', day: 'numeric' }
+                  );
+                } else {
+                  formattedDate = dateField;
+                }
+              } catch {
+                formattedDate = dateField;
+              }
+            }
+
             return {
               id: item.sys.id,
               title: safeGetField(fields, 'title', 'No title'),
               image: imageUrl,
               description: safeGetField(fields, 'description', ''),
               author: safeGetField(fields, 'author', 'Unknown'),
-              date: new Date(item.sys.createdAt).toLocaleDateString(
-                currentLocale === 'sq' ? 'sq-AL' : 'de-DE',
-                { year: 'numeric', month: 'long', day: 'numeric' }
-              ),
+              date: formattedDate,
             };
           })
         );
