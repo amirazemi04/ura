@@ -147,16 +147,13 @@ const GroupsSection = () => {
                   <div className="relative inline-block text-[#8B1D24] cursor-pointer text-left pb-1">
                     {t('header.join')}
                     <svg
-                      viewBox="0 0 100 20"
+                      viewBox="0 0 768.9 65.28"
                       preserveAspectRatio="none"
                       className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[85px] h-[6px]"
                     >
                       <path
-                        d="M0,20 Q50,-10 100,20"
-                        fill="none"
-                        stroke="#a51e28"
-                        strokeWidth="8"
-                        strokeLinecap="round"
+                        fill="#a61e29"
+                        d="M22.08,48.81c82.09-11.37,164.95-17.33,247.75-20.22,97.88-3.42,195.97-2.19,293.72,4.02,56.9,3.62,113.69,8.98,170.23,16.42,3.24.43,5.97-3.06,6-6,.04-3.59-2.8-5.58-6-6-100.74-13.25-202.31-20-303.88-21.8-93.06-1.65-186.27.79-279.07,7.98-44.1,3.42-88.11,7.96-131.93,14.03-7.62,1.05-4.38,12.62,3.19,11.57"
                       />
                     </svg>
                   </div>
