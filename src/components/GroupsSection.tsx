@@ -46,7 +46,7 @@ const GroupsSection = () => {
           const fields = entries[0].fields || {};
           const images = safeGetField(fields, 'grups', []);
           const imageUrls = images
-            .slice(0, 3)
+            .slice(0, 4)
             .map((img: any) => img?.fields?.file?.url ? `https:${img.fields.file.url}` : '')
             .filter(Boolean);
           setGroupImages(imageUrls);
@@ -63,25 +63,26 @@ const GroupsSection = () => {
     t('groupsSection.groups.age18_30'),
     t('groupsSection.groups.age30_45'),
     t('groupsSection.groups.age45_plus'),
+    t('groupsSection.groups.age18_30'),
   ];
 
   return (
     <section className="bg-white" id="groups">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Left Column - Group Images */}
+          {/* Left Column - Group Images + Schedule */}
           <Reveal>
             <div>
               <h2 className="text-2xl sm:text-3xl font-light mb-8 text-center sm:text-left">
                 {t('groupsSection.title')}
               </h2>
 
-              <div className="grid grid-cols-3 gap-4 sm:gap-6">
+              {/* 4 Images Grid */}
+              <div className="grid grid-cols-4 gap-2 sm:gap-3 mb-8">
                 {groupImages.map((image, index) => (
                   <div
                     key={index}
-                    className="group relative overflow-hidden shadow-xl cursor-pointer aspect-[3/6] w-full max-w-sm mx-auto"
-
+                    className="group relative overflow-hidden shadow-xl cursor-pointer aspect-[3/4] w-full"
                   >
                     <img
                       src={image}
@@ -89,7 +90,7 @@ const GroupsSection = () => {
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center">
-                      <span className="text-white font-medium mb-4 text-center">
+                      <span className="text-white font-medium mb-2 text-center text-xs sm:text-sm px-1">
                         {captions[index] || ''}
                       </span>
                     </div>
@@ -97,15 +98,10 @@ const GroupsSection = () => {
                   </div>
                 ))}
               </div>
-            </div>
-          </Reveal>
 
-          {/* Right Column - Schedule and Info */}
-          <Reveal delay={0.2}>
-            <div className="flex flex-col justify-between">
-              {/* Schedule */}
-              <div className="mt-16">
-                <div className="grid grid-cols-2 gap-8 mb-10">
+              {/* Schedule - Now in Left Column */}
+              <div className="mt-8">
+                <div className="grid grid-cols-2 gap-8">
                   <div>
                     <h3 className="text-xl font-bold mb-4">
                       {t('groupsSection.schedule.title')}
@@ -132,12 +128,17 @@ const GroupsSection = () => {
                   </div>
                 </div>
               </div>
+            </div>
+          </Reveal>
 
+          {/* Right Column - Description + Button */}
+          <Reveal delay={0.2}>
+            <div className="flex flex-col justify-between h-full">
               {/* Description */}
-              <div>
+              <div className="flex-1 flex items-center">
                 <p className="text-gray-600 leading-relaxed text-lg">
                   {sectionDescription ||
-                    'Ansambli URA është i hapur për bashkëpunime\nme institucione, organizata dhe komunitete\nqë vlerësojnë trashëgiminë shqiptare.'}
+                    'Të bashkuar nga qëllimi për të ruajtur dhe promovuar kulturën shqiptare, ekipi ynë sjell përvojë, pasion dhe bashkëpunim në çdo provë dhe paraqitje.'}
                 </p>
               </div>
 
