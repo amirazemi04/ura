@@ -89,8 +89,8 @@ const NewInvestments = () => {
   }
 
   return (
-    <section className="px-6 py-12 bg-white">
-      <div className="container mx-auto grid grid-cols-1 lg:grid-cols-[55%_45%] gap-10">
+    <section className="py-12 bg-white">
+      <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-[55%_45%] gap-10">
         {/* Left Column: static image */}
         <Reveal>
           <div className="h-[550px] w-full overflow-hidden shadow-xl">
