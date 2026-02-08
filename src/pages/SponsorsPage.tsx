@@ -194,7 +194,7 @@ const SponsorsPage: React.FC = () => {
             <Reveal delay={0.1}>
               <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 py-10">
                 {content.topSponsors.map((sponsor, i) => (
-                  <div key={i} className="flex items-center justify-center h-40 md:h-56 lg:h-72">
+                  <div key={i} className="flex items-center justify-center">
                     {sponsor.link ? (
                       <a
                         href={sponsor.link}
@@ -204,14 +204,14 @@ const SponsorsPage: React.FC = () => {
                         <img
                           src={sponsor.url}
                           alt={`Top Sponsor ${i + 1}`}
-                          className="max-h-full w-auto object-contain transition duration-300"
+                          className="h-24 md:h-32 w-auto object-contain transition duration-300"
                         />
                       </a>
                     ) : (
                       <img
                         src={sponsor.url}
                         alt={`Top Sponsor ${i + 1}`}
-                        className="max-h-full w-auto object-contain transition duration-300"
+                        className="h-24 md:h-32 w-auto object-contain transition duration-300"
                       />
                     )}
                   </div>
