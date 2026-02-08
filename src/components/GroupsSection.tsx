@@ -46,7 +46,7 @@ const GroupsSection = () => {
           const fields = entries[0].fields || {};
           const images = safeGetField(fields, 'grups', []);
           const imageUrls = images
-            .slice(0, 3)
+            .slice(0, 4)
             .map((img: any) => img?.fields?.file?.url ? `https:${img.fields.file.url}` : '')
             .filter(Boolean);
           setGroupImages(imageUrls);
@@ -63,88 +63,88 @@ const GroupsSection = () => {
     t('groupsSection.groups.age18_30'),
     t('groupsSection.groups.age30_45'),
     t('groupsSection.groups.age45_plus'),
+    t('groupsSection.groups.age18_30'),
   ];
 
   return (
     <section className="bg-white" id="groups">
-      <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Left Column - Group Images */}
-          <Reveal>
-            <div>
-              <h2 className="text-2xl sm:text-3xl font-light mb-8 text-center sm:text-left">
-                {t('groupsSection.title')}
-              </h2>
-
-              <div className="grid grid-cols-3 gap-4 sm:gap-6">
-                {groupImages.map((image, index) => (
-                  <div
-                    key={index}
-                    className="group relative overflow-hidden shadow-xl cursor-pointer aspect-[3/6] w-full max-w-sm mx-auto"
-
-                  >
-                    <img
-                      src={image}
-                      alt={`Group ${index + 1}`}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center">
-                      <span className="text-white font-medium mb-4 text-center">
-                        {captions[index] || ''}
-                      </span>
-                    </div>
-                    <div className="absolute inset-0 bg-[#8B1D24]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      <div className="container mx-auto px-6 py-16">
+        <Reveal>
+          <div>
+            {/* Images Grid - 4 columns */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-8">
+              {groupImages.map((image, index) => (
+                <div
+                  key={index}
+                  className="group relative overflow-hidden shadow-xl cursor-pointer aspect-[3/4] w-full"
+                >
+                  <img
+                    src={image}
+                    alt={`Group ${index + 1}`}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center">
+                    <span className="text-white font-medium mb-4 text-center px-2 text-sm">
+                      {captions[index] || ''}
+                    </span>
                   </div>
-                ))}
-              </div>
+                  <div className="absolute inset-0 bg-[#8B1D24]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+              ))}
             </div>
-          </Reveal>
 
-          {/* Right Column - Schedule and Info */}
-          <Reveal delay={0.2}>
-            <div className="flex flex-col justify-between">
-              {/* Schedule */}
-              <div className="mt-16">
-                <div className="grid grid-cols-2 gap-8 mb-10">
+            {/* Content Section */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12">
+              {/* Left: Description */}
+              <div className="lg:col-span-2">
+                <p className="text-gray-800 leading-relaxed text-base sm:text-lg mb-8">
+                  {sectionDescription ||
+                    'Të bashkuar nga gëllimi për të ruajtur dhe promovuar kulturën shqiptare, ekipi ynë sjell përvojë, pasion dhe bashkëpunim në çdo provë dhe paraqitje.'}
+                </p>
+
+                {/* Schedule Section */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                   <div>
-                    <h3 className="text-xl font-bold mb-4">
+                    <h3 className="text-lg font-bold mb-4">
                       {t('groupsSection.schedule.title')}
                     </h3>
                     {scheduleTime.length > 0 ? (
                       scheduleTime.map((time, idx) => (
-                        <p key={idx} className="text-[#8B1D24]">{time}</p>
+                        <p key={idx} className="text-gray-800 mb-2">{time}</p>
                       ))
                     ) : (
-                      <p className="text-[#8B1D24]">08:00–11:00</p>
+                      <>
+                        <p className="text-gray-800 mb-2">Senior: 20:00 - 21:45</p>
+                        <p className="text-gray-800 mb-2">Teenager: 18:00 - 19:45</p>
+                        <p className="text-gray-800 mb-2">Junior: 18:00 - 19:45</p>
+                        <p className="text-gray-800 mb-2">Kids: 18:00 - 19:45</p>
+                      </>
                     )}
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold mb-4">
+                    <h3 className="text-lg font-bold mb-4">
                       {t('groupsSection.locations.title')}
                     </h3>
                     {scheduleLocation.length > 0 ? (
                       scheduleLocation.map((loc, idx) => (
-                        <p key={idx} className="text-[#8B1D24]">{loc}</p>
+                        <p key={idx} className="text-gray-800 mb-2">{loc}</p>
                       ))
                     ) : (
-                      <p className="text-[#8B1D24]">Dübendorf, Zürich</p>
+                      <>
+                        <p className="text-gray-800 mb-2">Singsaal Schulhaus Stägenbuck</p>
+                        <p className="text-gray-800 mb-2">Turnhalle Schulhaus Stägenbuck</p>
+                        <p className="text-gray-800 mb-2">Turnhalle Schulhaus Flugfeld</p>
+                        <p className="text-gray-800 mb-2">Grüze 4</p>
+                      </>
                     )}
                   </div>
                 </div>
               </div>
 
-              {/* Description */}
-              <div>
-                <p className="text-gray-600 leading-relaxed text-lg">
-                  {sectionDescription ||
-                    'Ansambli URA është i hapur për bashkëpunime\nme institucione, organizata dhe komunitete\nqë vlerësojnë trashëgiminë shqiptare.'}
-                </p>
-              </div>
-
-              {/* Join Link */}
-              <Link to="/join-us">
-                <div className="mt-16 sm:mt-auto">
-                  <div className="relative inline-block text-[#8B1D24] cursor-pointer text-left pb-1">
+              {/* Right: Join Link */}
+              <div className="flex items-end justify-start lg:justify-end">
+                <Link to="/join-us">
+                  <div className="relative inline-block text-[#8B1D24] cursor-pointer text-2xl sm:text-3xl font-light pb-2">
                     {t('header.join')}
                     <svg
                       viewBox="-5 -5 110 30"
@@ -160,11 +160,11 @@ const GroupsSection = () => {
                       />
                     </svg>
                   </div>
-                </div>
-              </Link>
+                </Link>
+              </div>
             </div>
-          </Reveal>
-        </div>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
