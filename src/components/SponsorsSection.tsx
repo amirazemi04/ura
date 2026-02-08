@@ -6,9 +6,14 @@ import { safeGetEntries, safeGetField } from '../utils/contentfulHelpers';
 const ROTATION_INTERVAL = 3000; // ms
 const SLIDE_DURATION = 600; // ms
 
+interface SponsorImage {
+  url: string;
+  link?: string;
+}
+
 const SponsorsSection: React.FC = () => {
   const { t } = useTranslation();
-  const [sponsorImages, setSponsorImages] = useState<string[]>([]);
+  const [sponsorImages, setSponsorImages] = useState<SponsorImage[]>([]);
   const sliderRef = useRef<HTMLDivElement>(null);
   const [offset, setOffset] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(true);
@@ -38,8 +43,12 @@ const SponsorsSection: React.FC = () => {
           const fields = entries[0].fields || {};
           const sponsors = safeGetField(fields, 'sponsorsImages', []);
           const images = sponsors
-            .map((asset: any) => asset?.fields?.file?.url ? `https:${asset.fields.file.url}` : '')
-            .filter(Boolean);
+            .map((asset: any) => {
+              const url = asset?.fields?.file?.url ? `https:${asset.fields.file.url}` : '';
+              const link = asset?.fields?.title || '';
+              return { url, link };
+            })
+            .filter((item: SponsorImage) => item.url);
           if (images.length > 0) {
             setSponsorImages([...images, ...images]);
           }
@@ -95,13 +104,28 @@ const SponsorsSection: React.FC = () => {
                   transition: isTransitioning ? `transform ${SLIDE_DURATION}ms ease-in-out` : 'none',
                 }}
               >
-                {sponsorImages.map((src, i) => (
+                {sponsorImages.map((sponsor, i) => (
                   <div key={i} className="flex-1 flex justify-center items-center px-2">
-                    <img
-                      src={src}
-                      alt={`Sponsor ${i + 1}`}
-                      className="w-36 md:w-52 lg:w-64 grayscale hover:grayscale-0 transition duration-300 object-contain"
-                    />
+                    {sponsor.link ? (
+                      <a
+                        href={sponsor.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="cursor-pointer"
+                      >
+                        <img
+                          src={sponsor.url}
+                          alt={`Sponsor ${i + 1}`}
+                          className="h-[210px] w-auto grayscale hover:grayscale-0 transition duration-300 object-contain"
+                        />
+                      </a>
+                    ) : (
+                      <img
+                        src={sponsor.url}
+                        alt={`Sponsor ${i + 1}`}
+                        className="h-[210px] w-auto grayscale hover:grayscale-0 transition duration-300 object-contain"
+                      />
+                    )}
                   </div>
                 ))}
               </div>
