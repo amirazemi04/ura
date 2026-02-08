@@ -143,9 +143,9 @@ const GroupsSection = () => {
               </div>
 
               {/* Join Link */}
-              <Link to="/join-us">
-                <div className="mt-16 sm:mt-auto">
-                  <div className="relative inline-block text-[#8B1D24] cursor-pointer text-left pb-1">
+              <div className="mt-16 sm:mt-auto flex justify-end">
+                <Link to="/join-us">
+                  <div className="relative inline-block text-[#8B1D24] cursor-pointer text-right pb-1">
                     {t('header.join')}
                     <svg
                       viewBox="-5 -5 110 30"
@@ -161,8 +161,8 @@ const GroupsSection = () => {
                       />
                     </svg>
                   </div>
-                </div>
-              </Link>
+                </Link>
+              </div>
             </div>
           </Reveal>
         </div>
