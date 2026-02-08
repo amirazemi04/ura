@@ -204,14 +204,14 @@ const SponsorsPage: React.FC = () => {
                         <img
                           src={sponsor.url}
                           alt={`Top Sponsor ${i + 1}`}
-                          className="h-32 md:h-40 w-auto object-contain transition duration-300"
+                          className="h-[210px] w-auto object-contain transition duration-300"
                         />
                       </a>
                     ) : (
                       <img
                         src={sponsor.url}
                         alt={`Top Sponsor ${i + 1}`}
-                        className="h-24 md:h-32 w-auto object-contain transition duration-300"
+                        className="h-[210px] w-auto object-contain transition duration-300"
                       />
                     )}
                   </div>
