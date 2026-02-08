@@ -200,19 +200,18 @@ const SponsorsPage: React.FC = () => {
                         href={sponsor.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="cursor-pointer hover:opacity-80 transition-opacity duration-300"
                       >
                         <img
                           src={sponsor.url}
                           alt={`Top Sponsor ${i + 1}`}
-                          className="max-h-full w-auto object-contain"
+                          className="max-h-full w-auto object-contain transition duration-300"
                         />
                       </a>
                     ) : (
                       <img
                         src={sponsor.url}
                         alt={`Top Sponsor ${i + 1}`}
-                        className="max-h-full w-auto object-contain"
+                        className="max-h-full w-auto object-contain transition duration-300"
                       />
                     )}
                   </div>
