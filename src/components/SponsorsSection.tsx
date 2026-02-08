@@ -116,14 +116,14 @@ const SponsorsSection: React.FC = () => {
                         <img
                           src={sponsor.url}
                           alt={`Sponsor ${i + 1}`}
-                          className="h-[210px] w-auto grayscale hover:grayscale-0 transition duration-300 object-contain"
+                          className="w-36 md:w-52 lg:w-64 grayscale hover:grayscale-0 transition duration-300 object-contain"
                         />
                       </a>
                     ) : (
                       <img
                         src={sponsor.url}
                         alt={`Sponsor ${i + 1}`}
-                        className="h-[210px] w-auto grayscale hover:grayscale-0 transition duration-300 object-contain"
+                        className="w-36 md:w-52 lg:w-64 grayscale hover:grayscale-0 transition duration-300 object-contain"
                       />
                     )}
                   </div>
