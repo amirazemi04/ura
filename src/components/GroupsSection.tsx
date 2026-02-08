@@ -135,7 +135,7 @@ const GroupsSection = () => {
           <Reveal delay={0.2}>
             <div className="flex flex-col justify-between h-full">
               {/* Description */}
-              <div>
+              <div className="mt-16">
                 <p className="text-gray-600 leading-relaxed text-lg">
                   {sectionDescription ||
                     'Të bashkuar nga qëllimi për të ruajtur dhe promovuar kulturën shqiptare, ekipi ynë sjell përvojë, pasion dhe bashkëpunim në çdo provë dhe paraqitje.'}
