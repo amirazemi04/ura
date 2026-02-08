@@ -46,7 +46,14 @@ const GroupsSection = () => {
     const fetchGroupImages = async () => {
       try {
         const currentLocale = normalizeLocale(i18n.language);
-        const entries = await safeGetEntries('imazhetEwebit', currentLocale, { limit: 1 });
+
+        // Try current locale first
+        let entries = await safeGetEntries('imazhetEwebit', currentLocale, { limit: 1 });
+
+        // Fallback to German if no entries found
+        if (entries.length === 0) {
+          entries = await safeGetEntries('imazhetEwebit', 'de', { limit: 1 });
+        }
 
         if (entries.length > 0) {
           const fields = entries[0].fields || {};
