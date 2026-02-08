@@ -4,9 +4,14 @@ import { useTranslation } from 'react-i18next';
 import Reveal from './Reveal';
 import { safeGetEntries, safeGetField, normalizeLocale } from '../utils/contentfulHelpers';
 
+interface GroupImage {
+  url: string;
+  title: string;
+}
+
 const GroupsSection = () => {
   const { t, i18n } = useTranslation();
-  const [groupImages, setGroupImages] = useState<string[]>([]);
+  const [groupImages, setGroupImages] = useState<GroupImage[]>([]);
   const [sectionDescription, setSectionDescription] = useState<string>('');
   const [scheduleTime, setScheduleTime] = useState<string[]>([]);
   const [scheduleLocation, setScheduleLocation] = useState<string[]>([]);
@@ -40,16 +45,21 @@ const GroupsSection = () => {
   useEffect(() => {
     const fetchGroupImages = async () => {
       try {
-        const entries = await safeGetEntries('imazhetEwebit', 'de', { limit: 1 });
+        const currentLocale = normalizeLocale(i18n.language);
+        const entries = await safeGetEntries('imazhetEwebit', currentLocale, { limit: 1 });
 
         if (entries.length > 0) {
           const fields = entries[0].fields || {};
           const images = safeGetField(fields, 'grups', []);
-          const imageUrls = images
+          const imageData: GroupImage[] = images
             .slice(0, 4)
-            .map((img: any) => img?.fields?.file?.url ? `https:${img.fields.file.url}` : '')
-            .filter(Boolean);
-          setGroupImages(imageUrls);
+            .map((img: any) => {
+              const url = img?.fields?.file?.url ? `https:${img.fields.file.url}` : '';
+              const title = img?.fields?.title || '';
+              return { url, title };
+            })
+            .filter((item: GroupImage) => item.url);
+          setGroupImages(imageData);
         }
       } catch (error) {
         console.error('Error fetching group images:', error);
@@ -57,14 +67,7 @@ const GroupsSection = () => {
     };
 
     fetchGroupImages();
-  }, []);
-
-  const captions = [
-    t('groupsSection.groups.age18_30'),
-    t('groupsSection.groups.age30_45'),
-    t('groupsSection.groups.age45_plus'),
-    t('groupsSection.groups.age18_30'),
-  ];
+  }, [i18n.language]);
 
   return (
     <section className="bg-white" id="groups">
@@ -85,13 +88,13 @@ const GroupsSection = () => {
                     className="group relative overflow-hidden shadow-xl cursor-pointer aspect-[3/4] w-full"
                   >
                     <img
-                      src={image}
-                      alt={`Group ${index + 1}`}
+                      src={image.url}
+                      alt={image.title || `Group ${index + 1}`}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center">
                       <span className="text-white font-medium mb-2 text-center text-xs sm:text-sm px-1">
-                        {captions[index] || ''}
+                        {image.title}
                       </span>
                     </div>
                     <div className="absolute inset-0 bg-[#8B1D24]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
