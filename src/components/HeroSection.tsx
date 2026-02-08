@@ -81,8 +81,8 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="px-6 py-12" id="home">
-      <div className="container mx-auto">
+    <section className="py-12" id="home">
+      <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-10 lg:gap-6 items-center">
           {/* Left Column */}
           <Reveal
