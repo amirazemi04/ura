@@ -47,18 +47,13 @@ const GroupsSection = () => {
       try {
         const currentLocale = normalizeLocale(i18n.language);
 
-        // Try current locale first
         let entries = await safeGetEntries('imazhetEwebit', currentLocale, { limit: 1 });
-
-        // Fallback to German if no entries found
-        if (entries.length === 0) {
-          entries = await safeGetEntries('imazhetEwebit', 'de', { limit: 1 });
-        }
+        let imageData: GroupImage[] = [];
 
         if (entries.length > 0) {
           const fields = entries[0].fields || {};
           const images = safeGetField(fields, 'grups', []);
-          const imageData: GroupImage[] = images
+          imageData = images
             .slice(0, 4)
             .map((img: any) => {
               const url = img?.fields?.file?.url ? `https:${img.fields.file.url}` : '';
@@ -66,8 +61,25 @@ const GroupsSection = () => {
               return { url, title };
             })
             .filter((item: GroupImage) => item.url);
-          setGroupImages(imageData);
         }
+
+        if (imageData.length === 0 && currentLocale !== 'de') {
+          entries = await safeGetEntries('imazhetEwebit', 'de', { limit: 1 });
+          if (entries.length > 0) {
+            const fields = entries[0].fields || {};
+            const images = safeGetField(fields, 'grups', []);
+            imageData = images
+              .slice(0, 4)
+              .map((img: any) => {
+                const url = img?.fields?.file?.url ? `https:${img.fields.file.url}` : '';
+                const title = img?.fields?.title || '';
+                return { url, title };
+              })
+              .filter((item: GroupImage) => item.url);
+          }
+        }
+
+        setGroupImages(imageData);
       } catch (error) {
         console.error('Error fetching group images:', error);
       }
