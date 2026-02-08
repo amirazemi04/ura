@@ -10,11 +10,16 @@ import { safeGetEntries, safeGetField, normalizeLocale } from '../utils/contentf
 const ROTATION_INTERVAL = 3000;
 const SLIDE_DURATION = 600;
 
+interface SponsorImage {
+  url: string;
+  link?: string;
+}
+
 interface SponsorContent {
   title: string;
   description: string;
-  topSponsors: string[];
-  secondarySponsors: string[];
+  topSponsors: SponsorImage[];
+  secondarySponsors: SponsorImage[];
   otherSponsorsTitle: string;
   otherSponsors: string[];
 }
@@ -33,11 +38,15 @@ const extractTextFromRichText = (doc: Document | null): string[] => {
     .filter(Boolean);
 };
 
-const extractImagesFromAssets = (assets: any[]): string[] => {
+const extractImagesFromAssets = (assets: any[]): SponsorImage[] => {
   if (!Array.isArray(assets)) return [];
   return assets
-    .map((asset: any) => asset?.fields?.file?.url ? `https:${asset.fields.file.url}` : '')
-    .filter(Boolean);
+    .map((asset: any) => {
+      const url = asset?.fields?.file?.url ? `https:${asset.fields.file.url}` : '';
+      const link = asset?.fields?.title || '';
+      return { url, link };
+    })
+    .filter((item: SponsorImage) => item.url);
 };
 
 const SponsorsPage: React.FC = () => {
@@ -55,7 +64,7 @@ const SponsorsPage: React.FC = () => {
   const [sliderOffset, setSliderOffset] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(true);
   const [visibleSlots, setVisibleSlots] = useState(4);
-  const [sliderImages, setSliderImages] = useState<string[]>([]);
+  const [sliderImages, setSliderImages] = useState<SponsorImage[]>([]);
 
   useEffect(() => {
     const updateVisibleSlots = () => {
@@ -184,13 +193,28 @@ const SponsorsPage: React.FC = () => {
           {content.topSponsors.length > 0 && (
             <Reveal delay={0.1}>
               <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 py-10">
-                {content.topSponsors.map((src, i) => (
+                {content.topSponsors.map((sponsor, i) => (
                   <div key={i} className="flex items-center justify-center h-40 md:h-56 lg:h-72">
-                    <img
-                      src={src}
-                      alt={`Top Sponsor ${i + 1}`}
-                      className="max-h-full w-auto object-contain transition duration-300"
-                    />
+                    {sponsor.link ? (
+                      <a
+                        href={sponsor.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="cursor-pointer hover:opacity-80 transition-opacity duration-300"
+                      >
+                        <img
+                          src={sponsor.url}
+                          alt={`Top Sponsor ${i + 1}`}
+                          className="max-h-full w-auto object-contain"
+                        />
+                      </a>
+                    ) : (
+                      <img
+                        src={sponsor.url}
+                        alt={`Top Sponsor ${i + 1}`}
+                        className="max-h-full w-auto object-contain"
+                      />
+                    )}
                   </div>
                 ))}
               </div>
@@ -210,13 +234,28 @@ const SponsorsPage: React.FC = () => {
                     transition: isTransitioning ? `transform ${SLIDE_DURATION}ms ease-in-out` : 'none',
                   }}
                 >
-                  {sliderImages.map((src, i) => (
+                  {sliderImages.map((sponsor, i) => (
                     <div key={i} className="flex-1 flex justify-center items-center px-2">
-                      <img
-                        src={src}
-                        alt={`Sponsor ${i + 1}`}
-                        className="w-28 md:w-40 lg:w-48 grayscale hover:grayscale-0 transition duration-300 object-contain"
-                      />
+                      {sponsor.link ? (
+                        <a
+                          href={sponsor.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="cursor-pointer"
+                        >
+                          <img
+                            src={sponsor.url}
+                            alt={`Sponsor ${i + 1}`}
+                            className="w-28 md:w-40 lg:w-48 grayscale hover:grayscale-0 transition duration-300 object-contain"
+                          />
+                        </a>
+                      ) : (
+                        <img
+                          src={sponsor.url}
+                          alt={`Sponsor ${i + 1}`}
+                          className="w-28 md:w-40 lg:w-48 grayscale hover:grayscale-0 transition duration-300 object-contain"
+                        />
+                      )}
                     </div>
                   ))}
                 </div>
