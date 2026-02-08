@@ -70,26 +70,6 @@ export const syncAllContent = async (
   for (const [id, url] of allAssets) {
     await setCachedAssetUrl(id, url);
   }
-  log(`Cached ${allAssets.size} assets from entries`);
-
-  for (const locale of LOCALES) {
-    try {
-      log(`Fetching all assets (${locale})...`);
-      const assets = await client.getAssets({ locale, limit: 1000 });
-      for (const asset of assets.items) {
-        if (asset.fields?.file?.url) {
-          const raw = asset.fields.file.url as string;
-          await setCachedAssetUrl(
-            asset.sys.id,
-            raw.startsWith('//') ? `https:${raw}` : raw
-          );
-        }
-      }
-      log(`  Done all assets (${locale}): ${assets.items.length}`);
-    } catch (error: any) {
-      log(`  Failed assets (${locale}): ${error?.message ?? error}`);
-    }
-  }
-
+  log(`Cached ${allAssets.size} used assets`);
   log('\nSync complete!');
 };
