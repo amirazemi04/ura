@@ -56,9 +56,9 @@ const MissionValuesTeam = () => {
   }
 
   return (
-    <section className="px-4 sm:px-6 py-12 bg-white">
+    <section className="bg-white py-12">
       <Reveal>
-        <div className="container mx-auto">
+        <div className="container mx-auto px-6">
 
           {/* Tabs */}
           <div className="flex flex-wrap justify-start gap-10 sm:gap-20 mb-8">
