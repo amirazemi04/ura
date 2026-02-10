@@ -22,18 +22,23 @@ export const safeGetEntries = async <T = any>(
   const normalizedLocale = normalizeLocale(locale);
 
   const cached = await getCachedEntries(contentType, normalizedLocale);
-  if (cached !== null) return cached as Entry<T>[];
+  if (cached !== null) {
+    console.log(`✅ [FIREBASE CACHE] Loaded ${contentType} (${normalizedLocale}) - ${cached.length} entries`);
+    return cached as Entry<T>[];
+  }
 
   try {
+    console.log(`⬇️ [CONTENTFUL API] Fetching ${contentType} (${normalizedLocale})...`);
     const response = await client.getEntries({
       content_type: contentType,
       locale: normalizedLocale,
       ...options,
     });
 
+    console.log(`✅ [CONTENTFUL API] Loaded ${contentType} (${normalizedLocale}) - ${response.items.length} entries`);
     return response.items as Entry<T>[];
   } catch (error) {
-    console.error(`Error fetching entries for ${contentType} in ${normalizedLocale}:`, error);
+    console.error(`❌ [CONTENTFUL API ERROR] ${contentType} in ${normalizedLocale}:`, error);
 
     if (normalizedLocale !== DEFAULT_LOCALE) {
       try {
@@ -60,13 +65,18 @@ export const safeGetEntry = async <T = any>(
   const normalizedLocale = normalizeLocale(locale);
 
   const cached = await getCachedEntry(entryId, normalizedLocale);
-  if (cached !== null) return cached as Entry<T>;
+  if (cached !== null) {
+    console.log(`✅ [FIREBASE CACHE] Loaded entry ${entryId} (${normalizedLocale})`);
+    return cached as Entry<T>;
+  }
 
   try {
+    console.log(`⬇️ [CONTENTFUL API] Fetching entry ${entryId} (${normalizedLocale})...`);
     const entry = await client.getEntry<T>(entryId, { locale: normalizedLocale });
+    console.log(`✅ [CONTENTFUL API] Loaded entry ${entryId} (${normalizedLocale})`);
     return entry;
   } catch (error) {
-    console.error(`Error fetching entry ${entryId} in ${normalizedLocale}:`, error);
+    console.error(`❌ [CONTENTFUL API ERROR] Entry ${entryId} in ${normalizedLocale}:`, error);
 
     if (normalizedLocale !== DEFAULT_LOCALE) {
       try {
@@ -89,13 +99,19 @@ export const safeGetAsset = async (
   if (!assetId) return '';
 
   const cached = await getCachedAssetUrl(assetId);
-  if (cached !== null) return cached;
+  if (cached !== null) {
+    console.log(`✅ [FIREBASE CACHE] Asset URL ${assetId}`);
+    return cached;
+  }
 
   try {
+    console.log(`⬇️ [CONTENTFUL API] Fetching asset ${assetId}...`);
     const asset = await client.getAsset(assetId, { locale: DEFAULT_LOCALE });
-    return asset?.fields?.file?.url ? `https:${asset.fields.file.url}` : '';
+    const url = asset?.fields?.file?.url ? `https:${asset.fields.file.url}` : '';
+    console.log(`✅ [CONTENTFUL API] Asset URL ${assetId}`);
+    return url;
   } catch (error) {
-    console.error(`Error fetching asset ${assetId}:`, error);
+    console.error(`❌ [CONTENTFUL API ERROR] Asset ${assetId}:`, error);
     return '';
   }
 };
